@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -546,6 +548,15 @@
 <nav id="nav-agent"><div class="nav-logo"><img src="logo.png" alt="Tiger Shark Logo"></div><button class="back-btn" onclick="showMainPage()">← Volver</button></nav>
 <nav id="nav-industry"><div class="nav-logo"><img src="logo.png" alt="Tiger Shark Logo"></div><button class="back-btn" onclick="showMainPage()">← Volver</button></nav>
 <nav id="nav-about">
+<ul class="nav-links">
+        <li><a href="#about">Sobre Nosotros</a></li>
+        <li><a href="#benefits">Beneficios</a></li>
+        <li><a href="#agents">Agente</a></li>
+        <li><a href="#contact">Contacto</a></li>
+        <li><a href="#links">Enlaces</a></li>
+        <li><a href="#recruit">Únete</a></li>
+    </ul>
+</nav>
     <div class="nav-logo"><img src="logo.png" alt="Tiger Shark Logo"></div>
     <button class="back-btn" onclick="showMainPage()">← Volver</button>
 </nav>
@@ -998,8 +1009,8 @@
                         <span class="video-label-dot"></span>
                         TIGER SHARK · OFFICIAL VIDEO
                     </div>
-                    <video id="about-video" autoplay muted controls playsinline preload="auto" class="about-video">
-    <source src="videos/TK_web.mp4" type="video/mp4">
+                   <video id="about-video" autoplay  muted controls playsinline preload="auto" class="about-video">
+    <source src="TK.mp4" type="video/mp4">
     Tu navegador no soporta la reproducción de video.
 </video>
                 </div>
@@ -1286,35 +1297,6 @@ window.addEventListener('scroll',()=>{
     window.scrollY>150&&window.scrollY>lastY ? nav.classList.add('nav-hidden') : nav.classList.remove('nav-hidden');
     lastY=window.scrollY;
 });
-(function initVideoFix(){
-    const vid = document.getElementById('about-video');
-    if(!vid) return;
-    let stallTimer = null;
-    /* 卡住时记录时间点，300ms 后强制跳帧继续 */
-    vid.addEventListener('stalled', () => {
-        clearTimeout(stallTimer);
-        stallTimer = setTimeout(() => {
-            const t = vid.currentTime;
-            vid.load();
-            vid.addEventListener('canplay', () => {
-                vid.currentTime = t;
-                vid.play().catch(()=>{});
-            }, { once: true });
-        }, 1);
-    });
-    /* waiting 超过 2 秒视为卡死，尝试微跳帧解锁 */
-    let waitTimer = null;
-    vid.addEventListener('waiting', () => {
-        waitTimer = setTimeout(() => {
-            if(vid.paused) return;
-            vid.currentTime += 0.01;
-        }, 2000);
-    });
-    vid.addEventListener('playing', () => {
-        clearTimeout(stallTimer);
-        clearTimeout(waitTimer);
-    });
-})();
 </script>
 </body>
 </html>
