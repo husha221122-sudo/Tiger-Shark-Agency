@@ -5,6 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tiger Shark - Reclutamiento Oficial</title>
     <link rel="icon" href="logo.png" type="image/png">
+    <meta property="og:title" content="Tiger Shark - Agencia Oficial">
+<meta property="og:description" content="Agencia Top de Creadores. Comisión Alta, Apoyo Profesional 24/7, Protección Legal Completa.">
+<meta property="og:image" content="https://husha221122-sudo.github.io/Tiger-Shark-Agency/logo.png">
+<meta property="og:url" content="https://husha221122-sudo.github.io/Tiger-Shark-Agency/">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Tiger Shark - Agencia Oficial">
+<meta name="twitter:description" content="Únete a Tiger Shark. Comisión Alta, Apoyo 24/7, Protección Legal.">
+<meta name="twitter:image" content="https://husha221122-sudo.github.io/Tiger-Shark-Agency/logo.png">
     <style>
 #popup-overlay {
             display:none;position:fixed;inset:0;z-index:10000;
@@ -694,22 +703,74 @@
         .accumulate-text h4 { font-size:.9rem;color:var(--gold);margin-bottom:5px; }
         .accumulate-text p { font-size:.82rem;color:rgba(224,247,250,0.65);line-height:1.6; }
 
+        @media(max-width:1024px){
+            section{padding:70px 30px;max-width:100%;}
+            .about-grid{grid-template-columns:repeat(2,1fr);}
+            nav{padding:0 24px;}
+        }
         @media(max-width:768px){
-            nav{padding:0 16px;} .nav-links{display:none;} section{padding:70px 20px;}
+            nav{padding:0 16px;height:60px;}
+            .nav-logo img{height:44px;}
+            .nav-links{display:flex;gap:2px;flex-wrap:wrap;}
+            .nav-links a{font-size:12px;padding:4px 10px;}
+            .nav-activity-btn{font-size:12px;padding:4px 10px;}
+            section{padding:60px 16px;max-width:100%;}
+            .about-grid{grid-template-columns:1fr;}
             .benefits-grid,.contact-wrap,.links-grid,.info-grid{grid-template-columns:1fr;}
-            .detail-section{padding:0 20px 60px;} .cta-section{padding:20px 20px 80px;}
-            .cta-box{padding:30px 22px;} .agent-profile-card{padding:30px 22px;}
+            .detail-section{padding:0 16px 50px;} 
+            .cta-section{padding:16px 16px 60px;}
+            .cta-box{padding:24px 16px;} 
+            .agent-profile-card{padding:24px 16px;}
             .awards-grid{grid-template-columns:1fr;}
             .awards-grid .award-card:last-child:nth-child(odd){grid-column:auto;max-width:100%;}
             .stats-bar{grid-template-columns:1fr;}
             #custom-cursor,#cursor-trail{display:none;}
-            #lightbox-prev{left:4px;} #lightbox-next{right:4px;}
+            #lightbox-prev{left:4px;} 
+            #lightbox-next{right:4px;}
             .commission-compare-banner{flex-direction:column;}
             .commission-side.base-side{border-right:none;border-bottom:1px solid rgba(255,255,255,0.08);}
             .commission-arrow-wrap{flex-direction:row;padding:12px 0;transform:rotate(90deg);}
             .req-cards-grid{grid-template-columns:1fr;}
-            .ladder-step-bonus{min-width:90px;padding:0 14px;}
+            .ladder-step-bonus{min-width:70px;padding:0 10px;}
+            .hero-title{font-size:clamp(1.8rem,5vw,2.8rem);}
+            .section-title{font-size:clamp(1.4rem,4vw,2rem);}
+            .card,.benefit-item,.agent-card{padding:18px 14px;}
+            .contact-wrap{max-width:100%;}
         }
+        @media(max-width:480px){
+            nav{padding:0 12px;height:56px;}
+            .nav-logo img{height:40px;}
+            .nav-links{gap:1px;}
+            .nav-links a{font-size:11px;padding:3px 8px;}
+            .nav-activity-btn{font-size:11px;padding:3px 8px;}
+            section{padding:40px 12px;max-width:100%;}
+            .hero-logo{width:180px;}
+            .hero-title{font-size:clamp(1.5rem,5vw,2.2rem);}
+            .hero-sub{font-size:0.9rem;letter-spacing:1px;}
+            .hero-btn{padding:10px 28px;font-size:0.9rem;}
+            .section-header{margin-bottom:30px;}
+            .section-tag{font-size:0.65rem;padding:4px 12px;}
+            .section-title{font-size:clamp(1.2rem,4vw,1.6rem);}
+            .section-divider{width:40px;}
+            .card,.benefit-item,.agent-card,.info-card{padding:16px 12px;}
+            .card-icon,.benefit-num{font-size:1.8rem;margin-bottom:8px;}
+            .about-grid{grid-template-columns:1fr;}
+            .benefits-grid,.contact-wrap,.links-grid,.info-grid{grid-template-columns:1fr;gap:14px;}
+            .detail-section{padding:0 12px 40px;}
+            .detail-hero h1{font-size:clamp(1.6rem,4vw,2rem);}
+            .detail-hero p{font-size:0.9rem;}
+            .cta-box{padding:20px 12px;margin:20px 0;}
+            .agent-profile-card{padding:20px 12px;}
+            .agent-card{max-width:100%;padding:24px 12px;}
+            .agent-avatar{width:70px;height:70px;font-size:1.8rem;}
+            .awards-grid{grid-template-columns:1fr;gap:16px;}
+            .stats-bar{grid-template-columns:repeat(2,1fr);gap:12px;}
+            .recruit-wrap{max-width:100%;padding:0;}
+            .cta-section{padding:12px 12px 40px;}
+            .footer{padding:20px 12px;}
+            #detail-page .contact-wrap{grid-template-columns:1fr;}
+        }
+       
 /* ══ About 子页面 ══ */
 #about-page { display:none; }
 #about-page.active { display:block; }
