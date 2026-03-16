@@ -708,18 +708,23 @@
 
         @media(max-width:768px){
             nav{
-    padding:0 16px;
-    height:60px;
-    justify-content:space-between;
-}
-    .nav-logo img{height:40px;}
-    .nav-links{display:none;}
-   .nav-activity-btn{
-    font-size:11px;
-    padding:6px 12px;
-    white-space:nowrap;
-}
-    .back-btn{font-size:.85rem;padding:6px 16px;}
+        padding:0 16px;
+        height:60px;
+        display:flex;  /* 确保这行存在 */
+        align-items:center;  /* 确保这行存在 */
+        justify-content:space-between;
+    }
+    .nav-logo img{height:38px;}
+    .nav-links{display:none;}  /* 只隐藏链接列表，不是整个nav */
+    .nav-activity-btn{
+        font-size:11px;
+        padding:6px 12px;
+        white-space:nowrap;
+    }
+    .back-btn{
+        font-size:.8rem;
+        padding:6px 14px;
+    }
     
     /* Hero区域*/
     #hero{padding:0 20px;}
