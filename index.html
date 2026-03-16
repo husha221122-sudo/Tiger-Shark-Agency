@@ -4,16 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tiger Shark - Reclutamiento Oficial</title>
-    <link rel="icon" href="logo.png" type="image/png">
-    <meta property="og:title" content="Tiger Shark - Agencia Oficial">
-<meta property="og:description" content="Agencia Top de Creadores. Comisión Alta, Apoyo Profesional 24/7, Protección Legal Completa.">
-<meta property="og:image" content="https://husha221122-sudo.github.io/Tiger-Shark-Agency/logo.png">
-<meta property="og:url" content="https://husha221122-sudo.github.io/Tiger-Shark-Agency/">
-<meta property="og:type" content="website">
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Tiger Shark - Agencia Oficial">
-<meta name="twitter:description" content="Únete a Tiger Shark. Comisión Alta, Apoyo 24/7, Protección Legal.">
-<meta name="twitter:image" content="https://husha221122-sudo.github.io/Tiger-Shark-Agency/logo.png">
+<svg width="0" height="0" style="position:absolute;pointer-events:none;" aria-hidden="true">
+    <defs>
+        <symbol id="tiktok-icon" viewBox="0 0 24 24">
+            <path fill="currentColor" d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.642.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 04.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z"/>
+        </symbol>
+    </defs>
+</svg>
     <style>
 #popup-overlay {
             display:none;position:fixed;inset:0;z-index:10000;
@@ -227,6 +224,12 @@
             box-shadow:0 0 8px var(--gold);animation:dotBlink 1.5s ease-in-out infinite;flex-shrink:0;
         }
         .validity-label { color:var(--gold);font-weight:700;letter-spacing:1px; }
+.tiktok-icon {
+    width: 1.4rem;
+    height: 1.4rem;
+    display: inline-block;
+    vertical-align: middle;
+}
         @media(max-width:768px){
             #popup-box{padding:28px 22px 24px;}
             .popup-btn-wrap{flex-direction:column;}
@@ -703,74 +706,225 @@
         .accumulate-text h4 { font-size:.9rem;color:var(--gold);margin-bottom:5px; }
         .accumulate-text p { font-size:.82rem;color:rgba(224,247,250,0.65);line-height:1.6; }
 
-        @media(max-width:1024px){
-            section{padding:70px 30px;max-width:100%;}
-            .about-grid{grid-template-columns:repeat(2,1fr);}
-            nav{padding:0 24px;}
-        }
         @media(max-width:768px){
-            nav{padding:0 16px;height:60px;}
-            .nav-logo img{height:44px;}
-            .nav-links{display:flex;gap:2px;flex-wrap:wrap;}
-            .nav-links a{font-size:12px;padding:4px 10px;}
-            .nav-activity-btn{font-size:12px;padding:4px 10px;}
-            section{padding:60px 16px;max-width:100%;}
-            .about-grid{grid-template-columns:1fr;}
-            .benefits-grid,.contact-wrap,.links-grid,.info-grid{grid-template-columns:1fr;}
-            .detail-section{padding:0 16px 50px;} 
-            .cta-section{padding:16px 16px 60px;}
-            .cta-box{padding:24px 16px;} 
-            .agent-profile-card{padding:24px 16px;}
-            .awards-grid{grid-template-columns:1fr;}
-            .awards-grid .award-card:last-child:nth-child(odd){grid-column:auto;max-width:100%;}
-            .stats-bar{grid-template-columns:1fr;}
-            #custom-cursor,#cursor-trail{display:none;}
-            #lightbox-prev{left:4px;} 
-            #lightbox-next{right:4px;}
-            .commission-compare-banner{flex-direction:column;}
-            .commission-side.base-side{border-right:none;border-bottom:1px solid rgba(255,255,255,0.08);}
-            .commission-arrow-wrap{flex-direction:row;padding:12px 0;transform:rotate(90deg);}
-            .req-cards-grid{grid-template-columns:1fr;}
-            .ladder-step-bonus{min-width:70px;padding:0 10px;}
-            .hero-title{font-size:clamp(1.8rem,5vw,2.8rem);}
-            .section-title{font-size:clamp(1.4rem,4vw,2rem);}
-            .card,.benefit-item,.agent-card{padding:18px 14px;}
-            .contact-wrap{max-width:100%;}
-        }
-        @media(max-width:480px){
-            nav{padding:0 12px;height:56px;}
-            .nav-logo img{height:40px;}
-            .nav-links{gap:1px;}
-            .nav-links a{font-size:11px;padding:3px 8px;}
-            .nav-activity-btn{font-size:11px;padding:3px 8px;}
-            section{padding:40px 12px;max-width:100%;}
-            .hero-logo{width:180px;}
-            .hero-title{font-size:clamp(1.5rem,5vw,2.2rem);}
-            .hero-sub{font-size:0.9rem;letter-spacing:1px;}
-            .hero-btn{padding:10px 28px;font-size:0.9rem;}
-            .section-header{margin-bottom:30px;}
-            .section-tag{font-size:0.65rem;padding:4px 12px;}
-            .section-title{font-size:clamp(1.2rem,4vw,1.6rem);}
-            .section-divider{width:40px;}
-            .card,.benefit-item,.agent-card,.info-card{padding:16px 12px;}
-            .card-icon,.benefit-num{font-size:1.8rem;margin-bottom:8px;}
-            .about-grid{grid-template-columns:1fr;}
-            .benefits-grid,.contact-wrap,.links-grid,.info-grid{grid-template-columns:1fr;gap:14px;}
-            .detail-section{padding:0 12px 40px;}
-            .detail-hero h1{font-size:clamp(1.6rem,4vw,2rem);}
-            .detail-hero p{font-size:0.9rem;}
-            .cta-box{padding:20px 12px;margin:20px 0;}
-            .agent-profile-card{padding:20px 12px;}
-            .agent-card{max-width:100%;padding:24px 12px;}
-            .agent-avatar{width:70px;height:70px;font-size:1.8rem;}
-            .awards-grid{grid-template-columns:1fr;gap:16px;}
-            .stats-bar{grid-template-columns:repeat(2,1fr);gap:12px;}
-            .recruit-wrap{max-width:100%;padding:0;}
-            .cta-section{padding:12px 12px 40px;}
-            .footer{padding:20px 12px;}
-            #detail-page .contact-wrap{grid-template-columns:1fr;}
-        }
-       
+            nav{
+    padding:0 16px;
+    height:60px;
+    justify-content:space-between;
+}
+    .nav-logo img{height:40px;}
+    .nav-links{display:none;}
+   .nav-activity-btn{
+    font-size:11px;
+    padding:6px 12px;
+    white-space:nowrap;
+}
+    .back-btn{font-size:.85rem;padding:6px 16px;}
+    
+    /* Hero区域*/
+    #hero{padding:0 20px;}
+    .hero-logo{width:180px;}
+    .hero-title{font-size:2rem;letter-spacing:3px;margin-bottom:10px;}
+    .hero-sub{font-size:.9rem;letter-spacing:2px;margin-bottom:28px;}
+    .hero-btn{padding:12px 32px;font-size:.9rem;}
+    .scroll-hint{font-size:.7rem;bottom:20px;}
+    
+    /* Section间距 */
+    section{padding:60px 16px;}
+    .section-header{margin-bottom:40px;}
+    .section-title{font-size:1.6rem;}
+    .section-tag{font-size:.7rem;padding:4px 14px;}
+    
+    /* 网格布局 */
+    .about-grid{grid-template-columns:1fr;gap:16px;}
+    .benefits-grid{grid-template-columns:1fr;gap:16px;}
+    .contact-wrap{grid-template-columns:1fr;gap:16px;}
+    .links-grid{grid-template-columns:1fr;gap:16px;}
+    .info-grid{grid-template-columns:1fr;gap:16px;}
+    
+    /* 卡片优化 */
+    .card{padding:24px 20px;}
+    .card-icon{font-size:2rem;}
+    .card h3{font-size:1rem;}
+    .card p{font-size:.85rem;}
+    
+    .benefit-item{padding:24px 20px;}
+    .benefit-num{font-size:1.8rem;}
+    .benefit-item h4{font-size:.9rem;}
+    .benefit-item p{font-size:.8rem;}
+    .benefit-item.clickable::before{font-size:.7rem;bottom:10px;}
+    
+    /* Agent卡片 */
+    .agent-card{padding:30px 24px;}
+    .agent-avatar{width:70px;height:70px;font-size:1.8rem;}
+    .agent-card h3{font-size:1.1rem;}
+    .agent-role{font-size:.75rem;}
+    .agent-card p{font-size:.85rem;}
+    
+    /* 联系方式 */
+    .contact-item{padding:20px 16px;gap:14px;}
+    .contact-icon{width:40px;height:40px;font-size:1.2rem;}
+    .contact-info h4{font-size:.8rem;}
+    .contact-info p{font-size:.85rem;}
+    
+    /* 链接卡片 */
+    .link-card{padding:20px 16px;}
+    .link-icon{font-size:1.4rem;}
+    .link-left h4{font-size:.9rem;}
+    .link-left p{font-size:.75rem;}
+    
+    /* Detail页面 */
+    .detail-hero{padding-top:100px;padding-bottom:40px;}
+    .detail-hero-icon{font-size:3rem;}
+    .detail-hero h1{font-size:1.8rem;letter-spacing:2px;}
+    .detail-hero p{font-size:.9rem;padding:0 16px;}
+    
+    .detail-section{padding:0 16px 50px;}
+    .detail-block{margin-bottom:40px;}
+    .detail-block-title{gap:10px;margin-bottom:20px;padding-bottom:12px;}
+    .detail-block-title .icon{width:36px;height:36px;font-size:1.1rem;}
+    .detail-block-title h2{font-size:1.1rem;}
+    /* Info卡片 */
+    .info-card{padding:20px 16px;}
+    .info-card h4{font-size:.85rem;}
+    .info-card p,.info-card ul li{font-size:.8rem;}
+    
+    /* 高亮框 */
+    .highlight-box{padding:24px 20px;}
+    .highlight-box h3{font-size:1rem;}
+    .highlight-box p{font-size:.85rem;}
+    
+    /* 保护列表 */
+    .protect-item{padding:18px 16px;gap:14px;}
+    .protect-icon-box{width:40px;height:40px;font-size:1.2rem;}
+    .protect-content h4{font-size:.85rem;}
+    .protect-content p{font-size:.8rem;}
+    
+    /* Agent资料卡 */
+    .agent-profile-card{padding:30px 20px;}
+    .agent-profile-avatar{width:100px;height:100px;}
+    .agent-profile-name{font-size:1.3rem;}
+    .agent-profile-role{font-size:.7rem;padding:4px 14px;}
+    .agent-profile-desc{font-size:.85rem;}
+    
+    /* Agent联系方式 */
+    .agent-contact-item{padding:18px 20px;gap:16px;}
+    .agent-contact-icon-box{width:44px;height:44px;font-size:1.3rem;}
+    .agent-contact-info h4{font-size:.8rem;}
+    .agent-contact-info p{font-size:.9rem;}
+    
+    /* CTA区域 */
+    .cta-section{padding:30px 16px 70px;}
+    .cta-box{padding:28px 20px;}
+    .cta-box h2{font-size:1.3rem;}
+    .cta-box p{font-size:.85rem;margin-bottom:24px;}
+    .cta-btn{padding:12px 32px;font-size:.9rem;}
+    
+    /* 奖项网格 */
+    .awards-intro{padding:24px 20px;margin-bottom:40px;}
+    .awards-intro p{font-size:.85rem;}
+    .awards-grid{grid-template-columns:1fr;gap:24px;}
+    .award-card-body{padding:18px 20px;}
+    .award-badge{font-size:.68rem;padding:3px 12px;}
+    .award-card h3{font-size:.95rem;}
+    .award-card p{font-size:.8rem;}
+    
+    /* 统计栏 */
+    .stats-bar{grid-template-columns:1fr;gap:16px;margin-bottom:40px;}
+    .stat-item{padding:20px 16px;}
+    .stat-num{font-size:1.8rem;}
+    .stat-label{font-size:.7rem;}
+    
+    /* 佣金对比横幅 */
+    .commission-compare-banner{flex-direction:column;}
+    .commission-side{padding:28px 20px;}
+    .commission-side.base-side{border-right:none;border-bottom:1px solid rgba(255,255,255,0.08);}
+    .commission-label{font-size:.68rem;}
+    .commission-percent{font-size:3.5rem;}
+    .commission-desc{font-size:.75rem;}
+    .commission-arrow-wrap{flex-direction:row;padding:12px 0;transform:rotate(90deg);}
+    .commission-arrow-icon{font-size:1.5rem;}
+    .commission-arrow-text{font-size:.6rem;}
+    
+    /* 阶梯进度 */
+    .ladder-step{grid-template-columns:auto1fr;padding:0;}
+    .ladder-step-num{width:48px;min-width:48px;height:auto;min-height:80px;font-size:1.1rem;}
+    .ladder-step-body{padding:16px 16px;}
+    .ladder-step-title{font-size:.85rem;}
+    .ladder-step-desc{font-size:.75rem;}
+    .ladder-step-bonus{min-width:auto;width:100%;padding:12px 16px;text-align:left;border-top:1px solid rgba(255,255,255,0.05);}
+    .ladder-bonus-num{font-size:1.2rem;}
+    .ladder-bonus-label{font-size:.65rem;}
+    .ladder-bar-row{padding:0 16px 12px 64px;}
+    /* 要求卡片 */
+    .req-cards-grid{grid-template-columns:1fr;gap:16px;}
+    .req-card-header{padding:14px 16px 12px;gap:10px;}
+    .req-card-num{width:32px;height:32px;font-size:.75rem;}
+    .req-card-title{font-size:.85rem;}
+    .req-card-body{padding:12px 16px16px;}
+    .req-card-target{font-size:1rem;}
+    .req-card-sub{font-size:.75rem;margin-bottom:12px;}
+    .req-card-reward{font-size:.72rem;padding:4px 12px;}
+    /* 累积提示框 */
+    .accumulate-box{padding:16px 18px;gap:14px;flex-direction:column;text-align:center;}
+    .accumulate-icon{font-size:1.5rem;}
+    .accumulate-text h4{font-size:.85rem;}
+    .accumulate-text p{font-size:.75rem;}
+    
+    /* 弹窗优化 */
+    #popup-box{padding:24px 18px 20px;max-width:calc(100vw - 32px);}
+    #popup-close{top:12px;right:16px;font-size:1.2rem;}
+    .popup-badge{font-size:.68rem;padding:4px 12px;}
+    .popup-title{font-size:1.3rem;}
+    .popup-desc{font-size:.8rem;margin-bottom:20px;}
+    .popup-preview{padding:14px 16px;margin-bottom:22px;}
+    .popup-preview-title{font-size:.68rem;}
+    .popup-preview-row{font-size:.75rem;padding:5px 0;}
+    .popup-preview-row .pr-right{font-size:.72rem;}
+    .popup-btn-wrap{flex-direction:column;gap:10px;}
+    .popup-go-btn{font-size:.85rem;padding:12px 18px;}
+    .popup-skip-btn{font-size:.8rem;padding:12px 18px;}
+    
+    /* 活动页面 */
+    .activity-validity-bar{padding:12px 16px;font-size:.8rem;flex-wrap:wrap;justify-content:center;text-align:center;}
+    .activity-frame-header,.activity-notes-header{padding:16px 18px;gap:12px;}
+    .activity-frame-icon,.activity-notes-icon{width:38px;height:38px;font-size:1.1rem;}
+    .activity-frame-header h3,.activity-notes-header h3{font-size:1rem;}
+    .activity-frame-header p,.activity-notes-header p{font-size:.72rem;}
+    .activity-notes-body{padding:18px 16px;}
+    .note-item{padding:12px 0;gap:12px;}
+    .note-num{width:26px;height:26px;font-size:.7rem;}
+    .note-text{font-size:.8rem;}
+    .reward-header-row{padding:10px 16px;}
+    .reward-header-row span{font-size:.65rem;}
+    .reward-row{grid-template-columns:1fr 1fr 1fr;padding:14px 16px;}
+    .reward-col-label{font-size:.65rem;}
+    .reward-days{font-size:.9rem;}
+    .reward-days em{display:none;}
+    .reward-diamonds{font-size:.95rem;}
+    .reward-amount{font-size:1.1rem;}
+    .reward-unit{font-size:.68rem;}
+    
+    /* About页面视频 */
+    .about-video-inner{border-radius:12px;}
+    .video-label{padding:10px 16px;font-size:.65rem;}
+    #about-page .stats-bar{grid-template-columns:repeat(2,1fr)!important;}
+    /* Footer */
+    footer{padding:28px 16px;}
+    footer img{height:32px;}
+    
+    /* 按钮优化 */
+    .join-btn{padding:16px;font-size:1rem;}
+    /* 灯箱 */
+    #lightbox-prev,#lightbox-next{width:44px;height:44px;font-size:1.8rem;}
+    #lightbox-prev{left:8px;}
+    #lightbox-next{right:8px;}
+    #lightbox-close{top:16px;right:20px;font-size:1.6rem;}
+    #lightbox-caption{font-size:.85rem;padding:0 16px;text-align:center;}
+    
+    /* 禁用3D效果和光标 */
+    #custom-cursor,#cursor-trail{display:none!important;}
+}
 /* ══ About 子页面 ══ */
 #about-page { display:none; }
 #about-page.active { display:block; }
@@ -906,14 +1060,14 @@
         <div class="card-icon">🦈</div>
         <h3>Sobre Tiger Shark</h3>
         <p>Tiger Shark es una agencia de gestión de primer nivel fundada en 2022...</p>
-        <span class="click-hint">Ver más →</span>
+      
     </div>
-    
-<div class="card about-card">
-    <div class="card-icon">🎯</div>
-    <h3>Nuestra Misión</h3>
-    <p>Con operaciones profesionales como núcleo, diseñamos estrategias de desarrollo personalizadas para cada creador, maximizando la monetización del tráfico. Creemos que toda persona con talento merece ser vista, y Tiger Shark será tu punto de despegue.</p>
-</div>
+    <div class="card about-card" onclick="showAboutPage()">
+        <div class="card-icon">🎯</div>
+        <h3>Nuestra Misión</h3>
+        <p>Con operaciones profesionales como núcleo...</p>
+        
+    </div>
     <div class="card industry-card" onclick="showIndustryPage()">
         <div class="card-icon">🏆</div>
         <h3>Posición en la Industria</h3>
@@ -956,15 +1110,28 @@
         <div class="contact-wrap">
             <div class="contact-item"><div class="contact-icon">💬</div><div class="contact-info"><h4>WHATSAPP</h4><p>+852 5240 2056</p></div></div>
             <div class="contact-item"><div class="contact-icon">🕐</div><div class="contact-info"><h4>HORARIO LABORAL</h4><p>Lunes a Sábado 09:00pm - 05:00pm</p></div></div>
-            <div class="contact-item"><div class="contact-icon">🎵</div><div class="contact-info"><h4>TIKTOK</h4><p>@new.tigershark</p></div></div>
-        </div>
+            <div class="contact-item"><div class="contact-icon">
+        <svg class="tiktok-icon"><use href="#tiktok-icon"/></svg>
+    </div>
+    <div class="contact-info">
+        <h4>TIKTOK</h4>
+        <p>@new.tigershark</p>
+    </div>
+</div>
     </section>
     <div class="section-line"></div>
 
     <section id="links">
         <div class="section-header"><div class="section-tag">OFFICIAL LINKS</div><h2 class="section-title">Enlaces <span>Oficiales</span></h2><div class="section-divider"></div></div>
         <div class="links-grid">
-            <a href="https://www.tiktok.com/@tigershark_agencia" target="_blank" rel="noopener" class="link-card"><div class="link-left"><span class="link-icon">🎵</span><div><h4>TIKTOK</h4><p>@tigershark_agencia</p></div></div><span class="link-arrow">→</span></a>
+            <a href="https://www.tiktok.com/@tigershark_agencia" target="_blank" rel="noopener" class="link-card"><div class="link-left">
+        <svg class="tiktok-icon" style="width:1.6rem;height:1.6rem;"><use href="#tiktok-icon"/></svg>
+        <div>
+            <h4>TIKTOK</h4>
+            <p>@tigershark_agencia</p>
+        </div>
+    </div><span class="link-arrow">→</span>
+</a>
             <a href="https://wa.me/85252402056" target="_blank" rel="noopener" class="link-card"><div class="link-left"><span class="link-icon">💬</span><div><h4>Grupo Oficial de WhatsApp</h4><p>Obtén las últimas noticias</p></div></div><span class="link-arrow">→</span></a>
         </div>
     </section>
@@ -1420,7 +1587,7 @@
         <button id="popup-close" onclick="closePopup()" aria-label="Cerrar">✕</button>
         <div class="popup-badge">🎉 ACTIVIDAD SEMANAL</div>
         <h2 class="popup-title">Actividad de <span>Agencia</span></h2>
-        <p class="popup-desc">¡Nueva actividad disponible esta semana!<br>Gana recompensas de diamantes por completar objetivos</p>
+        <p class="popup-desc">¡Nueva actividad disponible esta semana!<br>Completa los objetivos y recibe recompensas en efectivo.</p>
 
         <!-- 预览表 —— 每周同步更新此处文字 -->
         <!-- ✏️ EDITAR SEMANALMENTE: actualiza los datos del resumen aquí -->
@@ -1428,11 +1595,11 @@
             <div class="popup-preview-title">RESUMEN DE RECOMPENSAS</div>
             <div class="popup-preview-row">
                 <span class="pr-left">5 días · 2W 💎</span>
-                <span class="pr-right">+500 💵</span>
+                <span class="pr-right">+500 💎</span>
             </div>
             <div class="popup-preview-row">
                 <span class="pr-left">7 días · 12W 💎</span>
-                <span class="pr-right">+5000 💵</span>
+                <span class="pr-right">+5000 💎</span>
             </div>
         </div>
 
@@ -1463,7 +1630,7 @@
         <div class="activity-validity-bar">
             <span class="validity-dot"></span>
             <span class="validity-label">VIGENCIA:</span>
-            <span>Semana del &nbsp;<strong id="activity-week-text">16 Marzo – 22 Marzo 2026</strong></span>
+            <span>Semana del &nbsp;<strong id="activity-week-text">Del 16 al 22 de marzo de 2026</strong></span>
             <!-- ✏️ Cambia el texto de fecha arriba cada semana -->
         </div>
 
@@ -1581,14 +1748,14 @@
                 <div class="note-item">
                     <div class="note-num">01</div>
                     <div class="note-text">
-                        <strong>Período de actividad:</strong> Esta actividad aplica únicamente durante la semana indicada en la vigencia. Los resultados fuera del período no serán contabilizados.
+                        <strong>Período de actividad:</strong> Esta actividad solo aplica durante el período de vigencia. Los resultados fuera de ese período no serán considerados en el conteo.
                     </div>
                 </div>
 
                 <div class="note-item">
                     <div class="note-num">02</div>
                     <div class="note-text">
-                        <strong>Cálculo de diamantes:</strong> Se contabilizan los diamantes de ingresos por regalos en transmisiones en vivo. Las recargas de cuenta propia no aplican. <strong>1W = 10,000 diamantes.</strong>
+                        <strong>Cálculo de diamantes:</strong> Todos los diamantes obtenidos durante el período de la actividad contarán para el cálculo. 
                     </div>
                 </div>
 
@@ -1602,30 +1769,10 @@
                 <div class="note-item">
                     <div class="note-num">04</div>
                     <div class="note-text">
-                        <strong>Un nivel por semana:</strong> Solo se puede reclamar <strong>un nivel de recompensa por semana</strong>. Se aplica el nivel más alto alcanzado al final del período.
+                        <strong>Notas importantes:</strong> Si tiene alguna otra pregunta, por favor contacte a su <strong>agente.</strong>
                     </div>
                 </div>
 
-                <div class="note-item">
-                    <div class="note-num">05</div>
-                    <div class="note-text">
-                        <strong>Liquidación:</strong> Las recompensas se abonan junto con la liquidación mensual ordinaria, dentro de los primeros <strong>5 días hábiles</strong> del mes siguiente.
-                    </div>
-                </div>
-
-                <div class="note-item">
-                    <div class="note-num">06</div>
-                    <div class="note-text">
-                        <strong>Requisito de elegibilidad:</strong> El creador debe estar activo bajo contrato vigente con Tiger Shark durante toda la semana de actividad.
-                    </div>
-                </div>
-
-                <div class="note-item">
-                    <div class="note-num">07</div>
-                    <div class="note-text">
-                        Tiger Shark se reserva el derecho de <strong>modificar o cancelar la actividad</strong> con previo aviso. Ante cualquier duda, contacta directamente a tu agente exclusivo.
-                    </div>
-                </div>
 
                 <!-- ✏️ FIN ZONA EDITABLE - notas de actividad -->
 
