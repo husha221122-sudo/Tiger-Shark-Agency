@@ -390,16 +390,10 @@ nav { will-change: transform; }
             .hamburger-btn { display:none!important; }
             .mobile-drawer,.mobile-drawer-overlay { display:none!important; }
         }
-        @media(max-width:768px){
-            /* 移动端隐藏注意事项文字，只保留图标 */
-.nav-notice-btn { 
-    font-size:0;padding:8px 10px;letter-spacing:0;
-    width:36px;height:36px;justify-content:center;
+        @media(max-width:900px){
+    .nav-notice-btn,
+    .nav-activity-btn { display:none!important; }
 }
-.nav-notice-btn::before { content:'⚠️';font-size:16px; }
-.nav-activity-btn { font-size:0;padding:8px 10px;
-    width:36px;height:36px;justify-content:center; }
-.nav-activity-btn::before { content:'🏆';font-size:16px; }
             nav { padding:0 16px;height:60px; }
             .nav-logo img { height:40px; }
             .back-btn { font-size:.85rem;padding:6px 16px; }
@@ -521,6 +515,729 @@ nav { will-change: transform; }
     .rules-tab { font-size:.78rem;padding:8px 14px; }
     #live-rules-entry .links-grid { grid-template-columns:1fr!important; }
 }
+/* ══════════════════════════════
+   移动端 UI 全面优化
+══════════════════════════════ */
+/* ── 导航栏优化 ── */
+@media(max-width:900px){
+    nav {
+        height:56px;
+        padding:0 14px;
+        box-shadow:0 2px 20px rgba(0,0,0,0.4);
+    }
+    .nav-logo img { height:36px; }
+    .hamburger-btn {
+        width:40px;
+        height:40px;
+        border-radius:10px;
+    }
+}
+/* ── Hero区域优化 ── */
+@media(max-width:768px){
+    #hero {
+        padding: 0 24px;
+        gap: 0;
+    }
+    .hero-logo {
+        width:140px;
+        margin-bottom:16px;
+    }
+    .hero-title {
+        font-size:1.75rem;
+        letter-spacing:4px;
+        margin-bottom:10px;
+    }
+    .hero-sub {
+        font-size:.82rem;
+        letter-spacing:1.5px;
+        margin-bottom:24px;
+        color:rgba(0,229,255,0.65);
+    }
+    .hero-btn {
+        padding:14px 40px;
+        font-size:.95rem;
+        letter-spacing:1.5px;
+        border-radius:30px;
+    }
+    .scroll-hint {
+        bottom:90px;
+        font-size:.68rem;
+    }
+}
+/* ── Section标题优化 ── */
+@media(max-width:768px){
+    section {
+        padding:48px 16px;
+    }
+    .section-header {
+        margin-bottom:28px;
+    }
+    .section-tag {
+        font-size:.68rem;
+        padding:4px 14px;
+        letter-spacing:2px;
+    }
+    .section-title {
+        font-size:1.45rem;
+        letter-spacing:1.5px;
+    }
+}
+/* ── 卡片优化 ── */
+@media(max-width:768px){
+    .card {
+        padding:20px 18px;
+        border-radius:14px;
+    }
+    .card-icon {
+        font-size:2rem;
+        margin-bottom:12px;
+    }
+    .card h3 { font-size:1rem; }
+    .card p  { font-size:.85rem; line-height:1.75; }
+    /* benefit卡片 */
+    .benefit-item {
+        padding:20px 16px;
+        border-radius:14px;
+    }
+    .benefit-num { font-size:1.9rem; }
+    .benefit-item h4 { font-size:.95rem; }
+    .benefit-item p  { font-size:.82rem; }
+    /* 代理人卡片 */
+    .agent-card {
+        padding:28px 24px;
+        border-radius:16px;
+        max-width:100%;
+    }
+    .agent-avatar {
+        width:80px;
+        height:80px;
+        margin-bottom:14px;
+    }
+    .agent-card h3 { font-size:1.1rem; }
+}
+/* ── 联系方式优化 ── */
+@media(max-width:768px){
+    .contact-wrap {
+        gap:12px;
+    }
+    .contact-item {
+        padding:16px 14px;
+        border-radius:14px;
+        gap:12px;
+    }
+    .contact-icon {
+        width:40px;
+        height:40px;
+        font-size:1.1rem;
+        border-radius:10px;
+    }
+    .contact-info h4 { font-size:.75rem; }
+    .contact-info p  { font-size:.88rem; }
+}
+/* ── 链接卡片优化 ── */
+@media(max-width:768px){
+    .link-card {
+        padding:16px 14px;
+        border-radius:14px;
+        min-height:64px;
+    }
+    .link-left h4 { font-size:.9rem; }
+    .link-left p  { font-size:.75rem; }
+    .link-icon { font-size:1.4rem; }
+}
+/* ── 抽屉菜单优化 ── */
+@media(max-width:900px){
+    .mobile-drawer {
+        width:280px;
+        padding:70px 20px 40px;
+        border-radius:0 0 0 0;
+    }
+    .drawer-nav-links a {
+        font-size:.9rem;
+        padding:13px 14px;
+        border-radius:10px;
+        letter-spacing:.5px;
+    }
+    .drawer-nav-links a:hover,
+    .drawer-nav-links a:active {
+        background:rgba(0,229,255,0.1);
+        color:var(--cyan);
+    }
+    .drawer-icon { font-size:1rem; }
+    /* 活动按钮 */
+    .drawer-activity-btn {
+        padding:13px;
+        border-radius:10px;
+        font-size:.9rem;
+        letter-spacing:.5px;
+    }
+    /* 注意事项按钮 */
+    .drawer-notice-btn {
+        padding:13px;
+        border-radius:10px;
+        font-size:.9rem;
+        letter-spacing:.5px;
+    }
+    /* 语言网格 */
+    .drawer-lang-grid {
+        gap:6px;
+    }
+    .drawer-lang-option {
+        padding:9px 10px;
+        font-size:.78rem;
+        border-radius:8px;
+        min-height:40px;
+    }
+    .drawer-lang-title {
+        font-size:.65rem;
+        letter-spacing:2px;
+    }
+}
+/* ── Detail页面优化 ── */
+@media(max-width:768px){
+    .detail-hero {
+        padding:80px 20px 32px;
+    }
+    .detail-hero-icon { font-size:2.8rem; }
+    .detail-hero h1  { font-size:1.5rem; letter-spacing:2px; }
+    .detail-hero p   { font-size:.85rem; padding:0 8px; }
+    .detail-section { padding:0 14px 48px; }
+    .detail-block { margin-bottom:36px; }
+    .detail-block-title {
+        gap:10px;
+        margin-bottom:18px;
+        padding-bottom:12px;
+    }
+    .detail-block-title .icon {
+        width:38px;
+        height:38px;
+        font-size:1.1rem;
+        border-radius:10px;
+    }
+    .detail-block-title h2 { font-size:1.1rem; }
+    .info-card {
+        padding:16px 14px;
+        border-radius:12px;
+    }
+    .info-card h4 { font-size:.88rem; }
+    .info-card p, .info-card ul li { font-size:.82rem; }
+    .highlight-box {
+        padding:18px 16px;
+        border-radius:12px;
+    }
+    .highlight-box h3 { font-size:1rem; }
+    .highlight-box p  { font-size:.85rem; line-height:1.8; }
+}
+/* ── 佣金对比优化 ── */
+@media(max-width:768px){
+    .commission-compare-banner { border-radius:14px; }
+    .commission-side { padding:22px 18px; }
+    .commission-percent { font-size:3.2rem; }
+    .commission-label { font-size:.65rem; letter-spacing:2px; }
+    .commission-desc  { font-size:.75rem; }
+    /* 佣金条件表格 */
+    .commission-req-table { border-radius:12px; margin-top:12px; }
+    .commission-req-header { padding:10px 14px; }
+    .commission-req-row { padding:14px; gap:10px; }
+    .req-icon {
+        width:34px;
+        height:34px;
+        font-size:1rem;
+        border-radius:8px;
+    }
+    .req-label { font-size:.62rem; }
+    .req-cond  { font-size:.84rem; }
+    .req-bonus { font-size:1.35rem; min-width:56px; }
+    .req-bonus-sub { font-size:1.1rem; }
+    .accumulate-box {
+        padding:14px;
+        border-radius:12px;
+        flex-direction:column;
+        text-align:center;
+        gap:10px;
+        margin-top:12px;
+    }
+}
+/* ── 保护页面优化 ── */
+@media(max-width:768px){
+    .protect-item {
+        padding:14px 12px;
+        gap:12px;
+        border-radius:12px;
+    }
+    .protect-icon-box {
+        width:38px;
+        height:38px;
+        font-size:1.1rem;
+        border-radius:10px;
+        flex-shrink:0;
+    }
+    .protect-content h4 { font-size:.88rem; margin-bottom:4px; }
+    .protect-content p  { font-size:.8rem; line-height:1.65; }
+}
+/* ── 代理人页面优化 ── */
+@media(max-width:768px){
+    .agent-profile-card {
+        padding:28px 20px;
+        border-radius:16px;
+    }
+    .agent-profile-avatar {
+        width:100px;
+        height:100px;
+        margin-bottom:16px;
+    }
+    .agent-profile-name { font-size:1.3rem; }
+    .agent-profile-role { font-size:.72rem; padding:4px 14px; }
+    .agent-profile-desc { font-size:.85rem; line-height:1.75; }
+    .agent-contact-item {
+        padding:14px 16px;
+        gap:12px;
+        border-radius:12px;
+        min-height:66px;
+    }
+    .agent-contact-icon-box {
+        width:42px;
+        height:42px;
+        font-size:1.2rem;
+        border-radius:11px;
+    }
+    .agent-contact-info h4 { font-size:.75rem; }
+    .agent-contact-info p  { font-size:.9rem; }
+}
+/* ── 活动页面优化 ── */
+@media(max-width:768px){
+    .activity-reward-frame  { border-radius:14px; }
+    .activity-notes-frame   { border-radius:14px; }
+    .activity-frame-header,
+    .activity-notes-header  { padding:14px 16px; gap:10px; }
+    .activity-frame-icon,
+    .activity-notes-icon    {
+        width:38px;
+        height:38px;
+        font-size:1.1rem;
+        border-radius:10px;
+    }
+    .activity-frame-header h3,
+    .activity-notes-header h3 { font-size:.95rem; }
+    .reward-header-row { padding:10px 14px; }
+    .reward-header-row span { font-size:.62rem; letter-spacing:2px; }
+    .reward-row { padding:12px 14px; gap:8px; }
+    .reward-days { font-size:.9rem; }
+    .reward-diamonds { font-size:.92rem; }
+    .reward-amount { font-size:1.15rem; }
+    .reward-unit { font-size:.68rem; }
+    .activity-notes-body { padding:12px 14px; }
+    .note-item { padding:12px 0; gap:10px; }
+    .note-num {
+        width:26px;
+        height:26px;
+        border-radius:6px;
+        font-size:.7rem;
+        flex-shrink:0;
+    }
+    .note-text { font-size:.82rem; line-height:1.7; }
+    .activity-validity-bar {
+        padding:10px 14px;
+        font-size:.78rem;
+        border-radius:10px;
+        gap:6px;
+    }
+}
+/* ── 奖项页面优化 ── */
+@media(max-width:768px){
+    .awards-intro {
+        padding:18px 16px;
+        border-radius:14px;
+    }
+    .awards-intro p { font-size:.88rem; line-height:1.75; }
+    .award-card { border-radius:14px; }
+    .award-card-body { padding:14px; }
+    .award-badge { font-size:.65rem; padding:3px 10px; }
+    .award-card h3 { font-size:.95rem; }
+    .award-card p  { font-size:.78rem; }
+    .stat-item {
+        padding:18px 12px;
+        border-radius:12px;
+    }
+    .stat-num { font-size:1.7rem; }
+    .stat-label { font-size:.7rem; letter-spacing:1px; }
+}
+/* ── CTA区域优化 ── */
+@media(max-width:768px){
+    .cta-section { padding:24px 16px 80px; }
+    .cta-box {
+        padding:24px 18px;
+        border-radius:16px;
+    }
+    .cta-box h2 { font-size:1.15rem; letter-spacing:1px; }
+    .cta-box p  { font-size:.85rem; margin-bottom:20px; }
+    .cta-btn {
+        padding:14px 30px;
+        font-size:.9rem;
+        letter-spacing:1px;
+        border-radius:30px;
+    }
+    .join-btn {
+        padding:16px;
+        font-size:1rem;
+        letter-spacing:1px;
+        border-radius:14px;
+    }
+}
+/* ── 浮动按钮优化 ── */
+@media(max-width:768px){
+    .mobile-fab {
+        bottom:16px;
+        padding:13px 32px;
+        font-size:.9rem;
+        letter-spacing:1px;
+        border-radius:30px;
+        box-shadow:0 4px 24px rgba(0,229,255,0.45);
+    }
+}
+/* ── 注意事项页面优化 ── */
+@media(max-width:768px){
+    #notice-page .protect-list { gap:10px; }
+    #notice-page .info-card li {
+        padding-left:0!important;
+        font-size:.82rem;
+        line-height:1.7;
+        border-bottom-color:rgba(0,229,255,0.07)!important;
+    }
+    #notice-page .highlight-box p { font-size:.84rem; }
+}
+/* ── 规则页面优化 ── */
+@media(max-width:768px){
+    #rules-tabs {
+        padding:0 14px;
+        gap:6px;
+    }
+    .rules-tab {
+        flex:1;
+        min-width:calc(50% - 3px);
+        font-size:.72rem;
+        padding:9px 8px;
+        letter-spacing:0;
+        border-radius:10px;
+        text-align:center;
+    }
+    #rules-page .detail-section { padding:0 14px 48px; }
+}
+/* ── Footer优化 ── */
+@media(max-width:768px){
+    footer {
+        padding:24px 16px 88px;
+        font-size:.75rem;
+    }
+    footer img { height:28px; opacity:.5; }
+}
+/* ── Popup优化 ── */
+@media(max-width:768px){
+    #popup-box {
+        padding:28px 18px 22px;
+        border-radius:20px;
+        max-width:calc(100vw - 28px);
+    }
+    .popup-badge { font-size:.65rem; padding:4px 12px; }
+    .popup-title { font-size:1.3rem; }
+    .popup-desc  { font-size:.82rem; margin-bottom:18px; }
+    .popup-preview { padding:14px 14px; border-radius:12px; }
+    .popup-preview-row .pr-left { font-size:.8rem; }
+    .popup-preview-row .pr-right { font-size:.75rem; }
+    .popup-go-btn {
+        padding:14px;
+        font-size:.9rem;
+        border-radius:12px;
+    }
+    .popup-skip-btn {
+        padding:12px;
+        font-size:.82rem;
+        border-radius:12px;
+    }
+    #popup-close {
+        width:38px;
+        height:38px;
+        font-size:1.2rem;
+        top:12px;
+        right:12px;
+    }
+}
+/* ── Lightbox优化 ── */
+@media(max-width:768px){
+    #lightbox-close {
+        top:12px;
+        right:12px;
+        width:40px;
+        height:40px;
+        font-size:1.3rem;
+    }
+    #lightbox-prev { left:6px; width:40px; height:40px; font-size:1.6rem; }
+    #lightbox-next { right:6px; width:40px; height:40px; font-size:1.6rem; }
+    #lightbox-caption { font-size:.75rem; padding:0 50px; }
+    #lightbox-dots { gap:6px; }
+    .lightbox-dot { width:7px; height:7px; }
+}
+/* ── 通用触摸优化 ── */
+@media(max-width:768px){
+    /* 所有可点击元素最小高度44px（Apple标准） */
+    a, button, .clickable, [onclick] {
+        -webkit-tap-highlight-color: transparent;
+    }
+    /* 卡片点击反馈更明显 */
+    .card:active,
+    .benefit-item:active,
+    .link-card:active,
+    .contact-item:active,
+    .award-card:active,
+    .agent-card:active {
+        transform: scale(0.97);
+        opacity: 0.9;
+        transition: transform .1s, opacity .1s;
+    }
+    /* 段落行距优化 */
+    p { line-height: 1.75; }
+}
+/* 弹窗宽度修复 */
+@media(min-width:769px){
+    #popup-box {
+        max-width: 480px !important;
+        width: 480px !important;
+    }
+}
+/* ══ 奖项轮播 ══ */
+.awards-carousel {
+    max-width: 760px;
+    margin: 0 auto;
+}
+/* 主展示区 */
+.carousel-main {
+    position: relative;
+    border-radius: 20px;
+    overflow: hidden;
+    border: 1px solid rgba(255,215,64,0.3);
+    box-shadow: 0 0 40px rgba(255,215,64,0.12), 0 20px 60px rgba(0,0,0,0.5);
+    background: #000;
+    margin-bottom: 16px;
+}
+.carousel-stage {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 3/4;  /* 竖版图片比例 */
+    overflow: hidden;
+}
+@media(min-width:769px){
+    .carousel-stage {
+        aspect-ratio: 4/5; /* 桌面端稍宽 */
+        max-height: 600px;
+    }
+}
+.carousel-slide {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    transform: scale(1.04);
+    transition: opacity .6s cubic-bezier(.4,0,.2,1), transform .6s cubic-bezier(.4,0,.2,1);
+    pointer-events: none;
+}
+.carousel-slide.active {
+    opacity: 1;
+    transform: scale(1);
+    pointer-events: auto;
+}
+.carousel-slide.slide-out {
+    opacity: 0;
+    transform: scale(0.96);
+}
+.carousel-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform .6s ease;
+}
+.carousel-slide.active:hover .carousel-img {
+    transform: scale(1.03);
+}
+/* 底部信息遮罩 */
+.carousel-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 40px 28px 24px;
+    background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.4) 60%, transparent 100%);
+    transform: translateY(8px);
+    opacity: 0;
+    transition: all .4s ease;
+}
+.carousel-slide.active .carousel-overlay {
+    transform: translateY(0);
+    opacity: 1;
+    transition-delay: .2s;
+}
+.carousel-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: linear-gradient(135deg,rgba(255,215,64,0.2),rgba(255,143,0,0.15));
+    border: 1px solid rgba(255,215,64,0.5);
+    color: var(--gold);
+    font-size: .72rem;
+    letter-spacing: 2px;
+    padding: 4px 14px;
+    border-radius: 20px;
+    margin-bottom: 10px;
+}
+.carousel-title {
+    font-size: 1.2rem;
+    font-weight: 800;
+    color: #fff;
+    margin-bottom: 4px;
+    text-shadow: 0 2px 8px rgba(0,0,0,0.6);
+}
+.carousel-desc {
+    font-size: .85rem;
+    color: rgba(224,247,250,0.75);
+}
+/* 左右箭头 */
+.carousel-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 48px;
+    height: 48px;
+    background: rgba(0,0,0,0.55);
+    border: 1px solid rgba(255,215,64,0.35);
+    border-radius: 50%;
+    color: var(--gold);
+    font-size: 1.8rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all .3s;
+    z-index: 10;
+    line-height: 1;
+    opacity: 0;
+    backdrop-filter: blur(8px);
+}
+.carousel-main:hover .carousel-btn { opacity: 1; }
+.carousel-prev { left: 14px; }
+.carousel-next { right: 14px; }
+.carousel-btn:hover {
+    background: rgba(255,215,64,0.2);
+    border-color: var(--gold);
+    box-shadow: 0 0 20px rgba(255,215,64,0.4);
+    transform: translateY(-50%) scale(1.1);
+}
+/* 进度条 */
+.carousel-progress {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: rgba(255,255,255,0.1);
+    z-index: 10;
+}
+.carousel-progress-bar {
+    height: 100%;
+    background: linear-gradient(90deg, var(--gold), #ff8f00);
+    width: 0%;
+    transition: width linear;
+    box-shadow: 0 0 8px var(--gold);
+}
+/* 缩略图条 */
+.carousel-thumbs {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 14px;
+    overflow-x: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    padding: 4px 2px;
+}
+.carousel-thumbs::-webkit-scrollbar { display: none; }
+.carousel-thumb {
+    position: relative;
+    flex-shrink: 0;
+    width: calc(20% - 8px);
+    min-width: 80px;
+    aspect-ratio: 3/4;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 2px solid rgba(255,215,64,0.15);
+    cursor: pointer;
+    transition: all .35s ease;
+    opacity: 0.55;
+    background: #000;
+}
+.carousel-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform .4s ease;
+}
+.carousel-thumb:hover {
+    opacity: 0.85;
+    border-color: rgba(255,215,64,0.5);
+}
+.carousel-thumb:hover img { transform: scale(1.05); }
+.carousel-thumb.active {
+    border-color: var(--gold);
+    box-shadow: 0 0 16px rgba(255,215,64,0.5), 0 0 4px rgba(255,215,64,0.8);
+    opacity: 1;
+    transform: translateY(-3px);
+}
+.thumb-badge {
+    position: absolute;
+    bottom: 5px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0,0,0,0.75);
+    color: var(--gold);
+    font-size: .62rem;
+    padding: 2px 7px;
+    border-radius: 8px;
+    white-space: nowrap;
+    letter-spacing: 1px;
+    border: 1px solid rgba(255,215,64,0.25);
+}
+/* 小圆点 */
+.carousel-dots {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 4px;
+}
+.c-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: rgba(255,215,64,0.25);
+    cursor: pointer;
+    transition: all .3s;
+    border: 1px solid rgba(255,215,64,0.2);
+}
+.c-dot.active {
+    background: var(--gold);
+    box-shadow: 0 0 8px var(--gold);
+    transform: scale(1.3);
+    width: 20px;
+    border-radius: 10px;
+}
+/* 移动端适配 */
+@media(max-width:768px){
+    .carousel-stage { aspect-ratio: 3/4; }
+    .carousel-btn { width: 38px; height: 38px; font-size: 1.4rem; opacity: 1; }
+    .carousel-overlay { padding: 30px 16px 18px; }
+    .carousel-title { font-size: 1rem; }
+    .carousel-desc { font-size: .78rem; }
+    .carousel-thumb { min-width: 64px; border-radius: 8px; }
+    .thumb-badge { font-size: .55rem; padding: 2px 5px; }
+}
+
     </style>
 </head>
 <body>
@@ -935,13 +1652,90 @@ nav { will-change: transform; }
         <div class="awards-intro"><p data-i18n="awards-intro-p">🏅 Tiger Shark ha ganado en los torneos más prestigiosos de TikTok.</p></div>
         <div class="detail-block">
             <div class="detail-block-title"><div class="icon gold">🥇</div><h2 data-i18n="awards-gallery-title">Galería de <span class="gold">Premios</span></h2></div>
-            <div class="awards-grid">
-                <div class="award-card" onclick="openLightbox(0)"><img class="award-card-img" src="award1.jpg" alt="Award 1" loading="lazy"><div class="award-card-body"><div class="award-badge">🥇 TOP 1</div><h3>TikTok LIVE FEST 2024</h3><p>TigerShark_FR · Ligue Or FR</p></div></div>
-                <div class="award-card" onclick="openLightbox(1)"><img class="award-card-img" src="award2.jpg" alt="Award 2" loading="lazy"><div class="award-card-body"><div class="award-badge">💎 TOP 4</div><h3>Community FEST 2024</h3><p>EECCA Diamond Track</p></div></div>
-                <div class="award-card" onclick="openLightbox(2)"><img class="award-card-img" src="award3.jpg" alt="Award 3" loading="lazy"><div class="award-card-body"><div class="award-badge">🥈 2°</div><h3>LIVE FEST 25</h3><p>Tiger Shark_CCA · Diamante</p></div></div>
-                <div class="award-card" onclick="openLightbox(3)"><img class="award-card-img" src="award4.jpg" alt="Award 4" loading="lazy"><div class="award-card-body"><div class="award-badge">🏆 TOP 1</div><h3>LIVE FEST 2024</h3><p>EECCA Super League</p></div></div>
-                <div class="award-card" onclick="openLightbox(4)"><img class="award-card-img" src="award5.jpg" alt="Award 5" loading="lazy"><div class="award-card-body"><div class="award-badge">🎖️ OFICIAL</div><h3>Community FEST</h3><p>Creator Network</p></div></div>
+            <!-- 奖项轮播 -->
+<div class="awards-carousel">
+    <!-- 主展示区 -->
+    <div class="carousel-main">
+        <div class="carousel-stage" id="carouselStage">
+            <div class="carousel-slide active" data-index="0">
+                <img src="award1.jpg" alt="Award 1" class="carousel-img">
+                <div class="carousel-overlay">
+                    <div class="carousel-badge">🥇 TOP 1</div>
+                    <h3 class="carousel-title">TikTok LIVE FEST 2024</h3>
+                    <p class="carousel-desc">TigerShark_FR · Ligue Or FR</p>
+                </div>
             </div>
+            <div class="carousel-slide" data-index="1">
+                <img src="award2.jpg" alt="Award 2" class="carousel-img">
+                <div class="carousel-overlay">
+                    <div class="carousel-badge">💎 TOP 4</div>
+                    <h3 class="carousel-title">Community FEST 2024</h3>
+                    <p class="carousel-desc">EECCA Diamond Track</p>
+                </div>
+            </div>
+            <div class="carousel-slide" data-index="2">
+                <img src="award3.jpg" alt="Award 3" class="carousel-img">
+                <div class="carousel-overlay">
+                    <div class="carousel-badge">🥈 2°</div>
+                    <h3 class="carousel-title">LIVE FEST 25</h3>
+                    <p class="carousel-desc">Tiger Shark_CCA · Diamante</p>
+                </div>
+            </div>
+            <div class="carousel-slide" data-index="3">
+                <img src="award4.jpg" alt="Award 4" class="carousel-img">
+                <div class="carousel-overlay">
+                    <div class="carousel-badge">🏆 TOP 1</div>
+                    <h3 class="carousel-title">LIVE FEST 2024</h3>
+                    <p class="carousel-desc">EECCA Super League</p>
+                </div>
+            </div>
+            <div class="carousel-slide" data-index="4">
+                <img src="award5.jpg" alt="Award 5" class="carousel-img">
+                <div class="carousel-overlay">
+                    <div class="carousel-badge">🎖️ OFICIAL</div>
+                    <h3 class="carousel-title">Community FEST</h3>
+                    <p class="carousel-desc">Creator Network</p>
+                </div>
+            </div>
+        </div>
+        <!-- 左右箭头 -->
+        <button class="carousel-btn carousel-prev" onclick="carouselMove(-1)">‹</button>
+        <button class="carousel-btn carousel-next" onclick="carouselMove(1)">›</button>
+        <!-- 进度条 -->
+        <div class="carousel-progress"><div class="carousel-progress-bar" id="carouselProgress"></div></div>
+    </div>
+    <!-- 缩略图条 -->
+    <div class="carousel-thumbs" id="carouselThumbs">
+        <div class="carousel-thumb active" onclick="carouselGoTo(0)">
+            <img src="award1.jpg" alt="">
+            <span class="thumb-badge">🥇 TOP 1</span>
+        </div>
+        <div class="carousel-thumb" onclick="carouselGoTo(1)">
+            <img src="award2.jpg" alt="">
+            <span class="thumb-badge">💎 TOP 4</span>
+        </div>
+        <div class="carousel-thumb" onclick="carouselGoTo(2)">
+            <img src="award3.jpg" alt="">
+            <span class="thumb-badge">🥈 2°</span>
+        </div>
+        <div class="carousel-thumb" onclick="carouselGoTo(3)">
+            <img src="award4.jpg" alt="">
+            <span class="thumb-badge">🏆 TOP 1</span>
+        </div>
+        <div class="carousel-thumb" onclick="carouselGoTo(4)">
+            <img src="award5.jpg" alt="">
+            <span class="thumb-badge">🎖️</span>
+        </div>
+    </div>
+    <!-- 小圆点 -->
+    <div class="carousel-dots" id="carouselDots">
+        <div class="c-dot active" onclick="carouselGoTo(0)"></div>
+        <div class="c-dot" onclick="carouselGoTo(1)"></div>
+        <div class="c-dot" onclick="carouselGoTo(2)"></div>
+        <div class="c-dot" onclick="carouselGoTo(3)"></div>
+        <div class="c-dot" onclick="carouselGoTo(4)"></div>
+    </div>
+</div>
         </div>
     </div>
     <div class="cta-section"><div class="cta-box gold-cta"><h2 data-i18n="cta-champion">🏆 Únete al equipo campeón</h2><p data-i18n="cta-champion-p">Agencia más premiada por TikTok.</p><a href="https://www.tiktok.com/t/ZSMFrQJtd/" target="_blank" class="cta-btn gold-btn hover-magnet" data-i18n="cta-join">🚀 Únete Ahora</a></div></div>
@@ -2395,6 +3189,7 @@ function buildLangMenus(){
     dd.innerHTML=dH; dg.innerHTML=mH;
 }
 buildLangMenus();
+applyTranslation('es');
 
 function selectLang(code){ applyTranslation(code); closeLangDropdowns(); closeDrawer(); }
 function toggleLangDropdown(){ document.getElementById('lang-selector-desktop').classList.toggle('open'); }
@@ -2600,6 +3395,82 @@ window.addEventListener('scroll',()=>{
     lastY=window.scrollY;
 },{passive:true});
 
+/* ══ 奖项轮播 ══ */
+let carouselIndex = 0;
+const carouselTotal = 5;
+const carouselDuration = 4000; // 4秒自动切换
+let carouselTimer = null;
+let carouselProgressTimer = null;
+function carouselGoTo(idx) {
+    const slides = document.querySelectorAll('.carousel-slide');
+    const thumbs = document.querySelectorAll('.carousel-thumb');
+    const dots = document.querySelectorAll('.c-dot');
+    if (!slides.length) return;
+    // 移除旧 active
+    slides[carouselIndex].classList.remove('active');
+    thumbs[carouselIndex].classList.remove('active');
+    dots[carouselIndex].classList.remove('active');
+    carouselIndex = (idx + carouselTotal) % carouselTotal;
+    // 激活新 slide
+    slides[carouselIndex].classList.add('active');
+    thumbs[carouselIndex].classList.add('active');
+    dots[carouselIndex].classList.add('active');
+    // 滚动缩略图到可视区域
+    thumbs[carouselIndex].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+    // 重启进度条
+    carouselResetProgress();
+}
+function carouselMove(dir) {
+    carouselGoTo(carouselIndex + dir);
+    carouselRestart();
+}
+function carouselResetProgress() {
+    const bar = document.getElementById('carouselProgress');
+    if (!bar) return;
+    bar.style.transition = 'none';
+    bar.style.width = '0%';
+    requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+            bar.style.transition = `width ${carouselDuration}ms linear`;
+            bar.style.width = '100%';
+        });
+    });
+}
+function carouselRestart() {
+    clearInterval(carouselTimer);
+    carouselTimer = setInterval(() => carouselGoTo(carouselIndex + 1), carouselDuration);
+    carouselResetProgress();
+}
+function initCarousel() {
+    const stage = document.getElementById('carouselStage');
+    if (!stage) return;
+    // 自动播放
+    carouselRestart();
+    // 悬停暂停
+    const mainEl = stage.closest('.carousel-main');
+    if (mainEl) {
+        mainEl.addEventListener('mouseenter', () => {
+            clearInterval(carouselTimer);
+            const bar = document.getElementById('carouselProgress');
+            if (bar) { bar.style.transition = 'none'; }
+        });
+        mainEl.addEventListener('mouseleave', () => carouselRestart());
+    }
+    // 触摸滑动
+    let tsX = 0;
+    stage.addEventListener('touchstart', e => { tsX = e.touches[0].clientX; }, { passive: true });
+    stage.addEventListener('touchend', e => {
+        const dx = e.changedTouches[0].clientX - tsX;
+        if (Math.abs(dx) > 40) { carouselMove(dx < 0 ? 1 : -1); }
+    }, { passive: true });
+}
+// 进入行业地位页面时初始化轮播
+const _origShowIndustry = showIndustryPage;
+// 重写 showIndustryPage 以加入轮播初始化
+window.showIndustryPage = function() {
+    _origShowIndustry();
+    setTimeout(initCarousel, 300);
+};
 </script>
 </body>
 </html>
