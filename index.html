@@ -6,8 +6,15 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <title>Tiger Shark - Reclutamiento Oficial</title>
+     <meta name="description" content="Tiger Shark - Agencia oficial de TikTok LIVE. Únete y disfruta de altas comisiones, formación profesional y protección total. Premiada en TikTok LIVE FEST.">
+<meta name="keywords" content="Tiger Shark, TikTok agencia, LIVE streaming, reclutamiento, comisiones">
+<meta property="og:title" content="Tiger Shark - Reclutamiento Oficial">
+<meta property="og:description" content="Agencia Top de TikTok LIVE. Altas comisiones, formación y protección total.">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#050a0f">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        html, body { touch-action: pan-y; }
         :root {
             --cyan: #00e5ff; --cyan-dark: #00b8d4; --cyan-glow: rgba(0,229,255,0.3);
             --gold: #ffd740; --gold-glow: rgba(255,215,64,0.25);
@@ -15,25 +22,35 @@
             --purple: #ce93d8; --purple-glow: rgba(206,147,216,0.25);
             --dark: #050a0f; --text: #e0f7fa;
         }
+        /* 性能优化 */
+#glCanvas { will-change: transform; }
+.mobile-drawer { will-change: right; }
+nav { will-change: transform; }
         html { scroll-behavior: smooth; }
         body { background: var(--dark); color: var(--text); font-family: 'Microsoft YaHei','PingFang SC',sans-serif; overflow-x: hidden; }
 
         /* 触摸反馈 */
         a:active, button:active, .clickable:active, .agent-card:active, .card:active, .benefit-item:active, .link-card:active, .award-card:active {
-            opacity: 0.85;
-            transform: scale(0.98);
-        }
+    opacity: 0.85;
+    transform: scale(0.98);
+}
+.hero-btn:hover, .cta-btn:hover, .join-btn:hover {
+    transform: translateY(-2px) scale(1.02);
+    filter: brightness(1.1);
+}
+.hero-btn:active, .cta-btn:active, .join-btn:active {
+    transform: translateY(0) scale(0.97);
+}
 
         #custom-cursor { position:fixed;top:0;left:0;width:6px;height:6px;background:var(--cyan);border-radius:50%;pointer-events:none;z-index:99999;transform:translate(-50%,-50%);box-shadow:0 0 10px var(--cyan),0 0 20px var(--cyan);transition:width .2s,height .2s; }
         #cursor-trail { position:fixed;top:0;left:0;width:36px;height:36px;border:1px solid rgba(0,229,255,0.4);border-radius:50%;pointer-events:none;z-index:99998;transform:translate(-50%,-50%);transition:width .3s,height .3s,background .3s; }
         body.hovering #custom-cursor { width:0;height:0; }
         body.hovering #cursor-trail { width:60px;height:60px;background:rgba(0,229,255,0.1);border-color:var(--cyan); }
         #glCanvas { position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none; }
-        #main-page,#detail-page,#protect-page,#agent-page,#industry-page,#about-page,#activity-page { position:relative;z-index:1; }
-
+        #main-page,#detail-page,#protect-page,#agent-page,#industry-page,#about-page,#activity-page,#notice-page,#rules-page { position:relative;z-index:1; }
         /* ══ 页面初始显示控制 ══ */
-        #detail-page,#protect-page,#agent-page,#industry-page,#about-page,#activity-page { display:none; }
-        #nav-detail,#nav-protect,#nav-agent,#nav-industry,#nav-about,#nav-activity { display:none; }
+        #detail-page,#protect-page,#agent-page,#industry-page,#about-page,#activity-page,#notice-page,#rules-page { display:none; }
+#nav-detail,#nav-protect,#nav-agent,#nav-industry,#nav-about,#nav-activity,#nav-notice,#nav-rules { display:none; }
 
         /* ══ Nav ══ */
         nav { position:fixed;top:0;width:100%;z-index:100;background:rgba(5,10,15,0.92);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid rgba(0,229,255,0.2);padding:0 40px;display:flex;align-items:center;justify-content:space-between;height:70px;transition:transform .4s cubic-bezier(.16,1,.3,1); }
@@ -79,6 +96,7 @@
         .drawer-nav-links a:active { background:rgba(0,229,255,0.1);color:var(--cyan); }
         .drawer-nav-links .drawer-icon { font-size:1.1rem;width:24px;text-align:center; }
         .drawer-divider { height:1px;background:linear-gradient(90deg,transparent,rgba(0,229,255,0.2),transparent);margin:8px 0 16px; }
+       
         .drawer-activity-btn { display:flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:14px;border-radius:12px;background:linear-gradient(135deg,rgba(255,215,64,0.15),rgba(255,100,0,0.1));border:1px solid rgba(255,215,64,0.4);color:var(--gold);font-size:.95rem;font-weight:700;letter-spacing:1px;cursor:pointer;transition:all .3s;margin-bottom:16px;min-height:44px; }
         .drawer-lang-section { margin-top:8px; }
         .drawer-lang-title { font-size:.72rem;letter-spacing:3px;color:rgba(0,229,255,0.5);margin-bottom:12px;padding-left:4px; }
@@ -373,16 +391,24 @@
             .mobile-drawer,.mobile-drawer-overlay { display:none!important; }
         }
         @media(max-width:768px){
+            /* 移动端隐藏注意事项文字，只保留图标 */
+.nav-notice-btn { 
+    font-size:0;padding:8px 10px;letter-spacing:0;
+    width:36px;height:36px;justify-content:center;
+}
+.nav-notice-btn::before { content:'⚠️';font-size:16px; }
+.nav-activity-btn { font-size:0;padding:8px 10px;
+    width:36px;height:36px;justify-content:center; }
+.nav-activity-btn::before { content:'🏆';font-size:16px; }
             nav { padding:0 16px;height:60px; }
             .nav-logo img { height:40px; }
             .back-btn { font-size:.85rem;padding:6px 16px; }
-            .nav-activity-btn { font-size:11px;padding:5px 10px;letter-spacing:0; }
             #hero { padding:0 20px; }
             .hero-logo { width:160px; }
             .hero-title { font-size:1.8rem;letter-spacing:3px; }
             .hero-sub { font-size:.85rem;margin-bottom:28px;letter-spacing:2px; }
             .hero-btn { padding:14px 36px;font-size:.95rem; }
-            .scroll-hint { font-size:.7rem;bottom:100px; }
+            .scroll-hint { font-size:.7rem;bottom:80px; }
             section { padding:60px 16px; }
             .section-title { font-size:1.5rem; }
             /* ✅ 修复：统一覆盖所有grid为单列 */
@@ -457,6 +483,44 @@
             .hero-title { font-size:1.5rem; }
             .stats-bar[style] { grid-template-columns:1fr!important; }
         }
+     /* ══ 注意事项按钮 ══ */
+.nav-notice-btn {
+    display:inline-flex;align-items:center;gap:6px;
+    background:linear-gradient(135deg,rgba(0,229,255,0.12),rgba(0,100,120,0.1));
+    border:1px solid rgba(0,229,255,0.45);color:var(--cyan);
+    font-size:13px;font-weight:700;padding:6px 14px;border-radius:20px;
+    cursor:pointer;letter-spacing:1px;transition:all .3s;white-space:nowrap;
+}
+.nav-notice-btn:hover {
+    background:rgba(0,229,255,0.25);border-color:var(--cyan);
+    box-shadow:0 0 16px rgba(0,229,255,0.4);transform:translateY(-1px);
+}
+.drawer-notice-btn {
+    display:flex;align-items:center;justify-content:center;gap:8px;
+    width:100%;padding:14px;border-radius:12px;
+    background:linear-gradient(135deg,rgba(0,229,255,0.1),rgba(0,100,120,0.08));
+    border:1px solid rgba(0,229,255,0.35);color:var(--cyan);
+    font-size:.95rem;font-weight:700;letter-spacing:1px;cursor:pointer;
+    transition:all .3s;margin-bottom:10px;min-height:44px;
+}
+/* ══ 规则选项卡 ══ */
+.rules-tab {
+    padding:10px 20px;border-radius:20px;border:1px solid rgba(0,229,255,0.25);
+    background:rgba(0,229,255,0.06);color:rgba(224,247,250,0.7);
+    font-size:.88rem;cursor:pointer;transition:all .3s;font-weight:600;
+    letter-spacing:1px;white-space:nowrap;
+}
+.rules-tab:hover { background:rgba(0,229,255,0.15);color:var(--cyan);border-color:var(--cyan); }
+.rules-tab.active {
+    background:linear-gradient(135deg,rgba(0,229,255,0.2),rgba(0,100,120,0.15));
+    color:var(--cyan);border-color:var(--cyan);
+    box-shadow:0 0 16px rgba(0,229,255,0.25);
+}
+@media(max-width:768px){
+    #rules-tabs { padding:0 16px; }
+    .rules-tab { font-size:.78rem;padding:8px 14px; }
+    #live-rules-entry .links-grid { grid-template-columns:1fr!important; }
+}
     </style>
 </head>
 <body>
@@ -482,7 +546,8 @@
         <li><a href="#" onclick="navTo('recruit');return false;" data-i18n="nav-recruit">Únete</a></li>
     </ul>
     <div class="nav-right">
-        <button class="nav-activity-btn" onclick="showActivityPage()" data-i18n="nav-activity">🏆 Actividad</button>
+    <button class="nav-notice-btn" onclick="showNoticePage()" data-i18n="nav-notice">⚠️ 注意事项</button>
+    <button class="nav-activity-btn" onclick="showActivityPage()" data-i18n="nav-activity">🏆 Actividad</button>
         <div class="lang-selector-wrap" id="lang-selector-desktop">
             <button class="lang-btn" onclick="toggleLangDropdown()"><span id="current-lang-flag">🇪🇸</span><span id="current-lang-name">ES</span><span class="lang-arrow">▼</span></button>
             <div class="lang-dropdown" id="lang-dropdown-desktop"></div>
@@ -496,6 +561,8 @@
 <nav id="nav-industry"><div class="nav-logo"><img src="logo.png" alt="Logo"></div><div class="nav-right"><button class="back-btn" onclick="showMainPage()" data-i18n="back">← Volver</button></div></nav>
 <nav id="nav-about"><div class="nav-logo"><img src="logo.png" alt="Logo"></div><div class="nav-right"><button class="back-btn" onclick="showMainPage()" data-i18n="back">← Volver</button></div></nav>
 <nav id="nav-activity"><div class="nav-logo"><img src="logo.png" alt="Logo"></div><div class="nav-right"><button class="back-btn" onclick="showMainPage()" data-i18n="back">← Volver</button></div></nav>
+<nav id="nav-notice"><div class="nav-logo"><img src="logo.png" alt="Logo"></div><div class="nav-right"><button class="back-btn" onclick="showMainPage()" data-i18n="back">← Volver</button></div></nav>
+<nav id="nav-rules"><div class="nav-logo"><img src="logo.png" alt="Logo"></div><div class="nav-right"><button class="back-btn" onclick="showMainPage()" data-i18n="back">← Volver</button></div></nav>
 
 <!-- Drawer -->
 <div class="mobile-drawer-overlay" id="drawer-overlay" onclick="closeDrawer()"></div>
@@ -509,6 +576,7 @@
         <li><a href="#" onclick="closeDrawer();navTo('links');return false;" data-i18n="nav-links-nav"><span class="drawer-icon">🔗</span>Enlaces</a></li>
         <li><a href="#" onclick="closeDrawer();navTo('recruit');return false;" data-i18n="nav-recruit"><span class="drawer-icon">🚀</span>Únete</a></li>
     </ul>
+    <button class="drawer-notice-btn" onclick="closeDrawer();showNoticePage();" data-i18n="nav-notice">⚠️ 注意事项</button>
     <button class="drawer-activity-btn" onclick="closeDrawer();showActivityPage();" data-i18n="nav-activity">🏆 Actividad</button>
     <div class="drawer-divider"></div>
     <div class="drawer-lang-section">
@@ -646,6 +714,29 @@
             <a href="https://www.tiktok.com/t/ZSMFrQJtd/" target="_blank" class="join-btn hover-magnet" data-i18n="join-btn">🦈 Enviar Solicitud</a>
         </div>
     </section>
+    <div class="section-line"></div>
+<section id="live-rules-entry">
+    <div class="section-header">
+        <div class="section-tag" data-i18n="tag-rules">LIVE RULES</div>
+        <h2 class="section-title" data-i18n="title-rules">TikTok <span>直播规则</span></h2>
+        <div class="section-divider"></div>
+        <p style="margin-top:16px;color:rgba(224,247,250,0.55);font-size:.92rem;" data-i18n="rules-hint">了解平台直播规范，保护您的账号安全</p>
+    </div>
+    <div class="links-grid rules-entry-grid" style="max-width:900px;margin:0 auto;">
+        <div class="link-card" onclick="showRulesPage('general')" style="cursor:pointer;">
+            <div class="link-left"><span class="link-icon">📋</span><div><h4 data-i18n="rule-1-h">直播基本规则</h4><p data-i18n="rule-1-p">违规行为与封号规定</p></div></div>
+            <span class="link-arrow">→</span>
+        </div>
+        <div class="link-card" onclick="showRulesPage('gifts')" style="cursor:pointer;">
+            <div class="link-left"><span class="link-icon">🎁</span><div><h4 data-i18n="rule-2-h">礼物相关规则</h4><p data-i18n="rule-2-p">虚假礼物禁止规定</p></div></div>
+            <span class="link-arrow">→</span>
+        </div>
+        <div class="link-card" onclick="showRulesPage('training')" style="cursor:pointer;">
+            <div class="link-left"><span class="link-icon">🎓</span><div><h4 data-i18n="rule-3-h">主播培训指南</h4><p data-i18n="rule-3-p">如何提升直播效果</p></div></div>
+            <span class="link-arrow">→</span>
+        </div>
+    </div>
+</section>
     <footer><br><img src="logo.png" alt="Tiger Shark"><br>© 2024 Tiger Shark Agency<br><br><span data-i18n="footer-txt">Profesional · Integridad · Éxito Mutuo</span></footer>
 </div>
 
@@ -657,11 +748,77 @@
         <div class="detail-block">
             <div class="detail-block-title"><div class="icon">🚀</div><h2 data-i18n="detail-unlock">Desbloquea tu <span>Máxima Comisión</span></h2></div>
             <div class="commission-compare-banner">
-                <div class="commission-side base-side"><div class="commission-label" data-i18n="commission-base-label">COMISIÓN BASE</div><div class="commission-percent">3%</div><div class="commission-desc" data-i18n="commission-base-desc">Tasa garantizada para todos</div></div>
-                <div class="commission-arrow-wrap"><div class="commission-arrow-icon">→</div><div class="commission-arrow-text" data-i18n="commission-arrow">HASTA</div></div>
-                <div class="commission-side max-side"><div class="commission-label" data-i18n="commission-max-label">COMISIÓN MÁXIMA</div><div class="commission-percent">5%</div><div class="commission-desc" data-i18n="commission-max-desc">Cumpliendo todos los requisitos</div></div>
+    <div class="commission-side base-side">
+        <div class="commission-label" data-i18n="commission-base-label">COMISIÓN BASE</div>
+        <div class="commission-percent">3%</div>
+        <div class="commission-desc" data-i18n="commission-base-desc">Tasa garantizada para todos</div>
+    </div>
+    <div class="commission-arrow-wrap">
+        <div class="commission-arrow-icon">→</div>
+        <div class="commission-arrow-text" data-i18n="commission-arrow">HASTA</div>
+    </div>
+    <div class="commission-side max-side">
+        <div class="commission-label" data-i18n="commission-max-label">COMISIÓN MÁXIMA</div>
+        <div class="commission-percent">5%</div>
+        <div class="commission-desc" data-i18n="commission-max-desc">Cumpliendo todos los requisitos</div>
+    </div>
+</div>
+
+<!-- 4个加成条件 -->
+<div class="commission-req-table">
+    <div class="commission-req-header">
+        <span data-i18n="req-col-condition">📋 条件要求</span>
+        <span data-i18n="req-col-bonus">💰 额外加成</span>
+    </div>
+    <div class="commission-req-row">
+        <div class="req-left">
+            <div class="req-icon">🕐</div>
+            <div>
+                <div class="req-label" data-i18n="req-1-label">直播时长</div>
+                <div class="req-cond" data-i18n="req-1-cond">7天内直播 ≥ 15小时</div>
             </div>
-            <div class="accumulate-box"><div class="accumulate-icon">✨</div><div class="accumulate-text"><h4 data-i18n="accumulate-h">¡Las bonificaciones son acumulables!</h4><p data-i18n="accumulate-p">De 3% base hasta 5% máximo.</p></div></div>
+        </div>
+        <div class="req-bonus req-bonus-main">+2.5%</div>
+    </div>
+    <div class="commission-req-row">
+        <div class="req-left">
+            <div class="req-icon">📅</div>
+            <div>
+                <div class="req-label" data-i18n="req-2-label">有效直播天数</div>
+                <div class="req-cond" data-i18n="req-2-cond">有效直播 ≥ 21天 + 50小时</div>
+            </div>
+        </div>
+        <div class="req-bonus req-bonus-main">+1.5%</div>
+    </div>
+    <div class="commission-req-row">
+        <div class="req-left">
+            <div class="req-icon">👥</div>
+            <div>
+                <div class="req-label" data-i18n="req-3-label">粉丝团规模</div>
+                <div class="req-cond" data-i18n="req-3-cond">本月粉丝团 ≥ 70人</div>
+            </div>
+        </div>
+        <div class="req-bonus req-bonus-sub">+0.5%</div>
+    </div>
+    <div class="commission-req-row" style="border-bottom:none;">
+        <div class="req-left">
+            <div class="req-icon">💎</div>
+            <div>
+                <div class="req-label" data-i18n="req-4-label">钻石收入</div>
+                <div class="req-cond" data-i18n="req-4-cond">本月钻石收入 ≥ 80,000</div>
+            </div>
+        </div>
+        <div class="req-bonus req-bonus-sub">+0.5%</div>
+    </div>
+</div>
+
+<div class="accumulate-box">
+    <div class="accumulate-icon">✨</div>
+    <div class="accumulate-text">
+        <h4 data-i18n="accumulate-h">¡Las bonificaciones son acumulables!</h4>
+        <p data-i18n="accumulate-p">De 3% base hasta 5% máximo cumpliendo los 4 requisitos.</p>
+    </div>
+</div>
         </div>
         <div class="section-line" style="margin-bottom:50px;"></div>
         <div class="detail-block">
@@ -779,11 +936,11 @@
         <div class="detail-block">
             <div class="detail-block-title"><div class="icon gold">🥇</div><h2 data-i18n="awards-gallery-title">Galería de <span class="gold">Premios</span></h2></div>
             <div class="awards-grid">
-                <div class="award-card" onclick="openLightbox(0)"><img class="award-card-img" src="award1.jpg" alt="Award 1"><div class="award-card-body"><div class="award-badge">🥇 TOP 1</div><h3>TikTok LIVE FEST 2024</h3><p>TigerShark_FR · Ligue Or FR</p></div></div>
-                <div class="award-card" onclick="openLightbox(1)"><img class="award-card-img" src="award2.jpg" alt="Award 2"><div class="award-card-body"><div class="award-badge">💎 TOP 4</div><h3>Community FEST 2024</h3><p>EECCA Diamond Track</p></div></div>
-                <div class="award-card" onclick="openLightbox(2)"><img class="award-card-img" src="award3.jpg" alt="Award 3"><div class="award-card-body"><div class="award-badge">🥈 2°</div><h3>LIVE FEST 25</h3><p>Tiger Shark_CCA · Diamante</p></div></div>
-                <div class="award-card" onclick="openLightbox(3)"><img class="award-card-img" src="award4.jpg" alt="Award 4"><div class="award-card-body"><div class="award-badge">🏆 TOP 1</div><h3>LIVE FEST 2024</h3><p>EECCA Super League</p></div></div>
-                <div class="award-card" onclick="openLightbox(4)"><img class="award-card-img" src="award5.jpg" alt="Award 5"><div class="award-card-body"><div class="award-badge">🎖️ OFICIAL</div><h3>Community FEST</h3><p>Creator Network</p></div></div>
+                <div class="award-card" onclick="openLightbox(0)"><img class="award-card-img" src="award1.jpg" alt="Award 1" loading="lazy"><div class="award-card-body"><div class="award-badge">🥇 TOP 1</div><h3>TikTok LIVE FEST 2024</h3><p>TigerShark_FR · Ligue Or FR</p></div></div>
+                <div class="award-card" onclick="openLightbox(1)"><img class="award-card-img" src="award2.jpg" alt="Award 2" loading="lazy"><div class="award-card-body"><div class="award-badge">💎 TOP 4</div><h3>Community FEST 2024</h3><p>EECCA Diamond Track</p></div></div>
+                <div class="award-card" onclick="openLightbox(2)"><img class="award-card-img" src="award3.jpg" alt="Award 3" loading="lazy"><div class="award-card-body"><div class="award-badge">🥈 2°</div><h3>LIVE FEST 25</h3><p>Tiger Shark_CCA · Diamante</p></div></div>
+                <div class="award-card" onclick="openLightbox(3)"><img class="award-card-img" src="award4.jpg" alt="Award 4" loading="lazy"><div class="award-card-body"><div class="award-badge">🏆 TOP 1</div><h3>LIVE FEST 2024</h3><p>EECCA Super League</p></div></div>
+                <div class="award-card" onclick="openLightbox(4)"><img class="award-card-img" src="award5.jpg" alt="Award 5" loading="lazy"><div class="award-card-body"><div class="award-badge">🎖️ OFICIAL</div><h3>Community FEST</h3><p>Creator Network</p></div></div>
             </div>
         </div>
     </div>
@@ -867,7 +1024,452 @@
     <div class="cta-section"><div class="cta-box gold-cta"><h2 data-i18n="cta-challenge">🚀 ¿Listo para el reto?</h2><p data-i18n="cta-challenge-p">Únete y gana recompensas semanales.</p><a href="https://www.tiktok.com/t/ZSMFrQJtd/" target="_blank" class="cta-btn gold-btn hover-magnet" data-i18n="cta-join">🦈 Únete Ahora</a></div></div>
     <footer><br><img src="logo.png" alt="Tiger Shark"><br>© 2024 Tiger Shark Agency<br><br><span data-i18n="footer-txt">Profesional · Integridad · Éxito Mutuo</span></footer>
 </div>
+<!-- ════ NOTICE PAGE ════ -->
+<div id="notice-page">
+    <div class="detail-hero">
+        <div class="detail-hero-icon">⚠️</div>
+        <h1 class="cyan-title" data-i18n="notice-title">注意事项</h1>
+        <p data-i18n="notice-desc">加入前请仔细阅读以下重要说明</p>
+    </div>
+    <div class="section-line"></div>
+    <div class="detail-section">
 
+        <!-- 第1条 -->
+        <div class="detail-block">
+            <div class="detail-block-title">
+                <div class="icon cyan-icon">💰</div>
+                <h2><span class="cyan" data-i18n="notice-1-title">关于利润分成</span></h2>
+            </div>
+            <div class="highlight-box" style="border-color:rgba(0,229,255,0.35);background:linear-gradient(135deg,rgba(0,229,255,0.08),rgba(0,100,120,0.05));">
+                <h3 style="color:var(--cyan);" data-i18n="notice-1-h">✅ 代理机构承诺</h3>
+                <p data-i18n="notice-1-p">代理机构<strong style="color:var(--cyan);">不会拥有和拿走创作者任何利润分成</strong>。您在 TikTok 直播中获得的所有收益完全归属于您本人，机构仅通过 TikTok 平台官方的公会分成机制获取收益，与您的个人收入完全分开，透明公正。</p>
+            </div>
+        </div>
+
+        <div class="section-line" style="margin-bottom:50px;"></div>
+
+        <!-- 第2条：加入流程 -->
+        <div class="detail-block">
+            <div class="detail-block-title">
+                <div class="icon cyan-icon">🚀</div>
+                <h2><span class="cyan" data-i18n="notice-2-title">加入流程</span></h2>
+            </div>
+            <div class="protect-list">
+                <div class="protect-item" style="border-color:rgba(0,229,255,0.15);">
+                    <div class="protect-icon-box" style="background:rgba(0,229,255,0.1);border-color:rgba(0,229,255,0.3);">🔗</div>
+                    <div class="protect-content">
+                        <h4 data-i18n="join-method-1-h" style="color:var(--cyan);">方式一：直接申请</h4>
+                        <p data-i18n="join-method-1-p">可直接点击网页上的加入链接提交申请，我们的经纪人会尽快与您联系。</p>
+                    </div>
+                </div>
+                <div class="protect-item" style="border-color:rgba(0,229,255,0.15);">
+                    <div class="protect-icon-box" style="background:rgba(0,229,255,0.1);border-color:rgba(0,229,255,0.3);">🎫</div>
+                    <div class="protect-content">
+                        <h4 style="color:var(--cyan);" data-i18n="join-method-2-h">方式二：发送邀请码</h4>
+                        <p data-i18n="join-method-2-p">将邀请码发送给联系您的经纪人，即可完成加入。</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 如何获取邀请码 -->
+            <div style="margin-top:28px;">
+                <div class="detail-block-title" style="margin-bottom:16px;">
+                    <div class="icon cyan-icon" style="width:36px;height:36px;font-size:1rem;">📱</div>
+                    <h2 style="font-size:1.1rem;"><span class="cyan" data-i18n="invite-code-title">如何获取邀请码</span></h2>
+                </div>
+                <div class="info-grid">
+                    <div class="info-card" style="border-color:rgba(0,229,255,0.2);">
+                        <h4 style="color:var(--cyan);" data-i18n="invite-steps-h">📋 操作步骤</h4>
+                        <ul style="list-style:none;padding:0;counter-reset:step;">
+                            <li style="padding:6px 0 6px 28px;position:relative;border-bottom:1px solid rgba(0,229,255,0.08);font-size:.88rem;color:rgba(224,247,250,0.8);line-height:1.7;" data-i18n="step-1">1️⃣ 打开 TikTok 应用，进入【个人主页】</li>
+                            <li style="padding:6px 0 6px 28px;position:relative;border-bottom:1px solid rgba(0,229,255,0.08);font-size:.88rem;color:rgba(224,247,250,0.8);line-height:1.7;" data-i18n="step-2">2️⃣ 点击右上角【三条横线】进入菜单页面</li>
+                            <li style="padding:6px 0 6px 28px;position:relative;border-bottom:1px solid rgba(0,229,255,0.08);font-size:.88rem;color:rgba(224,247,250,0.8);line-height:1.7;" data-i18n="step-3">3️⃣ 选择【TikTok Studio】</li>
+                            <li style="padding:6px 0 6px 28px;position:relative;border-bottom:1px solid rgba(0,229,255,0.08);font-size:.88rem;color:rgba(224,247,250,0.8);line-height:1.7;" data-i18n="step-4">4️⃣ 点击进入【直播（LIVE）】模块</li>
+                            <li style="padding:6px 0 6px 28px;position:relative;border-bottom:1px solid rgba(0,229,255,0.08);font-size:.88rem;color:rgba(224,247,250,0.8);line-height:1.7;" data-i18n="step-5">5️⃣ 向下滑动页面，找到【工具与资源】</li>
+                            <li style="padding:6px 0 6px 28px;position:relative;border-bottom:1px solid rgba(0,229,255,0.08);font-size:.88rem;color:rgba(224,247,250,0.8);line-height:1.7;" data-i18n="step-6">6️⃣ 点击进入后，选择【公会中心】</li>
+                            <li style="padding:6px 0 6px 28px;position:relative;border-bottom:1px solid rgba(0,229,255,0.08);font-size:.88rem;color:rgba(224,247,250,0.8);line-height:1.7;" data-i18n="step-7">7️⃣ 选择点击【查看加入方式】</li>
+                            <li style="padding:6px 0 6px 28px;position:relative;border-bottom:1px solid rgba(0,229,255,0.08);font-size:.88rem;color:rgba(224,247,250,0.8);line-height:1.7;" data-i18n="step-8">8️⃣ 找到蓝色小字【邀请码】</li>
+                            <li style="padding:6px 0 6px 0;position:relative;font-size:.88rem;color:rgba(224,247,250,0.8);line-height:1.7;" data-i18n="step-9">9️⃣ 复制邀请码发送给联系您的经纪人</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-line" style="margin-bottom:50px;"></div>
+
+        <!-- 第3条：退出流程 -->
+        <div class="detail-block">
+            <div class="detail-block-title">
+                <div class="icon cyan-icon">🚪</div>
+                <h2><span class="cyan" data-i18n="notice-3-title">退出代理机构流程</span></h2>
+            </div>
+            <div class="highlight-box" style="border-color:rgba(0,230,118,0.3);background:linear-gradient(135deg,rgba(0,230,118,0.06),rgba(0,229,255,0.04));margin-bottom:24px;">
+                <h3 style="color:var(--green);" data-i18n="exit-notice-h">✅ 自由退出承诺</h3>
+                <p data-i18n="exit-notice-p">代理机构<strong style="color:var(--green);">不会强制您留下</strong>，您可以随时自由离开，无需承担任何违约责任。</p>
+            </div>
+            <div class="info-grid">
+                <div class="info-card" style="border-color:rgba(0,230,118,0.2);">
+                    <h4 style="color:var(--green);" data-i18n="exit-steps-h">📋 退出操作步骤</h4>
+                    <ul style="list-style:none;padding:0;">
+                        <li style="padding:6px 0 6px 0;border-bottom:1px solid rgba(0,230,118,0.08);font-size:.88rem;color:rgba(224,247,250,0.8);line-height:1.7;" data-i18n="exit-step-1">1️⃣ 打开 TikTok 应用，进入【个人主页】</li>
+                        <li style="padding:6px 0 6px 0;border-bottom:1px solid rgba(0,230,118,0.08);font-size:.88rem;color:rgba(224,247,250,0.8);line-height:1.7;" data-i18n="exit-step-2">2️⃣ 点击右上角【三条横线】进入菜单页面</li>
+                        <li style="padding:6px 0 6px 0;border-bottom:1px solid rgba(0,230,118,0.08);font-size:.88rem;color:rgba(224,247,250,0.8);line-height:1.7;" data-i18n="exit-step-3">3️⃣ 选择【TikTok Studio】</li>
+                        <li style="padding:6px 0 6px 0;border-bottom:1px solid rgba(0,230,118,0.08);font-size:.88rem;color:rgba(224,247,250,0.8);line-height:1.7;" data-i18n="exit-step-4">4️⃣ 点击进入【直播（LIVE）】模块</li>
+                        <li style="padding:6px 0 6px 0;border-bottom:1px solid rgba(0,230,118,0.08);font-size:.88rem;color:rgba(224,247,250,0.8);line-height:1.7;" data-i18n="exit-step-5">5️⃣ 向下滑动页面，找到【工具与资源】</li>
+                        <li style="padding:6px 0 6px 0;border-bottom:1px solid rgba(0,230,118,0.08);font-size:.88rem;color:rgba(224,247,250,0.8);line-height:1.7;" data-i18n="exit-step-6">6️⃣ 点击进入后，选择【公会中心】</li>
+                        <li style="padding:6px 0 6px 0;border-bottom:1px solid rgba(0,230,118,0.08);font-size:.88rem;color:rgba(224,247,250,0.8);line-height:1.7;" data-i18n="exit-step-7">7️⃣ 在公会中心页面，点击【退出公会】按钮</li>
+                        <li style="padding:6px 0 6px 0;font-size:.88rem;color:rgba(224,247,250,0.8);line-height:1.7;" data-i18n="exit-step-8">8️⃣ 根据页面提示完成操作即可</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="cta-section">
+        <div class="cta-box">
+            <h2 data-i18n="cta-notice">🦈  了解清楚，放心加入</h2>
+            <p data-i18n="cta-notice-p">Tiger Shark 以透明和诚信为本，保障每位创作者的权益。</p>
+            <a href="https://www.tiktok.com/t/ZSMFrQJtd/" target="_blank" class="cta-btn hover-magnet" data-i18n="cta-join">🚀 Únete Ahora</a>
+        </div>
+    </div>
+    <footer><br><img src="logo.png" alt="Tiger Shark"><br>© 2024 Tiger Shark Agency<br><br><span data-i18n="footer-txt">Profesional · Integridad · Éxito Mutuo</span></footer>
+</div>
+
+<!-- ════ RULES PAGE ════ -->
+<div id="rules-page">
+    <div class="detail-hero">
+        <div class="detail-hero-icon">📋</div>
+        <h1 class="cyan-title" id="rules-page-title" data-i18n="title-rules">TikTok <span>直播规则</span></h1>
+<p id="rules-page-desc" data-i18n="rules-hint">了解平台规范，保护您的账号安全</p>
+    </div>
+    <div class="section-line"></div>
+
+    <!-- 规则选项卡 -->
+    <div style="position:relative;z-index:1;max-width:960px;margin:0 auto;padding:30px 40px 0;">
+        <div style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:32px;" id="rules-tabs">
+    <button class="rules-tab active" onclick="switchRulesTab('general')" id="tab-general" data-i18n="rule-1-h">📋 直播基本规则</button>
+    <button class="rules-tab" onclick="switchRulesTab('gifts')" id="tab-gifts" data-i18n="rule-2-h">🎁 礼物相关规则</button>
+    <button class="rules-tab" onclick="switchRulesTab('training')" id="tab-training" data-i18n="rule-3-h">🎓 主播培训指南</button>
+</div>
+    </div>
+
+   <!-- 直播基本规则 -->
+<div id="rules-general" class="rules-content detail-section" style="padding-top:0;">
+    <div class="detail-block">
+        <div class="detail-block-title">
+            <div class="icon" style="background:linear-gradient(135deg,rgba(255,100,0,0.15),rgba(255,50,50,0.1));border-color:rgba(255,100,0,0.4);">🚫</div>
+            <h2 data-i18n="rg-ban-title">绝对禁止 <span style="color:#ff6b6b;">（立即封号）</span></h2>
+        </div>
+        <div class="protect-list">
+            <div class="protect-item" style="border-color:rgba(255,100,0,0.2);">
+                <div class="protect-icon-box" style="background:rgba(255,100,0,0.1);border-color:rgba(255,100,0,0.35);">👤</div>
+                <div class="protect-content">
+                    <h4 style="color:#ff9f43;" data-i18n="rg-age-h">年龄限制</h4>
+                    <p data-i18n="rg-age-p">主播必须年满18岁。禁止借用或使用他人账号进行直播。</p>
+                </div>
+            </div>
+            <div class="protect-item" style="border-color:rgba(255,100,0,0.2);">
+                <div class="protect-icon-box" style="background:rgba(255,100,0,0.1);border-color:rgba(255,100,0,0.35);">⚔️</div>
+                <div class="protect-content">
+                    <h4 style="color:#ff9f43;" data-i18n="rg-violence-h">暴力与危险行为</h4>
+                    <p data-i18n="rg-violence-p">禁止威胁、打架、攻击行为。禁止展示武器或危险物品。禁止危险挑战或危险行为。</p>
+                </div>
+            </div>
+            <div class="protect-item" style="border-color:rgba(255,100,0,0.2);">
+                <div class="protect-icon-box" style="background:rgba(255,100,0,0.1);border-color:rgba(255,100,0,0.35);">💬</div>
+                <div class="protect-content">
+                    <h4 style="color:#ff9f43;" data-i18n="rg-hate-h">仇恨与歧视</h4>
+                    <p data-i18n="rg-hate-p">禁止侮辱或攻击受保护群体。禁止宣扬暴力、排斥或仇恨意识形态。</p>
+                </div>
+            </div>
+            <div class="protect-item" style="border-color:rgba(255,100,0,0.2);">
+                <div class="protect-icon-box" style="background:rgba(255,100,0,0.1);border-color:rgba(255,100,0,0.35);">🔞</div>
+                <div class="protect-content">
+                    <h4 style="color:#ff9f43;" data-i18n="rg-adult-h">色情内容</h4>
+                    <p data-i18n="rg-adult-p">禁止任何形式的裸露内容。禁止性暗示动作、舞蹈或语言。禁止任何涉及未成年人的色情内容（零容忍）。</p>
+                </div>
+            </div>
+            <div class="protect-item" style="border-color:rgba(255,100,0,0.2);">
+                <div class="protect-icon-box" style="background:rgba(255,100,0,0.1);border-color:rgba(255,100,0,0.35);">👶</div>
+                <div class="protect-content">
+                    <h4 style="color:#ff9f43;" data-i18n="rg-minor-h">涉及未成年人（零容忍）</h4>
+                    <p data-i18n="rg-minor-p">禁止利用、性化未成年人，或使用未成年人获取礼物或流量。</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="section-line" style="margin-bottom:50px;"></div>
+    <div class="detail-block">
+        <div class="detail-block-title">
+            <div class="icon" style="background:linear-gradient(135deg,rgba(255,215,64,0.15),rgba(255,143,0,0.1));border-color:rgba(255,215,64,0.4);">⚠️</div>
+            <h2 data-i18n="rg-risk-title">高风险行为 <span style="color:var(--gold);">（可能导致限流或反复封号）</span></h2>
+        </div>
+        <div class="info-grid info-grid-2">
+            <div class="info-card" style="border-color:rgba(255,215,64,0.2);">
+                <h4 style="color:var(--gold);" data-i18n="rg-fraud-h">🎰 欺诈与虚假承诺</h4>
+                <ul>
+                    <li data-i18n="rg-fraud-1">虚假奖品</li>
+                    <li data-i18n="rg-fraud-2">保证收益</li>
+                    <li data-i18n="rg-fraud-3">误导性的医疗、法律或财务信息</li>
+                </ul>
+            </div>
+            <div class="info-card" style="border-color:rgba(255,215,64,0.2);">
+                <h4 style="color:var(--gold);" data-i18n="rg-offplat-h">💸 平台外支付与引流</h4>
+                <ul>
+                    <li data-i18n="rg-offplat-1">要求在 TikTok 外支付</li>
+                    <li data-i18n="rg-offplat-2">强迫跳转至 WhatsApp、Telegram 等</li>
+                    <li data-i18n="rg-offplat-3">推广赌博或非法投资</li>
+                </ul>
+            </div>
+            <div class="info-card" style="border-color:rgba(255,215,64,0.2);">
+                <h4 style="color:var(--gold);" data-i18n="rg-bot-h">🤖 作弊与虚假活动</h4>
+                <ul>
+                    <li data-i18n="rg-bot-1">机器人、虚假观看或购买礼物</li>
+                    <li data-i18n="rg-bot-2">使用外部软件</li>
+                </ul>
+            </div>
+            <div class="info-card" style="border-color:rgba(255,215,64,0.2);">
+                <h4 style="color:var(--gold);" data-i18n="rg-other-h">📺 其他重要规则</h4>
+                <ul>
+                    <li data-i18n="rg-other-1">黑屏或无互动直播可能被处罚</li>
+                    <li data-i18n="rg-other-2">禁止将录制视频当作直播播放</li>
+                    <li data-i18n="rg-other-3">注意版权音乐或视频</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="section-line" style="margin-bottom:50px;"></div>
+    <div class="detail-block">
+        <div class="detail-block-title">
+            <div class="icon green">✅</div>
+            <h2 data-i18n="rg-checklist-title">开播前 <span class="green">检查清单</span></h2>
+        </div>
+        <div class="highlight-box" style="border-color:rgba(0,230,118,0.3);background:linear-gradient(135deg,rgba(0,230,118,0.06),rgba(0,229,255,0.04));">
+            <p data-i18n="rg-checklist-p" style="line-height:2.2;">
+                ☑️ 我已年满18岁<br>
+                ☑️ 没有暴力、色情或仇恨内容<br>
+                ☑️ 不承诺金钱或虚假奖品<br>
+                ☑️ 不要求平台外支付<br>
+                ☑️ 内容和语言适当<br>
+                ☑️ 主播对聊天内容、嘉宾及直播背景负责
+            </p>
+        </div>
+    </div>
+</div>
+
+    <!-- 礼物相关规则 -->
+<div id="rules-gifts" class="rules-content detail-section" style="padding-top:0;display:none;">
+    <div class="detail-block">
+        <div class="detail-block-title">
+            <div class="icon cyan-icon">❓</div>
+            <h2 data-i18n="gift-what-title">什么是 <span class="cyan">「虚假礼物」</span>？</h2>
+        </div>
+        <div class="highlight-box" style="border-color:rgba(0,229,255,0.3);">
+            <h3 style="color:var(--cyan);" data-i18n="gift-req-title">TikTok 要求所有礼物必须满足：</h3>
+            <p data-i18n="gift-req-p" style="line-height:2.2;">
+                ✅ 真实的<br>
+                ✅ 自愿的<br>
+                ✅ 通过平台内支付<br>
+                ❌ 不得退款或返现
+            </p>
+        </div>
+    </div>
+    <div class="section-line" style="margin-bottom:50px;"></div>
+    <div class="detail-block">
+        <div class="detail-block-title">
+            <div class="icon" style="background:linear-gradient(135deg,rgba(255,100,0,0.15),rgba(255,50,50,0.1));border-color:rgba(255,100,0,0.4);">🚫</div>
+            <h2 data-i18n="gift-ban-title">绝对禁止 <span style="color:#ff6b6b;">（直接封号）</span></h2>
+        </div>
+        <div class="protect-list">
+            <div class="protect-item" style="border-color:rgba(255,100,0,0.2);">
+                <div class="protect-icon-box" style="background:rgba(255,100,0,0.1);border-color:rgba(255,100,0,0.35);">💸</div>
+                <div class="protect-content">
+                    <h4 style="color:#ff9f43;" data-i18n="gift-refund-h">退款礼物</h4>
+                    <p data-i18n="gift-refund-p">例如："你发我1000，我退你500"。这属于金融欺诈，后果：收益冻结、直播封禁、永久停号。</p>
+                </div>
+            </div>
+            <div class="protect-item" style="border-color:rgba(255,100,0,0.2);">
+                <div class="protect-icon-box" style="background:rgba(255,100,0,0.1);border-color:rgba(255,100,0,0.35);">🔄</div>
+                <div class="protect-content">
+                    <h4 style="color:#ff9f43;" data-i18n="gift-swap-h">主播间互刷礼物</h4>
+                    <p data-i18n="gift-swap-p">A给B发礼物，B再给A发礼物，人为刷高收入。属于数据操纵，后果：收益清零、取消奖金。</p>
+                </div>
+            </div>
+            <div class="protect-item" style="border-color:rgba(255,100,0,0.2);">
+                <div class="protect-icon-box" style="background:rgba(255,100,0,0.1);border-color:rgba(255,100,0,0.35);">🤖</div>
+                <div class="protect-content">
+                    <h4 style="color:#ff9f43;" data-i18n="gift-bot-h">使用机器人或外部购买礼物</h4>
+                    <p data-i18n="gift-bot-p">包括外部充值服务、非法或低价代币、自动软件。TikTok 可检测 IP、设备、异常行为，后果：立即封号。</p>
+                </div>
+            </div>
+            <div class="protect-item" style="border-color:rgba(255,100,0,0.2);">
+                <div class="protect-icon-box" style="background:rgba(255,100,0,0.1);border-color:rgba(255,100,0,0.35);">💳</div>
+                <div class="protect-content">
+                    <h4 style="color:#ff9f43;" data-i18n="gift-offpay-h">平台外充值</h4>
+                    <p data-i18n="gift-offpay-p">"通过 PayPal 付给我"等。这违反官方支付系统，后果：直接封号、收益冻结。</p>
+                </div>
+            </div>
+            <div class="protect-item" style="border-color:rgba(255,100,0,0.2);">
+                <div class="protect-icon-box" style="background:rgba(255,100,0,0.1);border-color:rgba(255,100,0,0.35);">🎰</div>
+                <div class="protect-content">
+                    <h4 style="color:#ff9f43;" data-i18n="gift-fake-h">虚假抽奖活动</h4>
+                    <p data-i18n="gift-fake-p">"发500礼物赢 iPhone"、虚假奖品。属于诈骗行为。</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="section-line" style="margin-bottom:50px;"></div>
+    <div class="detail-block">
+        <div class="detail-block-title">
+            <div class="icon green">✅</div>
+            <h2 data-i18n="gift-allow-title">允许的行为</h2>
+        </div>
+        <div class="highlight-box" style="border-color:rgba(0,230,118,0.3);background:linear-gradient(135deg,rgba(0,230,118,0.06),rgba(0,229,255,0.04));">
+            <p data-i18n="gift-allow-p" style="line-height:2.2;">
+                ✅ 以自然方式请求支持<br>
+                ✅ 开展真实互动活动<br>
+                ✅ 干净公平地参与 PK<br>
+                ✅ 鼓励观众而不承诺金钱
+            </p>
+        </div>
+        <div class="accumulate-box" style="margin-top:20px;">
+            <div class="accumulate-icon">⚠️</div>
+            <div class="accumulate-text">
+                <h4 style="color:#ff9f43;" data-i18n="gift-remember-h">请记住</h4>
+                <p data-i18n="gift-remember-p">如果需要退款，就是违法的。如果需要秘密进行，就是违法的。机构不会保护任何进行退款、参与礼物互刷或使用非法充值的主播。</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <!-- 主播培训指南 -->
+<div id="rules-training" class="rules-content detail-section" style="padding-top:0;display:none;">
+    <div class="detail-block">
+        <div class="detail-block-title">
+            <div class="icon cyan-icon">❤️</div>
+            <h2 data-i18n="train-loyal-title">如何让大额打赏者<span class="cyan">持续支持</span></h2>
+        </div>
+        <div class="protect-list">
+            <div class="protect-item" style="border-color:rgba(0,229,255,0.15);">
+                <div class="protect-icon-box" style="background:rgba(0,229,255,0.1);border-color:rgba(0,229,255,0.3);">🤝</div>
+                <div class="protect-content">
+                    <h4 style="color:var(--cyan);" data-i18n="train-relation-h">先建立关系</h4>
+                    <p data-i18n="train-relation-p">不要一直说"发礼物"。正确做法是先交流互动，建立信任。例：今天怎么样？你来自哪个国家？</p>
+                </div>
+            </div>
+            <div class="protect-item" style="border-color:rgba(0,229,255,0.15);">
+                <div class="protect-icon-box" style="background:rgba(0,229,255,0.1);border-color:rgba(0,229,255,0.3);">👋</div>
+                <div class="protect-content">
+                    <h4 style="color:var(--cyan);" data-i18n="train-remember-h">记住常客粉丝</h4>
+                    <p data-i18n="train-remember-p">经常打赏的粉丝进入直播间时，记得叫出他们的名字打招呼。</p>
+                </div>
+            </div>
+            <div class="protect-item" style="border-color:rgba(0,229,255,0.15);">
+                <div class="protect-icon-box" style="background:rgba(0,229,255,0.1);border-color:rgba(0,229,255,0.3);">🙏</div>
+                <div class="protect-content">
+                    <h4 style="color:var(--cyan);" data-i18n="train-thanks-h">及时感谢礼物</h4>
+                    <p data-i18n="train-thanks-p">每次有人发礼物，都要热情地感谢。例："非常感谢你的礼物，我真的很感激。"</p>
+                </div>
+            </div>
+            <div class="protect-item" style="border-color:rgba(0,229,255,0.15);">
+                <div class="protect-icon-box" style="background:rgba(0,229,255,0.1);border-color:rgba(0,229,255,0.3);">⭐</div>
+                <div class="protect-content">
+                    <h4 style="color:var(--cyan);" data-i18n="train-fan-h">培养忠实粉丝</h4>
+                    <p data-i18n="train-fan-p">让粉丝感觉自己是直播间的重要成员。例："你一直支持我，真的非常感谢。"</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="section-line" style="margin-bottom:50px;"></div>
+    <div class="detail-block">
+        <div class="detail-block-title">
+            <div class="icon cyan-icon">💬</div>
+            <h2 data-i18n="train-phrases-title">自然请求礼物的<span class="cyan">参考话术</span></h2>
+        </div>
+        <div class="info-grid info-grid-2">
+            <div class="info-card">
+                <h4 style="color:var(--cyan);" data-i18n="train-common-h">🎯 常用语句</h4>
+                <ul>
+                    <li data-i18n="train-c1">如果你喜欢这个直播，送个小礼物支持一下</li>
+                    <li data-i18n="train-c2">一个小心心或礼物来支持直播</li>
+                    <li data-i18n="train-c3">谢谢家人们的支持</li>
+                    <li data-i18n="train-c4">我们在PK战中，需要支持</li>
+                    <li data-i18n="train-c5">谁送第一个礼物？</li>
+                    <li data-i18n="train-c6">那个礼物太棒了</li>
+                </ul>
+            </div>
+            <div class="info-card">
+                <h4 style="color:var(--cyan);" data-i18n="train-goal-h">🚀 目标激励语句</h4>
+                <ul>
+                    <li data-i18n="train-g1">达到100朵玫瑰我跳个舞</li>
+                    <li data-i18n="train-g2">达成目标我做个挑战</li>
+                    <li data-i18n="train-g3">我们快到目标了，家人们</li>
+                    <li data-i18n="train-g4">最后一点支持了</li>
+                    <li data-i18n="train-g5">谁送狮子？今天全力以赴</li>
+                    <li data-i18n="train-g6">我们是最棒的团队</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="section-line" style="margin-bottom:50px;"></div>
+    <div class="detail-block">
+        <div class="detail-block-title">
+            <div class="icon cyan-icon">⚔️</div>
+            <h2 data-i18n="train-pk-title">PK 战中如何<span class="cyan">获得支持</span></h2>
+        </div>
+        <div class="protect-list">
+            <div class="protect-item" style="border-color:rgba(0,229,255,0.15);">
+                <div class="protect-icon-box" style="background:rgba(0,229,255,0.1);border-color:rgba(0,229,255,0.3);">📢</div>
+                <div class="protect-content">
+                    <h4 style="color:var(--cyan);" data-i18n="train-pk-before-h">PK 前预告</h4>
+                    <p data-i18n="train-pk-before-p">提前告知粉丝："今天我要进行几场PK战。"</p>
+                </div>
+            </div>
+            <div class="protect-item" style="border-color:rgba(0,229,255,0.15);">
+                <div class="protect-icon-box" style="background:rgba(0,229,255,0.1);border-color:rgba(0,229,255,0.3);">⚡</div>
+                <div class="protect-content">
+                    <h4 style="color:var(--cyan);" data-i18n="train-pk-during-h">PK 中提醒</h4>
+                    <p data-i18n="train-pk-during-p">PK进行中提醒："家人们，我们正在PK战中。"</p>
+                </div>
+            </div>
+            <div class="protect-item" style="border-color:rgba(0,229,255,0.15);">
+                <div class="protect-icon-box" style="background:rgba(0,229,255,0.1);border-color:rgba(0,229,255,0.3);">💪</div>
+                <div class="protect-content">
+                    <h4 style="color:var(--cyan);" data-i18n="train-pk-lose-h">落后时激励</h4>
+                    <p data-i18n="train-pk-lose-p">分数落后时："加油团队，我们还能赢！"</p>
+                </div>
+            </div>
+            <div class="protect-item" style="border-color:rgba(0,229,255,0.15);">
+                <div class="protect-icon-box" style="background:rgba(0,229,255,0.1);border-color:rgba(0,229,255,0.3);">🙏</div>
+                <div class="protect-content">
+                    <h4 style="color:var(--cyan);" data-i18n="train-pk-after-h">PK 后感谢</h4>
+                    <p data-i18n="train-pk-after-p">PK结束后，始终表示感谢："感谢大家的支持。"</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="section-line" style="margin-bottom:50px;"></div>
+    <div class="detail-block">
+        <div class="detail-block-title">
+            <div class="icon gold">⭐</div>
+            <h2 data-i18n="train-core-title">最重要的<span class="gold">原则</span></h2>
+        </div>
+        <div class="highlight-box">
+            <h3 style="color:var(--gold);" data-i18n="train-core-h">💡 核心法则</h3>
+            <p data-i18n="train-core-p" style="font-size:1rem;line-height:2;">礼物不是因为你要求而来。礼物来自于<strong style="color:var(--gold);">人们感受到与你的连接</strong>。<br>先建立关系，支持自然就会到来。</p>
+        </div>
+    </div>
+</div>
+
+    <div class="cta-section">
+        <div class="cta-box">
+            <h2 data-i18n="cta-join-family">🦈 Forma parte de Tiger Shark</h2>
+            <p data-i18n="cta-join-family-p">Únete a la familia.</p>
+            <a href="https://www.tiktok.com/t/ZSMFrQJtd/" target="_blank" class="cta-btn hover-magnet" data-i18n="cta-join">🚀 Únete Ahora</a>
+        </div>
+    </div>
+    <footer><br><img src="logo.png" alt="Tiger Shark"><br>© 2024 Tiger Shark Agency<br><br><span data-i18n="footer-txt">Profesional · Integridad · Éxito Mutuo</span></footer>
+</div>
 <!-- Popup -->
 <div id="popup-overlay">
     <div id="popup-box">
@@ -895,12 +1497,124 @@
 .info-grid-3 { grid-template-columns:repeat(3,1fr); }
 .info-grid-2 { grid-template-columns:repeat(2,1fr); }
 .stats-bar-4 { grid-template-columns:repeat(4,1fr);max-width:100%; }
+.rules-entry-grid { grid-template-columns:repeat(3,1fr); }
 @media(max-width:768px){
+     /* 规则页选项卡手机端换行优化 */
+#rules-tabs { 
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+    padding:0 16px;
+}
+.rules-tab { 
+    flex:1;
+    min-width:calc(50% - 4px);
+    text-align:center;
+    font-size:.75rem;
+    padding:8px 10px;
+    letter-spacing:0;
+}
+/* 注意事项页面步骤列表手机优化 */
+#notice-page .info-card li { 
+    padding-left:0!important;
+}
+/* 直播规则入口3列变1列 */
+.rules-entry-grid { grid-template-columns:1fr!important; }
     .info-grid-3,.info-grid-2 { grid-template-columns:1fr!important; }
     .stats-bar-4 { grid-template-columns:repeat(2,1fr)!important; }
 }
 @media(max-width:380px){
     .stats-bar-4 { grid-template-columns:1fr!important; }
+}
+/* ══ 佣金要求表格 ══ */
+.commission-req-table {
+    background:rgba(5,15,25,0.7);
+    border:1px solid rgba(255,215,64,0.2);
+    border-radius:16px;
+    overflow:hidden;
+    margin-bottom:16px;
+}
+.commission-req-header {
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:12px 24px;
+    background:rgba(0,0,0,0.25);
+    border-bottom:1px solid rgba(255,215,64,0.15);
+    font-size:.68rem;
+    letter-spacing:3px;
+    color:rgba(224,247,250,0.35);
+    text-transform:uppercase;
+}
+.commission-req-row {
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:18px 24px;
+    border-bottom:1px solid rgba(255,255,255,0.04);
+    transition:background .25s;
+    gap:16px;
+}
+.commission-req-row:hover { background:rgba(255,215,64,0.04); }
+.req-left {
+    display:flex;
+    align-items:center;
+    gap:16px;
+    flex:1;
+}
+.req-icon {
+    width:40px;
+    height:40px;
+    border-radius:10px;
+    background:rgba(255,215,64,0.1);
+    border:1px solid rgba(255,215,64,0.25);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:1.2rem;
+    flex-shrink:0;
+}
+.req-label {
+    font-size:.7rem;
+    letter-spacing:2px;
+    color:rgba(224,247,250,0.4);
+    margin-bottom:4px;
+    text-transform:uppercase;
+}
+.req-cond {
+    font-size:.92rem;
+    font-weight:600;
+    color:#fff;
+}
+.req-bonus {
+    font-size:1.6rem;
+    font-weight:900;
+    flex-shrink:0;
+    min-width:72px;
+    text-align:right;
+}
+.req-bonus-main {
+    background:linear-gradient(135deg,var(--gold),#ff8f00);
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+    background-clip:text;
+    text-shadow:none;
+}
+.req-bonus-sub {
+    background:linear-gradient(135deg,var(--cyan),#00b8d4);
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+    background-clip:text;
+    text-shadow:none;
+    font-size:1.3rem;
+}
+@media(max-width:768px){
+    .commission-req-header { padding:10px 16px;font-size:.6rem; }
+    .commission-req-row { padding:14px 16px;gap:12px; }
+    .req-icon { width:34px;height:34px;font-size:1rem; }
+    .req-cond { font-size:.82rem; }
+    .req-bonus { font-size:1.3rem;min-width:58px; }
+    .req-bonus-sub { font-size:1.1rem; }
 }
 </style>
 
@@ -908,12 +1622,740 @@
 /* ══ 多语言系统 ══ */
 const LANGS=[{code:'es',flag:'🇪🇸',name:'Español'},{code:'en',flag:'🇺🇸',name:'English'},{code:'zh',flag:'🇨🇳',name:'中文'},{code:'fr',flag:'🇫🇷',name:'Français'},{code:'pt',flag:'🇧🇷',name:'Português'},{code:'ru',flag:'🇷🇺',name:'Русский'}];
 const T={
-es:{'nav-about':'Sobre Nosotros','nav-benefits':'Beneficios','nav-agents':'Agente','nav-contact':'Contacto','nav-links-nav':'Enlaces','nav-recruit':'Únete','nav-activity':'🏆 Actividad','lang-title':'IDIOMA','back':'← Volver','hero-sub':'Agencia Top · Profesional · Creamos el Futuro','hero-btn':'Únete Ahora','scroll-hint':'▼ Desplaza hacia abajo','tag-about':'ABOUT US','title-about':'Sobre <span>Nosotros</span>','card-about-1-h':'Sobre Tiger Shark','card-about-1-p':'Tiger Shark es una agencia de gestión de primer nivel fundada en 2022...','card-about-2-h':'Nuestra Misión','card-about-2-p':'Con operaciones profesionales como núcleo...','card-industry-h':'Posición en la Industria','card-industry-p':'Múltiples premios oficiales de TikTok LIVE FEST...','click-awards':'Ver premios →','tag-benefits':'BENEFITS','title-benefits':'<span>Beneficios</span>','ben-1-h':'Altas Comisiones','ben-1-p':'Las mejores tasas de comisión de la industria','ben-2-h':'Apoyo de Tráfico','ben-2-p':'Recursos oficiales dedicados, promoción exclusiva','ben-3-h':'Formación Profesional','ben-3-p':'Cursos sistemáticos sobre técnicas y streaming','ben-4-h':'Protección Total','ben-4-p':'Protección contractual, equipo legal exclusivo','click-more':'👆 Clic para ver detalles','tag-agents':'YOUR AGENT','title-agents':'Tu <span>Agente Exclusivo</span>','agent-role':'CHIEF AGENT','agent-desc':'Con 9 años de experiencia en la industria del streaming en vivo.','tag-contact':'CONTACT','title-contact':'<span>Contacto</span>','contact-2-h':'HORARIO LABORAL','contact-2-p':'Lunes a Sábado 09:00 - 17:00','tag-links':'OFFICIAL LINKS','title-links':'Enlaces <span>Oficiales</span>','link-wa-h':'Grupo Oficial de WhatsApp','link-wa-p':'Obtén las últimas noticias','tag-recruit':'JOIN US','title-recruit':'<span>Reclutamiento</span>','recruit-hint':'Haz clic para unirte a la familia Tiger Shark','join-btn':'🦈 Enviar Solicitud Ahora','footer-txt':'Profesional · Integridad · Éxito Mutuo','popup-badge':'🎉 ACTIVIDAD SEMANAL','popup-title':'Actividad de <span>Agencia</span>','popup-desc':'¡Nueva actividad disponible esta semana!','popup-go':'🏆 Ver Actividad Completa','popup-skip':'Cerrar','popup-summary':'RESUMEN DE RECOMPENSAS','detail-title':'Altas Comisiones · Detalles','detail-desc':'Tiger Shark ofrece las mejores tasas de comisión de la industria','detail-unlock':'Desbloquea tu <span>Máxima Comisión</span>','commission-base-label':'COMISIÓN BASE','commission-base-desc':'Tasa garantizada para todos los creadores','commission-arrow':'HASTA','commission-max-label':'COMISIÓN MÁXIMA','commission-max-desc':'Cumpliendo todos los requisitos mensuales','accumulate-h':'¡Las bonificaciones son acumulables!','accumulate-p':'De 3% base hasta 5% máximo cumpliendo los 4 requisitos.','bonus-title':'<span>Bonificaciones</span> Adicionales','bonus-box-h':'💎 Bonificaciones Adicionales','bonus-box-p':'Tiger Shark establece mensualmente un fondo de bonificación por rendimiento adicional.','settlement-title':'Detalles de <span>Liquidación</span>','settlement-1-h':'⏰ Ciclo de Liquidación','settlement-1-p':'Liquidación el 1° de cada mes. Transferencia bancaria / PayPal.','settlement-2-h':'📋 Fuentes de Ingreso','settlement-2-p':'Ingresos por regalos de streaming en vivo de TikTok.','settlement-3-h':'🔒 Garantía de Transparencia','settlement-3-p':'Datos verificables en tiempo real. Auditoría de terceros.','faq-title':'Preguntas <span>Frecuentes</span>','faq-1-h':'🤔 ¿Puedo firmar con cero seguidores?','faq-1-p':'¡Por supuesto! Tiger Shark da la bienvenida a todos.','faq-2-h':'📈 ¿Frecuencia de ajuste de comisión?','faq-2-p':'Evaluación mensual. Solo sube, nunca baja.','faq-3-h':'🌍 ¿Creadores internacionales?','faq-3-p':'Abierto a todo el mundo, múltiples monedas.','faq-4-h':'📝 ¿Restricciones del contrato?','faq-4-p':'Términos flexibles y transparentes.','protect-title':'Protección Total · Detalles','protect-desc':'Tiger Shark protege integralmente tus derechos','protect-main-title':'Protecciones <span class="green">Principales</span>','protect-1-h':'Contrato Transparente','protect-1-p':'Todos los términos son claros y públicos.','protect-2-h':'Equipo Legal Exclusivo','protect-2-p':'Equipo legal profesional para creadores.','protect-3-h':'Garantía de Liquidación','protect-3-p':'Liquidación puntual, transparente y rastreable.','protect-4-h':'Protección de Datos','protect-4-p':'Información protegida por confidencialidad.','protect-commit-title':'Tiger Shark <span class="green">Compromiso</span>','commit-1-h':'🕐 Soporte 24/7','commit-1-p':'Agente en línea 24 horas. Respuesta en menos de 2 horas.','commit-2-h':'📊 Seguridad de Cuenta','commit-2-p':'Asistencia en apelaciones y bloqueos.','commit-3-h':'🌍 Protección Transfronteriza','commit-3-p':'Soporte legal para creadores internacionales.','agent-title':'Tu Agente Exclusivo','agent-page-desc':'Servicio exclusivo uno a uno','agent-card-title':'Tarjeta del <span class="purple">Agente</span>','agent-contact-title':'<span class="purple">Contacto</span>','agent-email-label':'CORREO EMPRESARIAL','industry-title':'Premios · Posición en la Industria','industry-desc':'Tiger Shark galardonada por TikTok','industry-stats-title':'Logros <span class="gold">en Cifras</span>','stat-awards':'PREMIOS OFICIALES','stat-founded':'AÑO DE FUNDACIÓN','stat-experience':'AÑOS EXPERIENCIA','awards-intro-p':'🏅 Tiger Shark ha ganado en los torneos más prestigiosos de TikTok.','awards-gallery-title':'Galería de <span class="gold">Premios</span>','about-title':'Sobre Tiger Shark','about-desc':'Agencia de primer nivel · Fundada en 2022','about-video-title':'Video <span class="cyan">Oficial</span>','about-who-title':'¿Quiénes <span class="cyan">Somos?</span>','about-agency-h':'🏢 Sobre la Agencia','about-agency-p':'Tiger Shark es una agencia fundada en 2022, especializada en creadores de contenido.','about-mission-h':'🎯 Nuestra Misión','about-mission-p':'Diseñamos estrategias personalizadas para cada creador.','about-global-h':'🌍 Alcance Global','about-global-p':'Presencia activa en múltiples regiones del mundo.','about-values-h':'💡 Nuestros Valores','about-values-p':'Profesionalidad, integridad y éxito mutuo.','about-stats-title':'Tiger Shark <span class="cyan">en Cifras</span>','activity-title':'Actividad de Agencia','activity-desc':'Completa objetivos semanales y desbloquea recompensas','validity':'VIGENCIA:','validity-week':'Semana del','objectives-title':'OBJETIVOS Y RECOMPENSAS','objectives-desc':'Cumple días + diamantes → recibe bono','rh-days':'Días · Requisito','rh-diamonds':'💎 Diamantes','rh-reward':'🎁 Recompensa','days-word':'días','level-basic':'básico','level-advanced':'avanzado','level-elite':'élite','diamond-unit':'💎','terms-title':'TÉRMINOS Y CONDICIONES','terms-desc':'Lee atentamente antes de participar','note-1':'<strong>Período:</strong> Solo aplica durante el período de vigencia.','note-2':'<strong>Diamantes:</strong> Todos los diamantes obtenidos contarán.','note-3':'<strong>Días válidos:</strong> Mínimo 1 hora continua de transmisión.','note-4':'<strong>Preguntas:</strong> Contacte a su agente.','cta-join':'🚀 Únete Ahora','cta-ready':'🦈 ¿Estás listo?','cta-ready-p':'Únete a Tiger Shark.','cta-confidence':'🛡️ Únete con confianza','cta-confidence-p':'Tiger Shark se basa en profesionalidad.','cta-find-me':'🦈 Encuéntrame','cta-find-me-p':'Tu agente te acompaña.','cta-champion':'🏆 Únete al equipo campeón','cta-champion-p':'Agencia más premiada por TikTok.','cta-join-family':'🦈 Forma parte de Tiger Shark','cta-join-family-p':'Únete a la familia.','cta-challenge':'🚀 ¿Listo para el reto?','cta-challenge-p':'Únete y gana recompensas semanales.'},
-en:{'nav-about':'About Us','nav-benefits':'Benefits','nav-agents':'Agent','nav-contact':'Contact','nav-links-nav':'Links','nav-recruit':'Join','nav-activity':'🏆 Activity','lang-title':'LANGUAGE','back':'← Back','hero-sub':'Top Agency · Professional · Building the Future','hero-btn':'Join Now','scroll-hint':'▼ Scroll down','tag-about':'ABOUT US','title-about':'About <span>Us</span>','card-about-1-h':'About Tiger Shark','card-about-1-p':'Tiger Shark is a top-tier management agency founded in 2022...','card-about-2-h':'Our Mission','card-about-2-p':'With professional operations as our core...','card-industry-h':'Industry Position','card-industry-p':'Multiple official TikTok LIVE FEST awards...','click-awards':'View awards →','tag-benefits':'BENEFITS','title-benefits':'<span>Benefits</span>','ben-1-h':'High Commissions','ben-1-p':'Industry-leading commission rates','ben-2-h':'Traffic Support','ben-2-p':'Dedicated official resources','ben-3-h':'Professional Training','ben-3-p':'Systematic courses on streaming','ben-4-h':'Full Protection','ben-4-p':'Contract protection, exclusive legal team','click-more':'👆 Click for details','tag-agents':'YOUR AGENT','title-agents':'Your <span>Exclusive Agent</span>','agent-role':'CHIEF AGENT','agent-desc':'9 years of experience in the live streaming industry.','tag-contact':'CONTACT','title-contact':'<span>Contact</span>','contact-2-h':'WORKING HOURS','contact-2-p':'Monday to Saturday 09:00 - 17:00','tag-links':'OFFICIAL LINKS','title-links':'Official <span>Links</span>','link-wa-h':'Official WhatsApp Group','link-wa-p':'Get the latest news','tag-recruit':'JOIN US','title-recruit':'<span>Recruitment</span>','recruit-hint':'Click to join the Tiger Shark family','join-btn':'🦈 Apply Now','footer-txt':'Professional · Integrity · Mutual Success','popup-badge':'🎉 WEEKLY ACTIVITY','popup-title':'Agency <span>Activity</span>','popup-desc':'New activity available this week!','popup-go':'🏆 View Full Activity','popup-skip':'Close','popup-summary':'REWARDS SUMMARY','detail-title':'High Commissions · Details','detail-desc':'Tiger Shark offers the best commission rates','detail-unlock':'Unlock Your <span>Maximum Commission</span>','commission-base-label':'BASE COMMISSION','commission-base-desc':'Guaranteed starting rate for all creators','commission-arrow':'UP TO','commission-max-label':'MAXIMUM COMMISSION','commission-max-desc':'Meeting all monthly requirements','accumulate-h':'Bonuses are stackable!','accumulate-p':'From 3% base up to 5% maximum.','bonus-title':'Additional <span>Bonuses</span>','bonus-box-h':'💎 Additional Bonuses','bonus-box-p':'Tiger Shark establishes monthly bonus funds for additional performance.','settlement-title':'<span>Settlement</span> Details','settlement-1-h':'⏰ Settlement Cycle','settlement-1-p':'Settlement on the 1st of each month. Bank transfer / PayPal.','settlement-2-h':'📋 Income Sources','settlement-2-p':'TikTok Live gift income.','settlement-3-h':'🔒 Transparency Guarantee','settlement-3-p':'Real-time verifiable data. Third-party audit.','faq-title':'Frequently <span>Asked Questions</span>','faq-1-h':'🤔 Can I sign with zero followers?','faq-1-p':'Of course! Tiger Shark welcomes all creators.','faq-2-h':'📈 How often is commission adjusted?','faq-2-p':'Monthly evaluation. Only goes up, never down.','faq-3-h':'🌍 International creators?','faq-3-p':'Open worldwide, multiple currencies.','faq-4-h':'📝 Contract restrictions?','faq-4-p':'Flexible and transparent terms.','protect-title':'Full Protection · Details','protect-desc':'Tiger Shark fully protects your rights','protect-main-title':'Main <span class="green">Protections</span>','protect-1-h':'Transparent Contract','protect-1-p':'All terms are clear and public.','protect-2-h':'Exclusive Legal Team','protect-2-p':'Professional legal team for creators.','protect-3-h':'Settlement Guarantee','protect-3-p':'Timely, transparent and traceable settlement.','protect-4-h':'Data Protection','protect-4-p':'Information protected by confidentiality agreement.','protect-commit-title':'Tiger Shark <span class="green">Commitment</span>','commit-1-h':'🕐 24/7 Support','commit-1-p':'Agent online 24 hours. Response in under 2 hours.','commit-2-h':'📊 Account Security','commit-2-p':'Assistance with appeals and blocks.','commit-3-h':'🌍 Cross-border Protection','commit-3-p':'Legal support for international creators.','agent-title':'Your Exclusive Agent','agent-page-desc':'Exclusive one-on-one service','agent-card-title':'Agent <span class="purple">Card</span>','agent-contact-title':'<span class="purple">Contact</span>','agent-email-label':'BUSINESS EMAIL','industry-title':'Awards · Industry Position','industry-desc':'Tiger Shark awarded by TikTok','industry-stats-title':'Achievements <span class="gold">in Numbers</span>','stat-awards':'OFFICIAL AWARDS','stat-founded':'YEAR FOUNDED','stat-experience':'YEARS EXPERIENCE','awards-intro-p':'🏅 Tiger Shark has won at the most prestigious TikTok tournaments.','awards-gallery-title':'Awards <span class="gold">Gallery</span>','about-title':'About Tiger Shark','about-desc':'Top-tier agency · Founded in 2022','about-video-title':'Official <span class="cyan">Video</span>','about-who-title':'Who <span class="cyan">Are We?</span>','about-agency-h':'🏢 About the Agency','about-agency-p':'Tiger Shark is an agency founded in 2022, specializing in content creators.','about-mission-h':'🎯 Our Mission','about-mission-p':'We design personalized strategies for each creator.','about-global-h':'🌍 Global Reach','about-global-p':'Active presence in multiple regions worldwide.','about-values-h':'💡 Our Values','about-values-p':'Professionalism, integrity and mutual success.','about-stats-title':'Tiger Shark <span class="cyan">in Numbers</span>','activity-title':'Agency Activity','activity-desc':'Complete weekly goals and unlock rewards','validity':'VALID:','validity-week':'Week of','objectives-title':'OBJECTIVES & REWARDS','objectives-desc':'Complete days + diamonds → get bonus','rh-days':'Days · Requirement','rh-diamonds':'💎 Diamonds','rh-reward':'🎁 Reward','days-word':'days','level-basic':'basic','level-advanced':'advanced','level-elite':'elite','diamond-unit':'💎','terms-title':'TERMS & CONDITIONS','terms-desc':'Read carefully before participating','note-1':'<strong>Period:</strong> Only applies during the valid period.','note-2':'<strong>Diamonds:</strong> All diamonds earned will count.','note-3':'<strong>Valid days:</strong> Minimum 1 continuous hour of streaming.','note-4':'<strong>Questions:</strong> Contact your agent.','cta-join':'🚀 Join Now','cta-ready':'🦈 Are you ready?','cta-ready-p':'Join Tiger Shark.','cta-confidence':'🛡️ Join with confidence','cta-confidence-p':'Tiger Shark is built on professionalism.','cta-find-me':'🦈 Find me anytime','cta-find-me-p':'Your agent accompanies you.','cta-champion':'🏆 Join the champion team','cta-champion-p':'Most awarded agency by TikTok.','cta-join-family':'🦈 Be part of Tiger Shark','cta-join-family-p':'Join the family.','cta-challenge':'🚀 Ready for the challenge?','cta-challenge-p':'Join and earn weekly rewards.'},
-zh:{'nav-about':'关于我们','nav-benefits':'福利待遇','nav-agents':'专属经纪人','nav-contact':'联系方式','nav-links-nav':'官方链接','nav-recruit':'立即加入','nav-activity':'🏆 活动','lang-title':'语言','back':'← 返回','hero-sub':'顶级机构 · 专业运营 · 共创未来','hero-btn':'立即加入','scroll-hint':'▼ 向下滚动','tag-about':'关于我们','title-about':'关于<span>我们</span>','card-about-1-h':'关于 Tiger Shark','card-about-1-p':'Tiger Shark 是一家成立于2022年的顶级管理机构...','card-about-2-h':'我们的使命','card-about-2-p':'以专业运营为核心...','card-industry-h':'行业地位','card-industry-p':'多次荣获 TikTok LIVE FEST 官方奖项...','click-awards':'查看奖项 →','tag-benefits':'福利待遇','title-benefits':'<span>福利待遇</span>','ben-1-h':'高额佣金','ben-1-p':'行业最高佣金比例，收益透明公正','ben-2-h':'流量扶持','ben-2-p':'专属官方资源，精准流量推广','ben-3-h':'专业培训','ben-3-p':'系统化运营技巧及直播技能课程','ben-4-h':'全方位保障','ben-4-p':'合同权益保护，专属法律团队','click-more':'👆 点击查看详情','tag-agents':'专属经纪人','title-agents':'你的<span>专属经纪人</span>','agent-role':'首席经纪人','agent-desc':'拥有9年直播行业经验，成功孵化多位百万粉丝主播。','tag-contact':'联系方式','title-contact':'<span>联系方式</span>','contact-2-h':'工作时间','contact-2-p':'周一至周六 09:00 - 17:00','tag-links':'官方链接','title-links':'<span>官方</span>链接','link-wa-h':'官方 WhatsApp 群组','link-wa-p':'获取最新资讯','tag-recruit':'加入我们','title-recruit':'<span>招募计划</span>','recruit-hint':'点击下方按钮，加入 Tiger Shark 大家庭','join-btn':'🦈 立即提交申请','footer-txt':'专业 · 诚信 · 共同成功','popup-badge':'🎉 每周活动','popup-title':'<span>机构</span>专属活动','popup-desc':'本周新活动上线！','popup-go':'🏆 查看完整活动','popup-skip':'关闭','popup-summary':'奖励摘要','detail-title':'高额佣金 · 详情','detail-desc':'Tiger Shark 提供行业最高佣金比例','detail-unlock':'解锁你的<span>最高佣金</span>','commission-base-label':'基础佣金','commission-base-desc':'所有创作者的保底比例','commission-arrow':'最高可达','commission-max-label':'最高佣金','commission-max-desc':'完成所有月度要求','accumulate-h':'奖金可累积叠加！','accumulate-p':'从3%基础到5%最高，完成4项要求即可。','bonus-title':'额外<span>奖金</span>','bonus-box-h':'💎 额外奖金','bonus-box-p':'Tiger Shark 每月设立额外绩效奖金池。','settlement-title':'<span>结算</span>详情','settlement-1-h':'⏰ 结算周期','settlement-1-p':'每月1日结算。支持银行转账 / PayPal。','settlement-2-h':'📋 收入来源','settlement-2-p':'TikTok 直播礼物收入。','settlement-3-h':'🔒 透明保障','settlement-3-p':'实时可查数据，第三方审计。','faq-title':'常见<span>问题</span>','faq-1-h':'🤔 零粉丝可以签约吗？','faq-1-p':'当然可以！欢迎所有创作者。','faq-2-h':'📈 佣金多久调整一次？','faq-2-p':'每月自动评估，只升不降。','faq-3-h':'🌍 国际创作者能加入吗？','faq-3-p':'面向全球，支持多币种结算。','faq-4-h':'📝 合同有什么限制？','faq-4-p':'条款灵活透明，无隐藏条款。','protect-title':'全方位保障 · 详情','protect-desc':'Tiger Shark 全面保护你的权益','protect-main-title':'主要<span class="green">保障</span>','protect-1-h':'透明合同保障','protect-1-p':'所有合同条款公开透明。','protect-2-h':'专属法律团队','protect-2-p':'为创作者提供专业法律服务。','protect-3-h':'收入结算保障','protect-3-p':'准时结算，透明可追溯。','protect-4-h':'数据隐私保护','protect-4-p':'信息受保密协议保护。','protect-commit-title':'Tiger Shark <span class="green">承诺</span>','commit-1-h':'🕐 7×24小时支持','commit-1-p':'经纪人24小时在线，2小时内响应。','commit-2-h':'📊 账号安全','commit-2-p':'协助申诉和解封。','commit-3-h':'🌍 跨境保护','commit-3-p':'为国际创作者提供法律支持。','agent-title':'你的专属经纪人','agent-page-desc':'一对一专属服务','agent-card-title':'<span class="purple">经纪人</span>名片','agent-contact-title':'<span class="purple">联系方式</span>','agent-email-label':'企业邮箱','industry-title':'奖项 · 行业地位','industry-desc':'荣获 TikTok 官方认证','industry-stats-title':'<span class="gold">数据</span>成就','stat-awards':'官方奖项','stat-founded':'成立年份','stat-experience':'经验年数','awards-intro-p':'🏅 Tiger Shark 在 TikTok 最权威的赛事中屡获殊荣。','awards-gallery-title':'<span class="gold">奖项</span>展示','about-title':'关于 Tiger Shark','about-desc':'顶级管理机构 · 成立于2022年','about-video-title':'官方<span class="cyan">视频</span>','about-who-title':'我们是<span class="cyan">谁？</span>','about-agency-h':'🏢 关于机构','about-agency-p':'Tiger Shark 是一家成立于2022年的机构，专注于内容创作者。','about-mission-h':'🎯 我们的使命','about-mission-p':'为每位创作者定制个性化发展策略。','about-global-h':'🌍 全球覆盖','about-global-p':'在全球多个地区活跃运营。','about-values-h':'💡 我们的价值观','about-values-p':'专业、诚信、共同成功。','about-stats-title':'Tiger Shark <span class="cyan">数据</span>','activity-title':'机构活动','activity-desc':'完成每周目标解锁奖励','validity':'有效期：','validity-week':'活动周期','objectives-title':'目标与奖励','objectives-desc':'完成天数+钻石 → 获得奖金','rh-days':'天数·要求','rh-diamonds':'💎 钻石','rh-reward':'🎁 奖励','days-word':'天','level-basic':'基础','level-advanced':'进阶','level-elite':'精英','diamond-unit':'💎','terms-title':'条款与条件','terms-desc':'参与前请仔细阅读','note-1':'<strong>活动期限：</strong>仅在有效期内适用。','note-2':'<strong>钻石计算：</strong>活动期间获得的所有钻石均计入。','note-3':'<strong>有效天数：</strong>每天至少连续直播1小时。','note-4':'<strong>疑问：</strong>请联系您的经纪人。','cta-join':'🚀 立即加入','cta-ready':'🦈 准备好了吗？','cta-ready-p':'加入 Tiger Shark。','cta-confidence':'🛡️ 放心加入','cta-confidence-p':'Tiger Shark 以专业为本。','cta-find-me':'🦈 随时联系我','cta-find-me-p':'你的专属经纪人陪伴你。','cta-champion':'🏆 加入冠军团队','cta-champion-p':'TikTok 最多获奖的机构。','cta-join-family':'🦈 加入 Tiger Shark','cta-join-family-p':'加入大家庭。','cta-challenge':'🚀 准备好迎接挑战了吗？','cta-challenge-p':'加入并赢取每周奖励。'},
-fr:{'nav-about':'À Propos','nav-benefits':'Avantages','nav-agents':'Agent','nav-contact':'Contact','nav-links-nav':'Liens','nav-recruit':'Rejoindre','nav-activity':'🏆 Activité','lang-title':'LANGUE','back':'← Retour','hero-sub':'Agence Top · Professionnelle · Créons l\'Avenir','hero-btn':'Rejoindre','scroll-hint':'▼ Faites défiler','tag-about':'À PROPOS','title-about':'À <span>Propos</span>','card-about-1-h':'À Propos de Tiger Shark','card-about-1-p':'Agence de gestion fondée en 2022...','card-about-2-h':'Notre Mission','card-about-2-p':'Opérations professionnelles comme cœur...','card-industry-h':'Position Industrielle','card-industry-p':'Multiples prix TikTok LIVE FEST...','click-awards':'Voir les prix →','tag-benefits':'AVANTAGES','title-benefits':'<span>Avantages</span>','ben-1-h':'Hautes Commissions','ben-1-p':'Les meilleurs taux du secteur','ben-2-h':'Support Trafic','ben-2-p':'Ressources officielles dédiées','ben-3-h':'Formation Pro','ben-3-p':'Cours sur les techniques de streaming','ben-4-h':'Protection Totale','ben-4-p':'Protection contractuelle, équipe juridique','click-more':'👆 Cliquez pour voir','tag-agents':'VOTRE AGENT','title-agents':'Votre <span>Agent Exclusif</span>','agent-role':'AGENT PRINCIPAL','agent-desc':'9 ans d\'expérience dans le streaming.','tag-contact':'CONTACT','title-contact':'<span>Contact</span>','contact-2-h':'HORAIRES','contact-2-p':'Lundi à Samedi 09:00 - 17:00','tag-links':'LIENS OFFICIELS','title-links':'Liens <span>Officiels</span>','link-wa-h':'Groupe WhatsApp Officiel','link-wa-p':'Dernières nouvelles','tag-recruit':'REJOIGNEZ-NOUS','title-recruit':'<span>Recrutement</span>','recruit-hint':'Cliquez ci-dessous pour rejoindre','join-btn':'🦈 Postuler','footer-txt':'Professionnel · Intégrité · Succès Mutuel','popup-badge':'🎉 ACTIVITÉ HEBDO','popup-title':'Activité <span>d\'Agence</span>','popup-desc':'Nouvelle activité cette semaine !','popup-go':'🏆 Voir l\'Activité','popup-skip':'Fermer','popup-summary':'RÉSUMÉ DES RÉCOMPENSES','detail-title':'Hautes Commissions · Détails','detail-desc':'Tiger Shark offre les meilleurs taux','detail-unlock':'Débloquez votre <span>Commission Maximale</span>','commission-base-label':'COMMISSION DE BASE','commission-base-desc':'Taux garanti pour tous','commission-arrow':'JUSQU\'À','commission-max-label':'COMMISSION MAX','commission-max-desc':'En remplissant toutes les conditions','accumulate-h':'Les bonus sont cumulables !','accumulate-p':'De 3% à 5% maximum.','bonus-title':'<span>Bonus</span> Supplémentaires','bonus-box-h':'💎 Bonus Supplémentaires','bonus-box-p':'Tiger Shark établit mensuellement un fonds de bonus.','settlement-title':'Détails de <span>Règlement</span>','settlement-1-h':'⏰ Cycle de Règlement','settlement-1-p':'Règlement le 1er de chaque mois.','settlement-2-h':'📋 Sources de Revenus','settlement-2-p':'Revenus de cadeaux TikTok Live.','settlement-3-h':'🔒 Garantie de Transparence','settlement-3-p':'Données vérifiables en temps réel.','faq-title':'Questions <span>Fréquentes</span>','faq-1-h':'🤔 Zéro abonnés ?','faq-1-p':'Bien sûr ! Tous les créateurs sont les bienvenus.','faq-2-h':'📈 Fréquence d\'ajustement ?','faq-2-p':'Évaluation mensuelle. Ne baisse jamais.','faq-3-h':'🌍 Créateurs internationaux ?','faq-3-p':'Ouvert au monde entier.','faq-4-h':'📝 Restrictions du contrat ?','faq-4-p':'Termes flexibles et transparents.','protect-title':'Protection Totale · Détails','protect-desc':'Tiger Shark protège vos droits','protect-main-title':'Protections <span class="green">Principales</span>','protect-1-h':'Contrat Transparent','protect-1-p':'Tous les termes sont clairs.','protect-2-h':'Équipe Juridique','protect-2-p':'Équipe juridique professionnelle.','protect-3-h':'Garantie de Règlement','protect-3-p':'Règlement ponctuel et traçable.','protect-4-h':'Protection des Données','protect-4-p':'Informations protégées par la confidentialité.','protect-commit-title':'Tiger Shark <span class="green">Engagement</span>','commit-1-h':'🕐 Support 24/7','commit-1-p':'Agent en ligne 24h. Réponse en 2h.','commit-2-h':'📊 Sécurité du Compte','commit-2-p':'Aide aux appels et blocages.','commit-3-h':'🌍 Protection Transfrontalière','commit-3-p':'Support juridique international.','agent-title':'Votre Agent Exclusif','agent-page-desc':'Service exclusif personnalisé','agent-card-title':'Carte de l\'<span class="purple">Agent</span>','agent-contact-title':'<span class="purple">Contact</span>','agent-email-label':'EMAIL PROFESSIONNEL','industry-title':'Prix · Position Industrielle','industry-desc':'Récompensé par TikTok','industry-stats-title':'Réalisations <span class="gold">en Chiffres</span>','stat-awards':'PRIX OFFICIELS','stat-founded':'ANNÉE DE FONDATION','stat-experience':'ANS D\'EXPÉRIENCE','awards-intro-p':'🏅 Tiger Shark a gagné aux plus prestigieux tournois TikTok.','awards-gallery-title':'Galerie de <span class="gold">Prix</span>','about-title':'À Propos de Tiger Shark','about-desc':'Agence premium · Fondée en 2022','about-video-title':'Vidéo <span class="cyan">Officielle</span>','about-who-title':'Qui <span class="cyan">Sommes-nous ?</span>','about-agency-h':'🏢 L\'Agence','about-agency-p':'Tiger Shark est une agence fondée en 2022.','about-mission-h':'🎯 Notre Mission','about-mission-p':'Stratégies personnalisées pour chaque créateur.','about-global-h':'🌍 Portée Mondiale','about-global-p':'Présence active dans plusieurs régions.','about-values-h':'💡 Nos Valeurs','about-values-p':'Professionnalisme, intégrité et succès mutuel.','about-stats-title':'Tiger Shark <span class="cyan">en Chiffres</span>','activity-title':'Activité d\'Agence','activity-desc':'Complétez les objectifs et débloquez des récompenses','validity':'VALIDITÉ :','validity-week':'Semaine du','objectives-title':'OBJECTIFS ET RÉCOMPENSES','objectives-desc':'Jours + diamants → bonus','rh-days':'Jours · Requis','rh-diamonds':'💎 Diamants','rh-reward':'🎁 Récompense','days-word':'jours','level-basic':'base','level-advanced':'avancé','level-elite':'élite','diamond-unit':'💎','terms-title':'CONDITIONS GÉNÉRALES','terms-desc':'Lisez attentivement avant de participer','note-1':'<strong>Période :</strong> Valable uniquement pendant la période.','note-2':'<strong>Diamants :</strong> Tous les diamants comptent.','note-3':'<strong>Jours valides :</strong> Minimum 1 heure continue.','note-4':'<strong>Questions :</strong> Contactez votre agent.','cta-join':'🚀 Rejoindre','cta-ready':'🦈 Êtes-vous prêt ?','cta-ready-p':'Rejoignez Tiger Shark.','cta-confidence':'🛡️ Rejoignez en confiance','cta-confidence-p':'Tiger Shark est basé sur le professionnalisme.','cta-find-me':'🦈 Trouvez-moi','cta-find-me-p':'Votre agent vous accompagne.','cta-champion':'🏆 Rejoignez les champions','cta-champion-p':'L\'agence la plus primée par TikTok.','cta-join-family':'🦈 Faites partie de Tiger Shark','cta-join-family-p':'Rejoignez la famille.','cta-challenge':'🚀 Prêt pour le défi ?','cta-challenge-p':'Rejoignez et gagnez des récompenses.'},
-pt:{'nav-about':'Sobre Nós','nav-benefits':'Benefícios','nav-agents':'Agente','nav-contact':'Contato','nav-links-nav':'Links','nav-recruit':'Junte-se','nav-activity':'🏆 Atividade','lang-title':'IDIOMA','back':'← Voltar','hero-sub':'Agência Top · Profissional · Criamos o Futuro','hero-btn':'Junte-se','scroll-hint':'▼ Role para baixo','tag-about':'SOBRE NÓS','title-about':'Sobre <span>Nós</span>','card-about-1-h':'Sobre Tiger Shark','card-about-1-p':'Agência fundada em 2022...','card-about-2-h':'Nossa Missão','card-about-2-p':'Operações profissionais como núcleo...','card-industry-h':'Posição na Indústria','card-industry-p':'Vários prêmios TikTok LIVE FEST...','click-awards':'Ver prêmios →','tag-benefits':'BENEFÍCIOS','title-benefits':'<span>Benefícios</span>','ben-1-h':'Altas Comissões','ben-1-p':'Melhores taxas da indústria','ben-2-h':'Apoio de Tráfego','ben-2-p':'Recursos oficiais dedicados','ben-3-h':'Treinamento Pro','ben-3-p':'Cursos de técnicas de streaming','ben-4-h':'Proteção Total','ben-4-p':'Proteção contratual, equipe jurídica','click-more':'👆 Clique para ver','tag-agents':'SEU AGENTE','title-agents':'Seu <span>Agente Exclusivo</span>','agent-role':'AGENTE CHEFE','agent-desc':'9 anos de experiência em streaming ao vivo.','tag-contact':'CONTATO','title-contact':'<span>Contato</span>','contact-2-h':'HORÁRIO','contact-2-p':'Segunda a Sábado 09:00 - 17:00','tag-links':'LINKS OFICIAIS','title-links':'Links <span>Oficiais</span>','link-wa-h':'Grupo WhatsApp Oficial','link-wa-p':'Últimas notícias','tag-recruit':'JUNTE-SE','title-recruit':'<span>Recrutamento</span>','recruit-hint':'Clique abaixo para se juntar','join-btn':'🦈 Candidatar-se','footer-txt':'Profissional · Integridade · Sucesso Mútuo','popup-badge':'🎉 ATIVIDADE SEMANAL','popup-title':'Atividade da <span>Agência</span>','popup-desc':'Nova atividade esta semana!','popup-go':'🏆 Ver Atividade','popup-skip':'Fechar','popup-summary':'RESUMO DAS RECOMPENSAS','detail-title':'Altas Comissões · Detalhes','detail-desc':'Tiger Shark oferece as melhores taxas','detail-unlock':'Desbloqueie sua <span>Comissão Máxima</span>','commission-base-label':'COMISSÃO BASE','commission-base-desc':'Taxa garantida para todos','commission-arrow':'ATÉ','commission-max-label':'COMISSÃO MÁXIMA','commission-max-desc':'Cumprindo todos os requisitos','accumulate-h':'Bônus são acumuláveis!','accumulate-p':'De 3% base até 5% máximo.','bonus-title':'<span>Bônus</span> Adicionais','bonus-box-h':'💎 Bônus Adicionais','bonus-box-p':'Tiger Shark estabelece fundos mensais de bônus.','settlement-title':'Detalhes de <span>Liquidação</span>','settlement-1-h':'⏰ Ciclo de Liquidação','settlement-1-p':'Liquidação no 1° de cada mês.','settlement-2-h':'📋 Fontes de Renda','settlement-2-p':'Renda de presentes TikTok Live.','settlement-3-h':'🔒 Garantia de Transparência','settlement-3-p':'Dados verificáveis em tempo real.','faq-title':'Perguntas <span>Frequentes</span>','faq-1-h':'🤔 Zero seguidores?','faq-1-p':'Claro! Todos são bem-vindos.','faq-2-h':'📈 Frequência de ajuste?','faq-2-p':'Avaliação mensal. Só sobe.','faq-3-h':'🌍 Criadores internacionais?','faq-3-p':'Aberto ao mundo todo.','faq-4-h':'📝 Restrições do contrato?','faq-4-p':'Termos flexíveis e transparentes.','protect-title':'Proteção Total · Detalhes','protect-desc':'Tiger Shark protege seus direitos','protect-main-title':'Proteções <span class="green">Principais</span>','protect-1-h':'Contrato Transparente','protect-1-p':'Todos os termos são claros.','protect-2-h':'Equipe Jurídica','protect-2-p':'Equipe jurídica profissional.','protect-3-h':'Garantia de Liquidação','protect-3-p':'Liquidação pontual e rastreável.','protect-4-h':'Proteção de Dados','protect-4-p':'Informações protegidas por confidencialidade.','protect-commit-title':'Tiger Shark <span class="green">Compromisso</span>','commit-1-h':'🕐 Suporte 24/7','commit-1-p':'Agente online 24h. Resposta em 2h.','commit-2-h':'📊 Segurança da Conta','commit-2-p':'Ajuda com apelações e bloqueios.','commit-3-h':'🌍 Proteção Transfronteiriça','commit-3-p':'Suporte jurídico internacional.','agent-title':'Seu Agente Exclusivo','agent-page-desc':'Serviço exclusivo individual','agent-card-title':'Cartão do <span class="purple">Agente</span>','agent-contact-title':'<span class="purple">Contato</span>','agent-email-label':'EMAIL EMPRESARIAL','industry-title':'Prêmios · Posição na Indústria','industry-desc':'Premiada pelo TikTok','industry-stats-title':'Conquistas <span class="gold">em Números</span>','stat-awards':'PRÊMIOS OFICIAIS','stat-founded':'ANO DE FUNDAÇÃO','stat-experience':'ANOS DE EXPERIÊNCIA','awards-intro-p':'🏅 Tiger Shark venceu nos torneios mais prestigiados do TikTok.','awards-gallery-title':'Galeria de <span class="gold">Prêmios</span>','about-title':'Sobre Tiger Shark','about-desc':'Agência premium · Fundada em 2022','about-video-title':'Vídeo <span class="cyan">Oficial</span>','about-who-title':'Quem <span class="cyan">Somos?</span>','about-agency-h':'🏢 Sobre a Agência','about-agency-p':'Tiger Shark é uma agência fundada em 2022.','about-mission-h':'🎯 Nossa Missão','about-mission-p':'Estratégias personalizadas para cada criador.','about-global-h':'🌍 Alcance Global','about-global-p':'Presença ativa em várias regiões.','about-values-h':'💡 Nossos Valores','about-values-p':'Profissionalismo, integridade e sucesso mútuo.','about-stats-title':'Tiger Shark <span class="cyan">em Números</span>','activity-title':'Atividade da Agência','activity-desc':'Complete objetivos e desbloqueie recompensas','validity':'VIGÊNCIA:','validity-week':'Semana de','objectives-title':'OBJETIVOS E RECOMPENSAS','objectives-desc':'Dias + diamantes → bônus','rh-days':'Dias · Requisito','rh-diamonds':'💎 Diamantes','rh-reward':'🎁 Recompensa','days-word':'dias','level-basic':'básico','level-advanced':'avançado','level-elite':'elite','diamond-unit':'💎','terms-title':'TERMOS E CONDIÇÕES','terms-desc':'Leia atentamente antes de participar','note-1':'<strong>Período:</strong> Válido apenas durante a vigência.','note-2':'<strong>Diamantes:</strong> Todos os diamantes obtidos contam.','note-3':'<strong>Dias válidos:</strong> Mínimo 1 hora contínua.','note-4':'<strong>Dúvidas:</strong> Contate seu agente.','cta-join':'🚀 Junte-se','cta-ready':'🦈 Está pronto?','cta-ready-p':'Junte-se à Tiger Shark.','cta-confidence':'🛡️ Junte-se com confiança','cta-confidence-p':'Tiger Shark é baseada em profissionalismo.','cta-find-me':'🦈 Me encontre','cta-find-me-p':'Seu agente te acompanha.','cta-champion':'🏆 Junte-se aos campeões','cta-champion-p':'Agência mais premiada pelo TikTok.','cta-join-family':'🦈 Faça parte da Tiger Shark','cta-join-family-p':'Junte-se à família.','cta-challenge':'🚀 Pronto para o desafio?','cta-challenge-p':'Junte-se e ganhe recompensas.'},
-ru:{'nav-about':'О Нас','nav-benefits':'Преимущества','nav-agents':'Агент','nav-contact':'Контакты','nav-links-nav':'Ссылки','nav-recruit':'Вступить','nav-activity':'🏆 Активность','lang-title':'ЯЗЫК','back':'← Назад','hero-sub':'Топ Агентство · Профессионально · Создаём Будущее','hero-btn':'Вступить','scroll-hint':'▼ Прокрутите вниз','tag-about':'О НАС','title-about':'О <span>Нас</span>','card-about-1-h':'О Tiger Shark','card-about-1-p':'Агентство, основанное в 2022...','card-about-2-h':'Наша Миссия','card-about-2-p':'Профессиональные операции как основа...','card-industry-h':'Позиция в Индустрии','card-industry-p':'Множество наград TikTok LIVE FEST...','click-awards':'Смотреть награды →','tag-benefits':'ПРЕИМУЩЕСТВА','title-benefits':'<span>Преимущества</span>','ben-1-h':'Высокие Комиссии','ben-1-p':'Лучшие ставки в индустрии','ben-2-h':'Поддержка Трафика','ben-2-p':'Специальные официальные ресурсы','ben-3-h':'Обучение','ben-3-p':'Систематические курсы по стримингу','ben-4-h':'Полная Защита','ben-4-p':'Контрактная защита, юридическая команда','click-more':'👆 Нажмите для деталей','tag-agents':'ВАШ АГЕНТ','title-agents':'Ваш <span>Эксклюзивный Агент</span>','agent-role':'ГЛАВНЫЙ АГЕНТ','agent-desc':'9 лет опыта в прямых трансляциях.','tag-contact':'КОНТАКТЫ','title-contact':'<span>Контакты</span>','contact-2-h':'РАБОЧИЕ ЧАСЫ','contact-2-p':'Понедельник - Суббота 09:00 - 17:00','tag-links':'ОФИЦИАЛЬНЫЕ ССЫЛКИ','title-links':'Официальные <span>Ссылки</span>','link-wa-h':'Группа WhatsApp','link-wa-p':'Последние новости','tag-recruit':'ВСТУПИТЬ','title-recruit':'<span>Набор</span>','recruit-hint':'Нажмите ниже чтобы присоединиться','join-btn':'🦈 Подать Заявку','footer-txt':'Профессионализм · Честность · Успех','popup-badge':'🎉 ЕЖЕНЕДЕЛЬНО','popup-title':'Активность <span>Агентства</span>','popup-desc':'Новая активность на этой неделе!','popup-go':'🏆 Смотреть','popup-skip':'Закрыть','popup-summary':'ОБЗОР НАГРАД','detail-title':'Высокие Комиссии · Детали','detail-desc':'Tiger Shark предлагает лучшие ставки','detail-unlock':'Разблокируйте <span>Максимальную Комиссию</span>','commission-base-label':'БАЗОВАЯ КОМИССИЯ','commission-base-desc':'Гарантированная ставка для всех','commission-arrow':'ДО','commission-max-label':'МАКСИМАЛЬНАЯ КОМИССИЯ','commission-max-desc':'При выполнении всех требований','accumulate-h':'Бонусы суммируются!','accumulate-p':'От 3% базовой до 5% максимальной.','bonus-title':'Дополнительные <span>Бонусы</span>','bonus-box-h':'💎 Дополнительные Бонусы','bonus-box-p':'Tiger Shark ежемесячно формирует бонусный фонд.','settlement-title':'Детали <span>Расчёта</span>','settlement-1-h':'⏰ Цикл Расчёта','settlement-1-p':'Расчёт 1-го числа каждого месяца.','settlement-2-h':'📋 Источники Дохода','settlement-2-p':'Доход от подарков TikTok Live.','settlement-3-h':'🔒 Гарантия Прозрачности','settlement-3-p':'Данные в реальном времени. Аудит третьей стороны.','faq-title':'Частые <span>Вопросы</span>','faq-1-h':'🤔 Ноль подписчиков?','faq-1-p':'Конечно! Все приветствуются.','faq-2-h':'📈 Частота корректировки?','faq-2-p':'Ежемесячная оценка. Только вверх.','faq-3-h':'🌍 Международные авторы?','faq-3-p':'Открыто для всего мира.','faq-4-h':'📝 Ограничения контракта?','faq-4-p':'Гибкие и прозрачные условия.','protect-title':'Полная Защита · Детали','protect-desc':'Tiger Shark защищает ваши права','protect-main-title':'Основные <span class="green">Защиты</span>','protect-1-h':'Прозрачный Контракт','protect-1-p':'Все условия ясны и публичны.','protect-2-h':'Юридическая Команда','protect-2-p':'Профессиональная юридическая команда.','protect-3-h':'Гарантия Расчёта','protect-3-p':'Своевременный и отслеживаемый расчёт.','protect-4-h':'Защита Данных','protect-4-p':'Информация защищена конфиденциальностью.','protect-commit-title':'Tiger Shark <span class="green">Обязательства</span>','commit-1-h':'🕐 Поддержка 24/7','commit-1-p':'Агент онлайн 24ч. Ответ за 2ч.','commit-2-h':'📊 Безопасность Аккаунта','commit-2-p':'Помощь с апелляциями и блокировками.','commit-3-h':'🌍 Трансграничная Защита','commit-3-p':'Юридическая поддержка для международных авторов.','agent-title':'Ваш Эксклюзивный Агент','agent-page-desc':'Эксклюзивный индивидуальный сервис','agent-card-title':'Карточка <span class="purple">Агента</span>','agent-contact-title':'<span class="purple">Контакты</span>','agent-email-label':'РАБОЧИЙ EMAIL','industry-title':'Награды · Позиция в Индустрии','industry-desc':'Награждён TikTok','industry-stats-title':'Достижения <span class="gold">в Цифрах</span>','stat-awards':'ОФИЦИАЛЬНЫЕ НАГРАДЫ','stat-founded':'ГОД ОСНОВАНИЯ','stat-experience':'ЛЕТ ОПЫТА','awards-intro-p':'🏅 Tiger Shark победил на самых престижных турнирах TikTok.','awards-gallery-title':'Галерея <span class="gold">Наград</span>','about-title':'О Tiger Shark','about-desc':'Премиум агентство · Основано в 2022','about-video-title':'Официальное <span class="cyan">Видео</span>','about-who-title':'Кто <span class="cyan">Мы?</span>','about-agency-h':'🏢 Об Агентстве','about-agency-p':'Tiger Shark основано в 2022 году.','about-mission-h':'🎯 Наша Миссия','about-mission-p':'Персонализированные стратегии для каждого.','about-global-h':'🌍 Глобальный Охват','about-global-p':'Активное присутствие в разных регионах.','about-values-h':'💡 Наши Ценности','about-values-p':'Профессионализм, честность и взаимный успех.','about-stats-title':'Tiger Shark <span class="cyan">в Цифрах</span>','activity-title':'Активность Агентства','activity-desc':'Выполняйте цели и получайте награды','validity':'ДЕЙСТВУЕТ:','validity-week':'Неделя с','objectives-title':'ЦЕЛИ И НАГРАДЫ','objectives-desc':'Дни + алмазы → бонус','rh-days':'Дни · Требование','rh-diamonds':'💎 Алмазы','rh-reward':'🎁 Награда','days-word':'дней','level-basic':'базовый','level-advanced':'продвинутый','level-elite':'элита','diamond-unit':'💎','terms-title':'УСЛОВИЯ И ПОЛОЖЕНИЯ','terms-desc':'Прочитайте перед участием','note-1':'<strong>Период:</strong> Только в период действия.','note-2':'<strong>Алмазы:</strong> Все полученные алмазы считаются.','note-3':'<strong>Действ. дни:</strong> Минимум 1 час непрерывного стрима.','note-4':'<strong>Вопросы:</strong> Свяжитесь с агентом.','cta-join':'🚀 Вступить','cta-ready':'🦈 Готовы?','cta-ready-p':'Присоединяйтесь к Tiger Shark.','cta-confidence':'🛡️ Присоединяйтесь уверенно','cta-confidence-p':'Tiger Shark основан на профессионализме.','cta-find-me':'🦈 Найдите меня','cta-find-me-p':'Ваш агент рядом.','cta-champion':'🏆 Присоединяйтесь к чемпионам','cta-champion-p':'Самое награждённое агентство.','cta-join-family':'🦈 Станьте частью Tiger Shark','cta-join-family-p':'Присоединяйтесь к семье.','cta-challenge':'🚀 Готовы к вызову?','cta-challenge-p':'Присоединяйтесь и зарабатывайте.'}
+es:{'nav-about':'Sobre Nosotros','nav-benefits':'Beneficios','nav-agents':'Agente','nav-contact':'Contacto','nav-links-nav':'Enlaces','nav-recruit':'Únete','nav-activity':'🏆 Actividad','lang-title':'IDIOMA','back':'← Volver','hero-sub':'Agencia Top · Profesional · Creamos el Futuro','hero-btn':'Únete Ahora','scroll-hint':'▼ Desplaza hacia abajo','tag-about':'ABOUT US','title-about':'Sobre <span>Nosotros</span>','card-about-1-h':'Sobre Tiger Shark','card-about-1-p':'Tiger Shark es una agencia de gestión de primer nivel fundada en 2022...','card-about-2-h':'Nuestra Misión','card-about-2-p':'Con operaciones profesionales como núcleo...','card-industry-h':'Posición en la Industria','card-industry-p':'Múltiples premios oficiales de TikTok LIVE FEST...','click-awards':'Ver premios →','tag-benefits':'BENEFITS','title-benefits':'<span>Beneficios</span>','ben-1-h':'Altas Comisiones','ben-1-p':'Las mejores tasas de comisión de la industria','ben-2-h':'Apoyo de Tráfico','ben-2-p':'Recursos oficiales dedicados, promoción exclusiva','ben-3-h':'Formación Profesional','ben-3-p':'Cursos sistemáticos sobre técnicas y streaming','ben-4-h':'Protección Total','ben-4-p':'Protección contractual, equipo legal exclusivo','click-more':'👆 Clic para ver detalles','tag-agents':'YOUR AGENT','title-agents':'Tu <span>Agente Exclusivo</span>','agent-role':'CHIEF AGENT','agent-desc':'Con 9 años de experiencia en la industria del streaming en vivo.','tag-contact':'CONTACT','title-contact':'<span>Contacto</span>','contact-2-h':'HORARIO LABORAL','contact-2-p':'Lunes a Sábado 09:00 - 17:00','tag-links':'OFFICIAL LINKS','title-links':'Enlaces <span>Oficiales</span>','link-wa-h':'Grupo Oficial de WhatsApp','link-wa-p':'Obtén las últimas noticias','tag-recruit':'JOIN US','title-recruit':'<span>Reclutamiento</span>','recruit-hint':'Haz clic para unirte a la familia Tiger Shark','join-btn':'🦈 Enviar Solicitud Ahora','footer-txt':'Profesional · Integridad · Éxito Mutuo','popup-badge':'🎉 ACTIVIDAD SEMANAL','popup-title':'Actividad de <span>Agencia</span>','popup-desc':'¡Nueva actividad disponible esta semana!','popup-go':'🏆 Ver Actividad Completa','popup-skip':'Cerrar','popup-summary':'RESUMEN DE RECOMPENSAS','detail-title':'Altas Comisiones · Detalles','detail-desc':'Tiger Shark ofrece las mejores tasas de comisión de la industria','detail-unlock':'Desbloquea tu <span>Máxima Comisión</span>','commission-base-label':'COMISIÓN BASE','commission-base-desc':'Tasa garantizada para todos los creadores','commission-arrow':'HASTA','commission-max-label':'COMISIÓN MÁXIMA','commission-max-desc':'Cumpliendo todos los requisitos mensuales','accumulate-h':'¡Las bonificaciones son acumulables!','accumulate-p':'De 3% base hasta 5% máximo cumpliendo los 4 requisitos.','bonus-title':'<span>Bonificaciones</span> Adicionales','bonus-box-h':'💎 Bonificaciones Adicionales','bonus-box-p':'Tiger Shark establece mensualmente un fondo de bonificación por rendimiento adicional.','settlement-title':'Detalles de <span>Liquidación</span>','settlement-1-h':'⏰ Ciclo de Liquidación','settlement-1-p':'Liquidación el 1° de cada mes. Transferencia bancaria / PayPal.','settlement-2-h':'📋 Fuentes de Ingreso','settlement-2-p':'Ingresos por regalos de streaming en vivo de TikTok.','settlement-3-h':'🔒 Garantía de Transparencia','settlement-3-p':'Datos verificables en tiempo real. Auditoría de terceros.','faq-title':'Preguntas <span>Frecuentes</span>','faq-1-h':'🤔 ¿Puedo firmar con cero seguidores?','faq-1-p':'¡Por supuesto! Tiger Shark da la bienvenida a todos.','faq-2-h':'📈 ¿Frecuencia de ajuste de comisión?','faq-2-p':'Evaluación mensual. Solo sube, nunca baja.','faq-3-h':'🌍 ¿Creadores internacionales?','faq-3-p':'Abierto a todo el mundo, múltiples monedas.','faq-4-h':'📝 ¿Restricciones del contrato?','faq-4-p':'Términos flexibles y transparentes.','protect-title':'Protección Total · Detalles','protect-desc':'Tiger Shark protege integralmente tus derechos','protect-main-title':'Protecciones <span class="green">Principales</span>','protect-1-h':'Contrato Transparente','protect-1-p':'Todos los términos son claros y públicos.','protect-2-h':'Equipo Legal Exclusivo','protect-2-p':'Equipo legal profesional para creadores.','protect-3-h':'Garantía de Liquidación','protect-3-p':'Liquidación puntual, transparente y rastreable.','protect-4-h':'Protección de Datos','protect-4-p':'Información protegida por confidencialidad.','protect-commit-title':'Tiger Shark <span class="green">Compromiso</span>','commit-1-h':'🕐 Soporte 24/7','commit-1-p':'Agente en línea 24 horas. Respuesta en menos de 2 horas.','commit-2-h':'📊 Seguridad de Cuenta','commit-2-p':'Asistencia en apelaciones y bloqueos.','commit-3-h':'🌍 Protección Transfronteriza','commit-3-p':'Soporte legal para creadores internacionales.','agent-title':'Tu Agente Exclusivo','agent-page-desc':'Servicio exclusivo uno a uno','agent-card-title':'Tarjeta del <span class="purple">Agente</span>','agent-contact-title':'<span class="purple">Contacto</span>','agent-email-label':'CORREO EMPRESARIAL','industry-title':'Premios · Posición en la Industria','industry-desc':'Tiger Shark galardonada por TikTok','industry-stats-title':'Logros <span class="gold">en Cifras</span>','stat-awards':'PREMIOS OFICIALES','stat-founded':'AÑO DE FUNDACIÓN','stat-experience':'AÑOS EXPERIENCIA','awards-intro-p':'🏅 Tiger Shark ha ganado en los torneos más prestigiosos de TikTok.','awards-gallery-title':'Galería de <span class="gold">Premios</span>','about-title':'Sobre Tiger Shark','about-desc':'Agencia de primer nivel · Fundada en 2022','about-video-title':'Video <span class="cyan">Oficial</span>','about-who-title':'¿Quiénes <span class="cyan">Somos?</span>','about-agency-h':'🏢 Sobre la Agencia','about-agency-p':'Tiger Shark es una agencia fundada en 2022, especializada en creadores de contenido.','about-mission-h':'🎯 Nuestra Misión','about-mission-p':'Diseñamos estrategias personalizadas para cada creador.','about-global-h':'🌍 Alcance Global','about-global-p':'Presencia activa en múltiples regiones del mundo.','about-values-h':'💡 Nuestros Valores','about-values-p':'Profesionalidad, integridad y éxito mutuo.','about-stats-title':'Tiger Shark <span class="cyan">en Cifras</span>','activity-title':'Actividad de Agencia','activity-desc':'Completa objetivos semanales y desbloquea recompensas','validity':'VIGENCIA:','validity-week':'Semana del','objectives-title':'OBJETIVOS Y RECOMPENSAS','objectives-desc':'Cumple días + diamantes → recibe bono','rh-days':'Días · Requisito','rh-diamonds':'💎 Diamantes','rh-reward':'🎁 Recompensa','days-word':'días','level-basic':'básico','level-advanced':'avanzado','level-elite':'élite','diamond-unit':'💎','terms-title':'TÉRMINOS Y CONDICIONES','terms-desc':'Lee atentamente antes de participar','note-1':'<strong>Período:</strong> Solo aplica durante el período de vigencia.','note-2':'<strong>Diamantes:</strong> Todos los diamantes obtenidos contarán.','note-3':'<strong>Días válidos:</strong> Mínimo 1 hora continua de transmisión.','note-4':'<strong>Preguntas:</strong> Contacte a su agente.','cta-join':'🚀 Únete Ahora','cta-ready':'🦈 ¿Estás listo?','cta-ready-p':'Únete a Tiger Shark.','cta-confidence':'🛡️ Únete con confianza','cta-confidence-p':'Tiger Shark se basa en profesionalidad.','cta-find-me':'🦈 Encuéntrame','cta-find-me-p':'Tu agente te acompaña.','cta-champion':'🏆 Únete al equipo campeón','cta-champion-p':'Agencia más premiada por TikTok.','cta-join-family':'🦈 Forma parte de Tiger Shark','cta-join-family-p':'Únete a la familia.','cta-challenge':'🚀 ¿Listo para el reto?','cta-challenge-p':'Únete y gana recompensas semanales.','nav-notice':'⚠️ Aviso',
+'notice-title':'Avisos Importantes',
+'notice-desc':'Lee esto cuidadosamente antes de unirte',
+'notice-1-title':'Sobre las Ganancias',
+'notice-1-h':'✅ Compromiso de la Agencia',
+'notice-1-p':'La agencia <strong style="color:var(--cyan);">NO tomará ni poseerá ninguna parte de las ganancias del creador</strong>. Todos tus ingresos de TikTok Live te pertenecen exclusivamente a ti.',
+'notice-2-title':'Proceso de Incorporación',
+'join-method-1-h':'Método 1: Solicitud Directa',
+'join-method-1-p':'Haz clic en el enlace de la página web para enviar tu solicitud. Un agente te contactará pronto.',
+'join-method-2-h':'Método 2: Código de Invitación',
+'join-method-2-p':'Envía el código de invitación al agente que te contactó para completar el proceso.',
+'invite-code-title':'Cómo Obtener el Código de Invitación',
+'invite-steps-h':'📋 Pasos a Seguir',
+'step-1':'1️⃣ Abre TikTok → ve a tu Perfil',
+'step-2':'2️⃣ Toca las tres líneas (☰) arriba a la derecha',
+'step-3':'3️⃣ Selecciona TikTok Studio',
+'step-4':'4️⃣ Entra al módulo LIVE',
+'step-5':'5️⃣ Desliza abajo → busca Herramientas y Recursos',
+'step-6':'6️⃣ Selecciona Centro de Agencia',
+'step-7':'7️⃣ Toca Ver Métodos de Incorporación',
+'step-8':'8️⃣ Busca el texto azul Código de Invitación',
+'step-9':'9️⃣ Copia y envía el código a tu agente',
+'notice-3-title':'Proceso de Salida',
+'exit-notice-h':'✅ Libertad Total de Salida',
+'exit-notice-p':'La agencia <strong style="color:var(--green);">no te obligará a quedarte</strong>. Puedes irte en cualquier momento sin penalización alguna.',
+'exit-steps-h':'📋 Pasos para Salir',
+'exit-step-1':'1️⃣ Abre TikTok → ve a tu Perfil',
+'exit-step-2':'2️⃣ Toca las tres líneas (☰) arriba a la derecha',
+'exit-step-3':'3️⃣ Selecciona TikTok Studio',
+'exit-step-4':'4️⃣ Entra al módulo LIVE',
+'exit-step-5':'5️⃣ Desliza abajo → busca Herramientas y Recursos',
+'exit-step-6':'6️⃣ Selecciona Centro de Agencia',
+'exit-step-7':'7️⃣ Toca el botón Salir de la Agencia',
+'exit-step-8':'8️⃣ Sigue las instrucciones para completar',
+'cta-notice':'🦈 Únete con total confianza',
+'cta-notice-p':'Tiger Shark garantiza transparencia y honestidad para cada creador.',
+'tag-rules':'LIVE RULES',
+'title-rules':'TikTok <span>Reglas de LIVE</span>',
+'rules-hint':'Conoce las normas para proteger tu cuenta',
+'rule-1-h':'Reglas Básicas de LIVE',
+'rule-1-p':'Conductas prohibidas y suspensiones',
+'rule-2-h':'Reglas de Regalos',
+'rule-2-p':'Prohibición de regalos falsos',
+'rule-3-h':'Guía de Formación',
+'rule-3-p':'Cómo mejorar tu rendimiento en LIVE','rg-ban-title':'Absolutamente Prohibido <span style="color:#ff6b6b;">（Baneo Inmediato）</span>'
+,'rg-age-h':'Restricción de Edad'
+,'rg-age-p':'El streamer debe tener al menos 18 años. Prohibido usar cuentas ajenas.'
+,'rg-violence-h':'Violencia y Comportamiento Peligroso'
+,'rg-violence-p':'Prohibido amenazar, pelear o agredir. Prohibido mostrar armas. Prohibido retos peligrosos.'
+,'rg-hate-h':'Odio y Discriminación'
+,'rg-hate-p':'Prohibido insultar grupos protegidos. Prohibido promover violencia o ideologías de odio.'
+,'rg-adult-h':'Contenido Sexual'
+,'rg-adult-p':'Prohibido cualquier desnudo. Prohibido gestos, bailes o lenguaje sexual. Tolerancia cero con menores.'
+,'rg-minor-h':'Menores de Edad（Tolerancia Cero）'
+,'rg-minor-p':'Prohibido explotar o sexualizar menores o usarlos para obtener regalos o tráfico.'
+,'rg-risk-title':'Comportamientos de Alto Riesgo <span style="color:var(--gold);">（Pueden Causar Shadowban o Baneos）</span>'
+,'rg-fraud-h':'🎰 Fraude y Falsas Promesas'
+,'rg-fraud-1':'Premios falsos'
+,'rg-fraud-2':'Garantizar ganancias'
+,'rg-fraud-3':'Información médica, legal o financiera engañosa'
+,'rg-offplat-h':'💸 Pagos y Desvíos Fuera de Plataforma'
+,'rg-offplat-1':'Pedir pagos fuera de TikTok'
+,'rg-offplat-2':'Forzar a ir a WhatsApp, Telegram, etc.'
+,'rg-offplat-3':'Promover apuestas o inversiones ilegales'
+,'rg-bot-h':'🤖 Trampas y Actividad Falsa'
+,'rg-bot-1':'Bots, vistas falsas o compra de regalos'
+,'rg-bot-2':'Usar software externo'
+,'rg-other-h':'📺 Otras Reglas Importantes'
+,'rg-other-1':'Stream en negro o sin interacción puede ser penalizado'
+,'rg-other-2':'Prohibido reproducir videos grabados como si fueran en vivo'
+,'rg-other-3':'Atención a la música o videos con copyright'
+,'rg-checklist-title':'Lista de Verificación <span class="green">Antes de Iniciar</span>'
+,'rg-checklist-p':'☑️ Tengo al menos 18 años<br>☑️ Sin contenido violento, sexual ni de odio<br>☑️ No prometo dinero ni premios falsos<br>☑️ No pido pagos fuera de la plataforma<br>☑️ El contenido y lenguaje son apropiados<br>☑️ El streamer es responsable del chat, invitados y fondo'
+,'gift-what-title':'¿Qué es un <span class="cyan">«Regalo Falso»</span>?'
+,'gift-req-title':'TikTok exige que todos los regalos sean:'
+,'gift-req-p':'✅ Reales<br>✅ Voluntarios<br>✅ Pagados dentro de la plataforma<br>❌ Sin reembolsos ni devoluciones'
+,'gift-ban-title':'Absolutamente Prohibido <span style="color:#ff6b6b;">（Baneo Directo）</span>'
+,'gift-refund-h':'Reembolso de Regalos'
+,'gift-refund-p':'Ejemplo: "Envíame 1000, te devuelvo 500". Esto es fraude financiero. Consecuencias: ganancias congeladas, baneo de LIVE, suspensión permanente.'
+,'gift-swap-h':'Intercambio de Regalos entre Streamers'
+,'gift-swap-p':'A envía regalo a B, B envía a A para inflar ingresos artificialmente. Manipulación de datos. Consecuencias: ganancias a cero, cancelación de bonos, penalización a la agencia.'
+,'gift-bot-h':'Bots o Compra Externa de Regalos'
+,'gift-bot-p':'Incluye servicios de recarga externos, tokens ilegales o baratos, software automático. TikTok detecta IP, dispositivos y comportamiento anómalo. Consecuencias: baneo inmediato y posible afectación a cuentas vinculadas.'
+,'gift-offpay-h':'Recarga Fuera de Plataforma'
+,'gift-offpay-p':'"Págame por PayPal", "afuera es más barato". Viola el sistema de pago oficial. Consecuencias: baneo directo, ganancias congeladas.'
+,'gift-fake-h':'Sorteos Falsos'
+,'gift-fake-p':'"Envía 500 regalos y gana un iPhone", premios falsos, listas de ganadores inventadas. Esto es estafa.'
+,'gift-allow-title':'Comportamientos Permitidos'
+,'gift-allow-p':'✅ Pedir apoyo de forma natural<br>✅ Realizar actividades de interacción genuina<br>✅ Participar en PK de forma limpia y justa<br>✅ Motivar a la audiencia sin prometer dinero'
+,'gift-remember-h':'Recuerda'
+,'gift-remember-p':'Si necesita un reembolso, es ilegal. Si necesita hacerse en secreto, es ilegal. La agencia no protegerá a ningún streamer que haga reembolsos, intercambie regalos o use recargas ilegales. Cada streamer es totalmente responsable de su cuenta.'
+,'train-loyal-title':'Cómo Mantener el <span class="cyan">Apoyo de los Grandes Donadores</span>'
+,'train-relation-h':'Construye la Relación Primero'
+,'train-relation-p':'No pidas regalos constantemente. Primero interactúa y genera confianza. Ej: ¿Cómo estás hoy? ¿De qué país eres?'
+,'train-remember-h':'Recuerda a tus Seguidores Frecuentes'
+,'train-remember-p':'Cuando un seguidor habitual entre al LIVE, salúdale por su nombre. Ej: "¡Hola Carlos, bienvenido de vuelta!"'
+,'train-thanks-h':'Agradece los Regalos al Instante'
+,'train-thanks-p':'Cada vez que alguien envíe un regalo, agradécelo con entusiasmo. Ej: "¡Muchas gracias por tu regalo, lo aprecio mucho!"'
+,'train-fan-h':'Cultiva Fans Leales'
+,'train-fan-p':'Haz que los fans sientan que son parte importante del LIVE. Ej: "Siempre me apoyas, te lo agradezco muchísimo."'
+,'train-phrases-title':'Frases de Referencia para <span class="cyan">Pedir Regalos Naturalmente</span>'
+,'train-common-h':'🎯 Frases Comunes'
+,'train-c1':'Si te gusta este LIVE, envía un pequeño regalo de apoyo'
+,'train-c2':'Un corazoncito o regalo para apoyar el stream'
+,'train-c3':'Gracias familia por el apoyo'
+,'train-c4':'Estamos en un PK, necesitamos apoyo'
+,'train-c5':'¿Quién envía el primer regalo?'
+,'train-c6':'¡Ese regalo es increíble!'
+,'train-goal-h':'🚀 Frases de Motivación por Objetivos'
+,'train-g1':'Si llegamos a 100 rosas, bailo'
+,'train-g2':'Si alcanzamos el objetivo, hago un reto'
+,'train-g3':'Ya casi llegamos familia'
+,'train-g4':'Solo un poco más de apoyo'
+,'train-g5':'¿Quién envía el León? Hoy lo doy todo'
+,'train-g6':'¡Somos el mejor equipo!'
+,'train-pk-title':'Cómo Obtener <span class="cyan">Apoyo en Batalla PK</span>'
+,'train-pk-before-h':'Aviso Antes del PK'
+,'train-pk-before-p':'Avisa a tus fans: "Hoy voy a hacer varias batallas PK."'
+,'train-pk-during-h':'Recordatorio Durante el PK'
+,'train-pk-during-p':'Durante el PK: "Familia, estamos en una batalla PK."'
+,'train-pk-lose-h':'Motivar Cuando Vas Perdiendo'
+,'train-pk-lose-p':'Si vas perdiendo: "¡Vamos equipo, todavía podemos ganar!"'
+,'train-pk-after-h':'Agradecimiento Tras el PK'
+,'train-pk-after-p':'Al terminar, siempre da las gracias: "Gracias por el apoyo de todos."'
+,'train-core-title':'El Principio <span class="gold">Más Importante</span>'
+,'train-core-h':'💡 La Regla de Oro'
+,'train-core-p':'Los regalos no vienen porque los pidas. Vienen porque <strong style="color:var(--gold);">la gente siente una conexión contigo</strong>.<br>Construye primero la relación, el apoyo llegará solo.','req-col-condition':'📋 Requisito'
+,'req-col-bonus':'💰 Bono Extra'
+,'req-1-label':'DURACIÓN DE LIVE'
+,'req-1-cond':'LIVE ≥ 15h en 7 días'
+,'req-2-label':'DÍAS VÁLIDOS'
+,'req-2-cond':'LIVE válido ≥ 21 días + 50h'
+,'req-3-label':'FAN CLUB'
+,'req-3-cond':'Fan club del mes ≥ 70 personas'
+,'req-4-label':'DIAMANTES'
+,'req-4-cond':'Ingresos del mes ≥ 80,000 💎'},
+en:{'nav-about':'About Us','nav-benefits':'Benefits','nav-agents':'Agent','nav-contact':'Contact','nav-links-nav':'Links','nav-recruit':'Join','nav-activity':'🏆 Activity','lang-title':'LANGUAGE','back':'← Back','hero-sub':'Top Agency · Professional · Building the Future','hero-btn':'Join Now','scroll-hint':'▼ Scroll down','tag-about':'ABOUT US','title-about':'About <span>Us</span>','card-about-1-h':'About Tiger Shark','card-about-1-p':'Tiger Shark is a top-tier management agency founded in 2022...','card-about-2-h':'Our Mission','card-about-2-p':'With professional operations as our core...','card-industry-h':'Industry Position','card-industry-p':'Multiple official TikTok LIVE FEST awards...','click-awards':'View awards →','tag-benefits':'BENEFITS','title-benefits':'<span>Benefits</span>','ben-1-h':'High Commissions','ben-1-p':'Industry-leading commission rates','ben-2-h':'Traffic Support','ben-2-p':'Dedicated official resources','ben-3-h':'Professional Training','ben-3-p':'Systematic courses on streaming','ben-4-h':'Full Protection','ben-4-p':'Contract protection, exclusive legal team','click-more':'👆 Click for details','tag-agents':'YOUR AGENT','title-agents':'Your <span>Exclusive Agent</span>','agent-role':'CHIEF AGENT','agent-desc':'9 years of experience in the live streaming industry.','tag-contact':'CONTACT','title-contact':'<span>Contact</span>','contact-2-h':'WORKING HOURS','contact-2-p':'Monday to Saturday 09:00 - 17:00','tag-links':'OFFICIAL LINKS','title-links':'Official <span>Links</span>','link-wa-h':'Official WhatsApp Group','link-wa-p':'Get the latest news','tag-recruit':'JOIN US','title-recruit':'<span>Recruitment</span>','recruit-hint':'Click to join the Tiger Shark family','join-btn':'🦈 Apply Now','footer-txt':'Professional · Integrity · Mutual Success','popup-badge':'🎉 WEEKLY ACTIVITY','popup-title':'Agency <span>Activity</span>','popup-desc':'New activity available this week!','popup-go':'🏆 View Full Activity','popup-skip':'Close','popup-summary':'REWARDS SUMMARY','detail-title':'High Commissions · Details','detail-desc':'Tiger Shark offers the best commission rates','detail-unlock':'Unlock Your <span>Maximum Commission</span>','commission-base-label':'BASE COMMISSION','commission-base-desc':'Guaranteed starting rate for all creators','commission-arrow':'UP TO','commission-max-label':'MAXIMUM COMMISSION','commission-max-desc':'Meeting all monthly requirements','accumulate-h':'Bonuses are stackable!','accumulate-p':'From 3% base up to 5% maximum.','bonus-title':'Additional <span>Bonuses</span>','bonus-box-h':'💎 Additional Bonuses','bonus-box-p':'Tiger Shark establishes monthly bonus funds for additional performance.','settlement-title':'<span>Settlement</span> Details','settlement-1-h':'⏰ Settlement Cycle','settlement-1-p':'Settlement on the 1st of each month. Bank transfer / PayPal.','settlement-2-h':'📋 Income Sources','settlement-2-p':'TikTok Live gift income.','settlement-3-h':'🔒 Transparency Guarantee','settlement-3-p':'Real-time verifiable data. Third-party audit.','faq-title':'Frequently <span>Asked Questions</span>','faq-1-h':'🤔 Can I sign with zero followers?','faq-1-p':'Of course! Tiger Shark welcomes all creators.','faq-2-h':'📈 How often is commission adjusted?','faq-2-p':'Monthly evaluation. Only goes up, never down.','faq-3-h':'🌍 International creators?','faq-3-p':'Open worldwide, multiple currencies.','faq-4-h':'📝 Contract restrictions?','faq-4-p':'Flexible and transparent terms.','protect-title':'Full Protection · Details','protect-desc':'Tiger Shark fully protects your rights','protect-main-title':'Main <span class="green">Protections</span>','protect-1-h':'Transparent Contract','protect-1-p':'All terms are clear and public.','protect-2-h':'Exclusive Legal Team','protect-2-p':'Professional legal team for creators.','protect-3-h':'Settlement Guarantee','protect-3-p':'Timely, transparent and traceable settlement.','protect-4-h':'Data Protection','protect-4-p':'Information protected by confidentiality agreement.','protect-commit-title':'Tiger Shark <span class="green">Commitment</span>','commit-1-h':'🕐 24/7 Support','commit-1-p':'Agent online 24 hours. Response in under 2 hours.','commit-2-h':'📊 Account Security','commit-2-p':'Assistance with appeals and blocks.','commit-3-h':'🌍 Cross-border Protection','commit-3-p':'Legal support for international creators.','agent-title':'Your Exclusive Agent','agent-page-desc':'Exclusive one-on-one service','agent-card-title':'Agent <span class="purple">Card</span>','agent-contact-title':'<span class="purple">Contact</span>','agent-email-label':'BUSINESS EMAIL','industry-title':'Awards · Industry Position','industry-desc':'Tiger Shark awarded by TikTok','industry-stats-title':'Achievements <span class="gold">in Numbers</span>','stat-awards':'OFFICIAL AWARDS','stat-founded':'YEAR FOUNDED','stat-experience':'YEARS EXPERIENCE','awards-intro-p':'🏅 Tiger Shark has won at the most prestigious TikTok tournaments.','awards-gallery-title':'Awards <span class="gold">Gallery</span>','about-title':'About Tiger Shark','about-desc':'Top-tier agency · Founded in 2022','about-video-title':'Official <span class="cyan">Video</span>','about-who-title':'Who <span class="cyan">Are We?</span>','about-agency-h':'🏢 About the Agency','about-agency-p':'Tiger Shark is an agency founded in 2022, specializing in content creators.','about-mission-h':'🎯 Our Mission','about-mission-p':'We design personalized strategies for each creator.','about-global-h':'🌍 Global Reach','about-global-p':'Active presence in multiple regions worldwide.','about-values-h':'💡 Our Values','about-values-p':'Professionalism, integrity and mutual success.','about-stats-title':'Tiger Shark <span class="cyan">in Numbers</span>','activity-title':'Agency Activity','activity-desc':'Complete weekly goals and unlock rewards','validity':'VALID:','validity-week':'Week of','objectives-title':'OBJECTIVES & REWARDS','objectives-desc':'Complete days + diamonds → get bonus','rh-days':'Days · Requirement','rh-diamonds':'💎 Diamonds','rh-reward':'🎁 Reward','days-word':'days','level-basic':'basic','level-advanced':'advanced','level-elite':'elite','diamond-unit':'💎','terms-title':'TERMS & CONDITIONS','terms-desc':'Read carefully before participating','note-1':'<strong>Period:</strong> Only applies during the valid period.','note-2':'<strong>Diamonds:</strong> All diamonds earned will count.','note-3':'<strong>Valid days:</strong> Minimum 1 continuous hour of streaming.','note-4':'<strong>Questions:</strong> Contact your agent.','cta-join':'🚀 Join Now','cta-ready':'🦈 Are you ready?','cta-ready-p':'Join Tiger Shark.','cta-confidence':'🛡️ Join with confidence','cta-confidence-p':'Tiger Shark is built on professionalism.','cta-find-me':'🦈 Find me anytime','cta-find-me-p':'Your agent accompanies you.','cta-champion':'🏆 Join the champion team','cta-champion-p':'Most awarded agency by TikTok.','cta-join-family':'🦈 Be part of Tiger Shark','cta-join-family-p':'Join the family.','cta-challenge':'🚀 Ready for the challenge?','cta-challenge-p':'Join and earn weekly rewards.','nav-notice':'⚠️ Notice',
+'notice-title':'Important Notices',
+'notice-desc':'Please read carefully before joining',
+'notice-1-title':'About Revenue Sharing',
+'notice-1-h':'✅ Agency Commitment',
+'notice-1-p':'The agency <strong style="color:var(--cyan);">will NOT take or own any portion of the creator\'s profits</strong>. All your TikTok Live earnings belong entirely to you.',
+'notice-2-title':'Joining Process',
+'join-method-1-h':'Method 1: Direct Application',
+'join-method-1-p':'Click the join link on the webpage to submit your application. An agent will contact you soon.',
+'join-method-2-h':'Method 2: Invitation Code',
+'join-method-2-p':'Send the invitation code to the agent who contacted you to complete the process.',
+'invite-code-title':'How to Get the Invitation Code',
+'invite-steps-h':'📋 Steps',
+'step-1':'1️⃣ Open TikTok → go to your Profile',
+'step-2':'2️⃣ Tap the three lines (☰) in the top right corner',
+'step-3':'3️⃣ Select TikTok Studio',
+'step-4':'4️⃣ Enter the LIVE module',
+'step-5':'5️⃣ Scroll down → find Tools & Resources',
+'step-6':'6️⃣ Select Agency Center',
+'step-7':'7️⃣ Tap View Joining Methods',
+'step-8':'8️⃣ Find the blue text Invitation Code',
+'step-9':'9️⃣ Copy and send the code to your agent',
+'notice-3-title':'Exit Process',
+'exit-notice-h':'✅ Freedom to Leave',
+'exit-notice-p':'The agency <strong style="color:var(--green);">will not force you to stay</strong>. You can leave at any time without any penalty.',
+'exit-steps-h':'📋 Steps to Exit',
+'exit-step-1':'1️⃣ Open TikTok → go to your Profile',
+'exit-step-2':'2️⃣ Tap the three lines (☰) in the top right corner',
+'exit-step-3':'3️⃣ Select TikTok Studio',
+'exit-step-4':'4️⃣ Enter the LIVE module',
+'exit-step-5':'5️⃣ Scroll down → find Tools & Resources',
+'exit-step-6':'6️⃣ Select Agency Center',
+'exit-step-7':'7️⃣ Tap the Leave Agency button',
+'exit-step-8':'8️⃣ Follow the prompts to complete',
+'cta-notice':'🦈 Join with complete confidence',
+'cta-notice-p':'Tiger Shark guarantees transparency and integrity for every creator.',
+'tag-rules':'LIVE RULES',
+'title-rules':'TikTok <span>LIVE Rules</span>',
+'rules-hint':'Know the platform rules to protect your account',
+'rule-1-h':'Basic LIVE Rules',
+'rule-1-p':'Prohibited behaviors and suspensions',
+'rule-2-h':'Gift Rules',
+'rule-2-p':'False gift prohibition',
+'rule-3-h':'Training Guide',
+'rule-3-p':'How to improve your LIVE performance','req-col-condition':'📋 Requirement'
+,'req-col-bonus':'💰 Bonus'
+,'req-1-label':'LIVE DURATION'
+,'req-1-cond':'LIVE ≥ 15h within 7 days'
+,'req-2-label':'VALID DAYS'
+,'req-2-cond':'Valid LIVE ≥ 21 days + 50h'
+,'req-3-label':'FAN CLUB'
+,'req-3-cond':'Monthly fan club ≥ 70 people'
+,'req-4-label':'DIAMONDS'
+,'req-4-cond':'Monthly diamond income ≥ 80,000 💎'},
+zh:{'nav-about':'关于我们','nav-benefits':'福利待遇','nav-agents':'专属经纪人','nav-contact':'联系方式','nav-links-nav':'官方链接','nav-recruit':'立即加入','nav-activity':'🏆 活动','lang-title':'语言','back':'← 返回','hero-sub':'顶级机构 · 专业运营 · 共创未来','hero-btn':'立即加入','scroll-hint':'▼ 向下滚动','tag-about':'关于我们','title-about':'关于<span>我们</span>','card-about-1-h':'关于 Tiger Shark','card-about-1-p':'Tiger Shark 是一家成立于2022年的顶级管理机构...','card-about-2-h':'我们的使命','card-about-2-p':'以专业运营为核心...','card-industry-h':'行业地位','card-industry-p':'多次荣获 TikTok LIVE FEST 官方奖项...','click-awards':'查看奖项 →','tag-benefits':'福利待遇','title-benefits':'<span>福利待遇</span>','ben-1-h':'高额佣金','ben-1-p':'行业最高佣金比例，收益透明公正','ben-2-h':'流量扶持','ben-2-p':'专属官方资源，精准流量推广','ben-3-h':'专业培训','ben-3-p':'系统化运营技巧及直播技能课程','ben-4-h':'全方位保障','ben-4-p':'合同权益保护，专属法律团队','click-more':'👆 点击查看详情','tag-agents':'专属经纪人','title-agents':'你的<span>专属经纪人</span>','agent-role':'首席经纪人','agent-desc':'拥有9年直播行业经验，成功孵化多位百万粉丝主播。','tag-contact':'联系方式','title-contact':'<span>联系方式</span>','contact-2-h':'工作时间','contact-2-p':'周一至周六 09:00 - 17:00','tag-links':'官方链接','title-links':'<span>官方</span>链接','link-wa-h':'官方 WhatsApp 群组','link-wa-p':'获取最新资讯','tag-recruit':'加入我们','title-recruit':'<span>招募计划</span>','recruit-hint':'点击下方按钮，加入 Tiger Shark 大家庭','join-btn':'🦈 立即提交申请','footer-txt':'专业 · 诚信 · 共同成功','popup-badge':'🎉 每周活动','popup-title':'<span>机构</span>专属活动','popup-desc':'本周新活动上线！','popup-go':'🏆 查看完整活动','popup-skip':'关闭','popup-summary':'奖励摘要','detail-title':'高额佣金 · 详情','detail-desc':'Tiger Shark 提供行业最高佣金比例','detail-unlock':'解锁你的<span>最高佣金</span>','commission-base-label':'基础佣金','commission-base-desc':'所有创作者的保底比例','commission-arrow':'最高可达','commission-max-label':'最高佣金','commission-max-desc':'完成所有月度要求','accumulate-h':'奖金可累积叠加！','accumulate-p':'从3%基础到5%最高，完成4项要求即可。','bonus-title':'额外<span>奖金</span>','bonus-box-h':'💎 额外奖金','bonus-box-p':'Tiger Shark 每月设立额外绩效奖金池。','settlement-title':'<span>结算</span>详情','settlement-1-h':'⏰ 结算周期','settlement-1-p':'每月1日结算。支持银行转账 / PayPal。','settlement-2-h':'📋 收入来源','settlement-2-p':'TikTok 直播礼物收入。','settlement-3-h':'🔒 透明保障','settlement-3-p':'实时可查数据，第三方审计。','faq-title':'常见<span>问题</span>','faq-1-h':'🤔 零粉丝可以签约吗？','faq-1-p':'当然可以！欢迎所有创作者。','faq-2-h':'📈 佣金多久调整一次？','faq-2-p':'每月自动评估，只升不降。','faq-3-h':'🌍 国际创作者能加入吗？','faq-3-p':'面向全球，支持多币种结算。','faq-4-h':'📝 合同有什么限制？','faq-4-p':'条款灵活透明，无隐藏条款。','protect-title':'全方位保障 · 详情','protect-desc':'Tiger Shark 全面保护你的权益','protect-main-title':'主要<span class="green">保障</span>','protect-1-h':'透明合同保障','protect-1-p':'所有合同条款公开透明。','protect-2-h':'专属法律团队','protect-2-p':'为创作者提供专业法律服务。','protect-3-h':'收入结算保障','protect-3-p':'准时结算，透明可追溯。','protect-4-h':'数据隐私保护','protect-4-p':'信息受保密协议保护。','protect-commit-title':'Tiger Shark <span class="green">承诺</span>','commit-1-h':'🕐 7×24小时支持','commit-1-p':'经纪人24小时在线，2小时内响应。','commit-2-h':'📊 账号安全','commit-2-p':'协助申诉和解封。','commit-3-h':'🌍 跨境保护','commit-3-p':'为国际创作者提供法律支持。','agent-title':'你的专属经纪人','agent-page-desc':'一对一专属服务','agent-card-title':'<span class="purple">经纪人</span>名片','agent-contact-title':'<span class="purple">联系方式</span>','agent-email-label':'企业邮箱','industry-title':'奖项 · 行业地位','industry-desc':'荣获 TikTok 官方认证','industry-stats-title':'<span class="gold">数据</span>成就','stat-awards':'官方奖项','stat-founded':'成立年份','stat-experience':'经验年数','awards-intro-p':'🏅 Tiger Shark 在 TikTok 最权威的赛事中屡获殊荣。','awards-gallery-title':'<span class="gold">奖项</span>展示','about-title':'关于 Tiger Shark','about-desc':'顶级管理机构 · 成立于2022年','about-video-title':'官方<span class="cyan">视频</span>','about-who-title':'我们是<span class="cyan">谁？</span>','about-agency-h':'🏢 关于机构','about-agency-p':'Tiger Shark 是一家成立于2022年的机构，专注于内容创作者。','about-mission-h':'🎯 我们的使命','about-mission-p':'为每位创作者定制个性化发展策略。','about-global-h':'🌍 全球覆盖','about-global-p':'在全球多个地区活跃运营。','about-values-h':'💡 我们的价值观','about-values-p':'专业、诚信、共同成功。','about-stats-title':'Tiger Shark <span class="cyan">数据</span>','activity-title':'机构活动','activity-desc':'完成每周目标解锁奖励','validity':'有效期：','validity-week':'活动周期','objectives-title':'目标与奖励','objectives-desc':'完成天数+钻石 → 获得奖金','rh-days':'天数·要求','rh-diamonds':'💎 钻石','rh-reward':'🎁 奖励','days-word':'天','level-basic':'基础','level-advanced':'进阶','level-elite':'精英','diamond-unit':'💎','terms-title':'条款与条件','terms-desc':'参与前请仔细阅读','note-1':'<strong>活动期限：</strong>仅在有效期内适用。','note-2':'<strong>钻石计算：</strong>活动期间获得的所有钻石均计入。','note-3':'<strong>有效天数：</strong>每天至少连续直播1小时。','note-4':'<strong>疑问：</strong>请联系您的经纪人。','cta-join':'🚀 立即加入','cta-ready':'🦈 准备好了吗？','cta-ready-p':'加入 Tiger Shark。','cta-confidence':'🛡️ 放心加入','cta-confidence-p':'Tiger Shark 以专业为本。','cta-find-me':'🦈 随时联系我','cta-find-me-p':'你的专属经纪人陪伴你。','cta-champion':'🏆 加入冠军团队','cta-champion-p':'TikTok 最多获奖的机构。','cta-join-family':'🦈 加入 Tiger Shark','cta-join-family-p':'加入大家庭。','cta-challenge':'🚀 准备好迎接挑战了吗？','cta-challenge-p':'加入并赢取每周奖励。','nav-notice':'⚠️ 注意事项',
+'notice-title':'注意事项',
+'notice-desc':'加入前请仔细阅读以下重要说明',
+'notice-1-title':'关于利润分成',
+'notice-1-h':'✅ 代理机构承诺',
+'notice-1-p':'代理机构<strong style="color:var(--cyan);">不会拥有和拿走创作者任何利润分成</strong>。您在 TikTok 直播中获得的所有收益完全归属于您本人，透明公正。',
+'notice-2-title':'加入流程',
+'join-method-1-h':'方式一：直接申请',
+'join-method-1-p':'可直接点击网页上的加入链接提交申请，我们的经纪人会尽快与您联系。',
+'join-method-2-h':'方式二：发送邀请码',
+'join-method-2-p':'将邀请码发送给联系您的经纪人，即可完成加入。',
+'invite-code-title':'如何获取邀请码',
+'invite-steps-h':'📋 操作步骤',
+'step-1':'1️⃣ 打开 TikTok 应用，进入【个人主页】',
+'step-2':'2️⃣ 点击右上角【三条横线】进入菜单页面',
+'step-3':'3️⃣ 选择【TikTok Studio】',
+'step-4':'4️⃣ 点击进入【直播（LIVE）】模块',
+'step-5':'5️⃣ 向下滑动页面，找到【工具与资源】',
+'step-6':'6️⃣ 点击进入后，选择【公会中心】',
+'step-7':'7️⃣ 选择点击【查看加入方式】',
+'step-8':'8️⃣ 找到蓝色小字【邀请码】',
+'step-9':'9️⃣ 复制邀请码发送给联系您的经纪人',
+'notice-3-title':'退出代理机构流程',
+'exit-notice-h':'✅ 自由退出承诺',
+'exit-notice-p':'代理机构<strong style="color:var(--green);">不会强制您留下</strong>，您可以随时自由离开，无需承担任何违约责任。',
+'exit-steps-h':'📋 退出操作步骤',
+'exit-step-1':'1️⃣ 打开 TikTok 应用，进入【个人主页】',
+'exit-step-2':'2️⃣ 点击右上角【三条横线】进入菜单页面',
+'exit-step-3':'3️⃣ 选择【TikTok Studio】',
+'exit-step-4':'4️⃣ 点击进入【直播（LIVE）】模块',
+'exit-step-5':'5️⃣ 向下滑动页面，找到【工具与资源】',
+'exit-step-6':'6️⃣ 点击进入后，选择【公会中心】',
+'exit-step-7':'7️⃣ 在公会中心页面，点击【退出公会】按钮',
+'exit-step-8':'8️⃣ 根据页面提示完成操作即可',
+'cta-notice':'🦈 了解清楚，放心加入',
+'cta-notice-p':'Tiger Shark 以透明和诚信为本，保障每位创作者的权益。',
+'tag-rules':'直播规则',
+'title-rules':'TikTok <span>直播规则</span>',
+'rules-hint':'了解平台直播规范，保护您的账号安全',
+'rule-1-h':'直播基本规则',
+'rule-1-p':'违规行为与封号规定',
+'rule-2-h':'礼物相关规则',
+'rule-2-p':'虚假礼物禁止规定',
+'rule-3-h':'主播培训指南',
+'rule-3-p':'如何提升直播效果','rg-ban-title':'绝对禁止 <span style="color:#ff6b6b;">（立即封号）</span>'
+,'rg-age-h':'年龄限制'
+,'rg-age-p':'主播必须年满18岁。禁止借用或使用他人账号进行直播。'
+,'rg-violence-h':'暴力与危险行为'
+,'rg-violence-p':'禁止威胁、打架、攻击行为。禁止展示武器或危险物品。禁止危险挑战或危险行为。'
+,'rg-hate-h':'仇恨与歧视'
+,'rg-hate-p':'禁止侮辱或攻击受保护群体。禁止宣扬暴力、排斥或仇恨意识形态。'
+,'rg-adult-h':'色情内容'
+,'rg-adult-p':'禁止任何形式的裸露内容。禁止性暗示动作、舞蹈或语言。禁止任何涉及未成年人的色情内容（零容忍）。'
+,'rg-minor-h':'涉及未成年人（零容忍）'
+,'rg-minor-p':'禁止利用、性化未成年人，或使用未成年人获取礼物或流量。'
+,'rg-risk-title':'高风险行为 <span style="color:var(--gold);">（可能导致限流或反复封号）</span>'
+,'rg-fraud-h':'🎰 欺诈与虚假承诺'
+,'rg-fraud-1':'虚假奖品'
+,'rg-fraud-2':'保证收益'
+,'rg-fraud-3':'误导性的医疗、法律或财务信息'
+,'rg-offplat-h':'💸 平台外支付与引流'
+,'rg-offplat-1':'要求在 TikTok 外支付'
+,'rg-offplat-2':'强迫跳转至 WhatsApp、Telegram 等'
+,'rg-offplat-3':'推广赌博或非法投资'
+,'rg-bot-h':'🤖 作弊与虚假活动'
+,'rg-bot-1':'机器人、虚假观看或购买礼物'
+,'rg-bot-2':'使用外部软件'
+,'rg-other-h':'📺 其他重要规则'
+,'rg-other-1':'黑屏或无互动直播可能被处罚'
+,'rg-other-2':'禁止将录制视频当作直播播放'
+,'rg-other-3':'注意版权音乐或视频'
+,'rg-checklist-title':'开播前 <span class="green">检查清单</span>'
+,'rg-checklist-p':'☑️ 我已年满18岁<br>☑️ 没有暴力、色情或仇恨内容<br>☑️ 不承诺金钱或虚假奖品<br>☑️ 不要求平台外支付<br>☑️ 内容和语言适当<br>☑️ 主播对聊天内容、嘉宾及直播背景负责'
+,'gift-what-title':'什么是 <span class="cyan">「虚假礼物」</span>？'
+,'gift-req-title':'TikTok 要求所有礼物必须满足：'
+,'gift-req-p':'✅ 真实的<br>✅ 自愿的<br>✅ 通过平台内支付<br>❌ 不得退款或返现'
+,'gift-ban-title':'绝对禁止 <span style="color:#ff6b6b;">（直接封号）</span>'
+,'gift-refund-h':'退款礼物'
+,'gift-refund-p':'例如："你发我1000，我退你500"、"通过 WhatsApp 给你退款"。这属于金融欺诈，后果：收益冻结、直播封禁、永久停号。'
+,'gift-swap-h':'主播间互刷礼物'
+,'gift-swap-p':'A给B发礼物，B再给A发礼物，人为刷高收入。属于数据操纵，后果：收益清零、取消奖金、对公会的处罚。'
+,'gift-bot-h':'使用机器人或外部购买礼物'
+,'gift-bot-p':'包括外部充值服务、非法或低价代币、自动软件。TikTok 可检测 IP、设备、异常行为，后果：立即封号并可能影响关联账号。'
+,'gift-offpay-h':'平台外充值'
+,'gift-offpay-p':'"通过 PayPal 付给我"、"外面更便宜"等。这违反官方支付系统，后果：直接封号、收益冻结。'
+,'gift-fake-h':'虚假抽奖活动'
+,'gift-fake-p':'"发500礼物赢 iPhone"、虚假奖品、假中奖名单。属于诈骗行为。'
+,'gift-allow-title':'允许的行为'
+,'gift-allow-p':'✅ 以自然方式请求支持<br>✅ 开展真实互动活动<br>✅ 干净公平地参与 PK<br>✅ 鼓励观众而不承诺金钱'
+,'gift-remember-h':'请记住'
+,'gift-remember-p':'如果需要退款，就是违法的。如果需要秘密进行，就是违法的。机构不会保护任何进行退款、参与礼物互刷或使用非法充值的主播。每位主播对自己的账号负完全责任。'
+,'train-loyal-title':'如何让大额打赏者<span class="cyan">持续支持</span>'
+,'train-relation-h':'先建立关系'
+,'train-relation-p':'不要一直说"发礼物"。正确做法是先交流互动，建立信任。例：今天怎么样？你来自哪个国家？'
+,'train-remember-h':'记住常客粉丝'
+,'train-remember-p':'经常打赏的粉丝进入直播间时，记得叫出他们的名字打招呼。例："你好 Carlos，欢迎回来！"'
+,'train-thanks-h':'及时感谢礼物'
+,'train-thanks-p':'每次有人发礼物，都要热情地感谢。例："非常感谢你的礼物，我真的很感激。"'
+,'train-fan-h':'培养忠实粉丝'
+,'train-fan-p':'让粉丝感觉自己是直播间的重要成员。例："你一直支持我，真的非常感谢。"'
+,'train-phrases-title':'自然请求礼物的<span class="cyan">参考话术</span>'
+,'train-common-h':'🎯 常用语句'
+,'train-c1':'如果你喜欢这个直播，送个小礼物支持一下'
+,'train-c2':'一个小心心或礼物来支持直播'
+,'train-c3':'谢谢家人们的支持'
+,'train-c4':'我们在PK战中，需要支持'
+,'train-c5':'谁送第一个礼物？'
+,'train-c6':'那个礼物太棒了'
+,'train-goal-h':'🚀 目标激励语句'
+,'train-g1':'达到100朵玫瑰我跳个舞'
+,'train-g2':'达成目标我做个挑战'
+,'train-g3':'我们快到目标了，家人们'
+,'train-g4':'最后一点支持了'
+,'train-g5':'谁送狮子？今天全力以赴'
+,'train-g6':'我们是最棒的团队'
+,'train-pk-title':'PK 战中如何<span class="cyan">获得支持</span>'
+,'train-pk-before-h':'PK 前预告'
+,'train-pk-before-p':'提前告知粉丝："今天我要进行几场PK战。"'
+,'train-pk-during-h':'PK 中提醒'
+,'train-pk-during-p':'PK进行中提醒："家人们，我们正在PK战中。"'
+,'train-pk-lose-h':'落后时激励'
+,'train-pk-lose-p':'分数落后时："加油团队，我们还能赢！"'
+,'train-pk-after-h':'PK 后感谢'
+,'train-pk-after-p':'PK结束后，始终表示感谢："感谢大家的支持。"'
+,'train-core-title':'最重要的<span class="gold">原则</span>'
+,'train-core-h':'💡 核心法则'
+,'train-core-p':'礼物不是因为你要求而来。礼物来自于<strong style="color:var(--gold);">人们感受到与你的连接</strong>。<br>先建立关系，支持自然就会到来。','req-col-condition':'📋 条件要求'
+,'req-col-bonus':'💰 额外加成'
+,'req-1-label':'直播时长'
+,'req-1-cond':'7天内直播 ≥ 15小时'
+,'req-2-label':'有效直播天数'
+,'req-2-cond':'有效直播 ≥ 21天 + 50小时'
+,'req-3-label':'粉丝团规模'
+,'req-3-cond':'本月粉丝团 ≥ 70人'
+,'req-4-label':'钻石收入'
+,'req-4-cond':'本月钻石收入 ≥ 80,000'},
+fr:{'nav-about':'À Propos','nav-benefits':'Avantages','nav-agents':'Agent','nav-contact':'Contact','nav-links-nav':'Liens','nav-recruit':'Rejoindre','nav-activity':'🏆 Activité','lang-title':'LANGUE','back':'← Retour','hero-sub':'Agence Top · Professionnelle · Créons l\'Avenir','hero-btn':'Rejoindre','scroll-hint':'▼ Faites défiler','tag-about':'À PROPOS','title-about':'À <span>Propos</span>','card-about-1-h':'À Propos de Tiger Shark','card-about-1-p':'Agence de gestion fondée en 2022...','card-about-2-h':'Notre Mission','card-about-2-p':'Opérations professionnelles comme cœur...','card-industry-h':'Position Industrielle','card-industry-p':'Multiples prix TikTok LIVE FEST...','click-awards':'Voir les prix →','tag-benefits':'AVANTAGES','title-benefits':'<span>Avantages</span>','ben-1-h':'Hautes Commissions','ben-1-p':'Les meilleurs taux du secteur','ben-2-h':'Support Trafic','ben-2-p':'Ressources officielles dédiées','ben-3-h':'Formation Pro','ben-3-p':'Cours sur les techniques de streaming','ben-4-h':'Protection Totale','ben-4-p':'Protection contractuelle, équipe juridique','click-more':'👆 Cliquez pour voir','tag-agents':'VOTRE AGENT','title-agents':'Votre <span>Agent Exclusif</span>','agent-role':'AGENT PRINCIPAL','agent-desc':'9 ans d\'expérience dans le streaming.','tag-contact':'CONTACT','title-contact':'<span>Contact</span>','contact-2-h':'HORAIRES','contact-2-p':'Lundi à Samedi 09:00 - 17:00','tag-links':'LIENS OFFICIELS','title-links':'Liens <span>Officiels</span>','link-wa-h':'Groupe WhatsApp Officiel','link-wa-p':'Dernières nouvelles','tag-recruit':'REJOIGNEZ-NOUS','title-recruit':'<span>Recrutement</span>','recruit-hint':'Cliquez ci-dessous pour rejoindre','join-btn':'🦈 Postuler','footer-txt':'Professionnel · Intégrité · Succès Mutuel','popup-badge':'🎉 ACTIVITÉ HEBDO','popup-title':'Activité <span>d\'Agence</span>','popup-desc':'Nouvelle activité cette semaine !','popup-go':'🏆 Voir l\'Activité','popup-skip':'Fermer','popup-summary':'RÉSUMÉ DES RÉCOMPENSES','detail-title':'Hautes Commissions · Détails','detail-desc':'Tiger Shark offre les meilleurs taux','detail-unlock':'Débloquez votre <span>Commission Maximale</span>','commission-base-label':'COMMISSION DE BASE','commission-base-desc':'Taux garanti pour tous','commission-arrow':'JUSQU\'À','commission-max-label':'COMMISSION MAX','commission-max-desc':'En remplissant toutes les conditions','accumulate-h':'Les bonus sont cumulables !','accumulate-p':'De 3% à 5% maximum.','bonus-title':'<span>Bonus</span> Supplémentaires','bonus-box-h':'💎 Bonus Supplémentaires','bonus-box-p':'Tiger Shark établit mensuellement un fonds de bonus.','settlement-title':'Détails de <span>Règlement</span>','settlement-1-h':'⏰ Cycle de Règlement','settlement-1-p':'Règlement le 1er de chaque mois.','settlement-2-h':'📋 Sources de Revenus','settlement-2-p':'Revenus de cadeaux TikTok Live.','settlement-3-h':'🔒 Garantie de Transparence','settlement-3-p':'Données vérifiables en temps réel.','faq-title':'Questions <span>Fréquentes</span>','faq-1-h':'🤔 Zéro abonnés ?','faq-1-p':'Bien sûr ! Tous les créateurs sont les bienvenus.','faq-2-h':'📈 Fréquence d\'ajustement ?','faq-2-p':'Évaluation mensuelle. Ne baisse jamais.','faq-3-h':'🌍 Créateurs internationaux ?','faq-3-p':'Ouvert au monde entier.','faq-4-h':'📝 Restrictions du contrat ?','faq-4-p':'Termes flexibles et transparents.','protect-title':'Protection Totale · Détails','protect-desc':'Tiger Shark protège vos droits','protect-main-title':'Protections <span class="green">Principales</span>','protect-1-h':'Contrat Transparent','protect-1-p':'Tous les termes sont clairs.','protect-2-h':'Équipe Juridique','protect-2-p':'Équipe juridique professionnelle.','protect-3-h':'Garantie de Règlement','protect-3-p':'Règlement ponctuel et traçable.','protect-4-h':'Protection des Données','protect-4-p':'Informations protégées par la confidentialité.','protect-commit-title':'Tiger Shark <span class="green">Engagement</span>','commit-1-h':'🕐 Support 24/7','commit-1-p':'Agent en ligne 24h. Réponse en 2h.','commit-2-h':'📊 Sécurité du Compte','commit-2-p':'Aide aux appels et blocages.','commit-3-h':'🌍 Protection Transfrontalière','commit-3-p':'Support juridique international.','agent-title':'Votre Agent Exclusif','agent-page-desc':'Service exclusif personnalisé','agent-card-title':'Carte de l\'<span class="purple">Agent</span>','agent-contact-title':'<span class="purple">Contact</span>','agent-email-label':'EMAIL PROFESSIONNEL','industry-title':'Prix · Position Industrielle','industry-desc':'Récompensé par TikTok','industry-stats-title':'Réalisations <span class="gold">en Chiffres</span>','stat-awards':'PRIX OFFICIELS','stat-founded':'ANNÉE DE FONDATION','stat-experience':'ANS D\'EXPÉRIENCE','awards-intro-p':'🏅 Tiger Shark a gagné aux plus prestigieux tournois TikTok.','awards-gallery-title':'Galerie de <span class="gold">Prix</span>','about-title':'À Propos de Tiger Shark','about-desc':'Agence premium · Fondée en 2022','about-video-title':'Vidéo <span class="cyan">Officielle</span>','about-who-title':'Qui <span class="cyan">Sommes-nous ?</span>','about-agency-h':'🏢 L\'Agence','about-agency-p':'Tiger Shark est une agence fondée en 2022.','about-mission-h':'🎯 Notre Mission','about-mission-p':'Stratégies personnalisées pour chaque créateur.','about-global-h':'🌍 Portée Mondiale','about-global-p':'Présence active dans plusieurs régions.','about-values-h':'💡 Nos Valeurs','about-values-p':'Professionnalisme, intégrité et succès mutuel.','about-stats-title':'Tiger Shark <span class="cyan">en Chiffres</span>','activity-title':'Activité d\'Agence','activity-desc':'Complétez les objectifs et débloquez des récompenses','validity':'VALIDITÉ :','validity-week':'Semaine du','objectives-title':'OBJECTIFS ET RÉCOMPENSES','objectives-desc':'Jours + diamants → bonus','rh-days':'Jours · Requis','rh-diamonds':'💎 Diamants','rh-reward':'🎁 Récompense','days-word':'jours','level-basic':'base','level-advanced':'avancé','level-elite':'élite','diamond-unit':'💎','terms-title':'CONDITIONS GÉNÉRALES','terms-desc':'Lisez attentivement avant de participer','note-1':'<strong>Période :</strong> Valable uniquement pendant la période.','note-2':'<strong>Diamants :</strong> Tous les diamants comptent.','note-3':'<strong>Jours valides :</strong> Minimum 1 heure continue.','note-4':'<strong>Questions :</strong> Contactez votre agent.','cta-join':'🚀 Rejoindre','cta-ready':'🦈 Êtes-vous prêt ?','cta-ready-p':'Rejoignez Tiger Shark.','cta-confidence':'🛡️ Rejoignez en confiance','cta-confidence-p':'Tiger Shark est basé sur le professionnalisme.','cta-find-me':'🦈 Trouvez-moi','cta-find-me-p':'Votre agent vous accompagne.','cta-champion':'🏆 Rejoignez les champions','cta-champion-p':'L\'agence la plus primée par TikTok.','cta-join-family':'🦈 Faites partie de Tiger Shark','cta-join-family-p':'Rejoignez la famille.','cta-challenge':'🚀 Prêt pour le défi ?','cta-challenge-p':'Rejoignez et gagnez des récompenses.','nav-notice':'⚠️ Avertissement',
+'notice-title':'Avertissements Importants',
+'notice-desc':'Lisez attentivement avant de rejoindre',
+'notice-1-title':'Sur le Partage des Revenus',
+'notice-1-h':'✅ Engagement de l\'Agence',
+'notice-1-p':'L\'agence <strong style="color:var(--cyan);">ne prendra ni ne possédera aucune part des bénéfices du créateur</strong>. Tous vos revenus TikTok Live vous appartiennent entièrement.',
+'notice-2-title':'Processus d\'Inscription',
+'join-method-1-h':'Méthode 1 : Demande Directe',
+'join-method-1-p':'Cliquez sur le lien d\'inscription sur la page web. Un agent vous contactera bientôt.',
+'join-method-2-h':'Méthode 2 : Code d\'Invitation',
+'join-method-2-p':'Envoyez le code d\'invitation à l\'agent qui vous a contacté.',
+'invite-code-title':'Comment Obtenir le Code d\'Invitation',
+'invite-steps-h':'📋 Étapes à Suivre',
+'step-1':'1️⃣ Ouvrez TikTok → allez sur votre Profil',
+'step-2':'2️⃣ Appuyez sur les trois lignes (☰) en haut à droite',
+'step-3':'3️⃣ Sélectionnez TikTok Studio',
+'step-4':'4️⃣ Entrez dans le module LIVE',
+'step-5':'5️⃣ Faites défiler → trouvez Outils et Ressources',
+'step-6':'6️⃣ Sélectionnez Centre d\'Agence',
+'step-7':'7️⃣ Appuyez sur Voir les Méthodes d\'Inscription',
+'step-8':'8️⃣ Trouvez le texte bleu Code d\'Invitation',
+'step-9':'9️⃣ Copiez et envoyez le code à votre agent',
+'notice-3-title':'Processus de Sortie',
+'exit-notice-h':'✅ Liberté de Partir',
+'exit-notice-p':'L\'agence <strong style="color:var(--green);">ne vous forcera pas à rester</strong>. Vous pouvez partir à tout moment sans pénalité.',
+'exit-steps-h':'📋 Étapes pour Partir',
+'exit-step-1':'1️⃣ Ouvrez TikTok → allez sur votre Profil',
+'exit-step-2':'2️⃣ Appuyez sur les trois lignes (☰) en haut à droite',
+'exit-step-3':'3️⃣ Sélectionnez TikTok Studio',
+'exit-step-4':'4️⃣ Entrez dans le module LIVE',
+'exit-step-5':'5️⃣ Faites défiler → trouvez Outils et Ressources',
+'exit-step-6':'6️⃣ Sélectionnez Centre d\'Agence',
+'exit-step-7':'7️⃣ Appuyez sur Quitter l\'Agence',
+'exit-step-8':'8️⃣ Suivez les instructions pour terminer',
+'cta-notice':'🦈 Rejoignez en toute confiance',
+'cta-notice-p':'Tiger Shark garantit transparence et honnêteté pour chaque créateur.',
+'tag-rules':'RÈGLES LIVE',
+'title-rules':'TikTok <span>Règles LIVE</span>',
+'rules-hint':'Connaissez les règles pour protéger votre compte',
+'rule-1-h':'Règles de Base LIVE',
+'rule-1-p':'Comportements interdits et suspensions',
+'rule-2-h':'Règles sur les Cadeaux',
+'rule-2-p':'Interdiction des faux cadeaux',
+'rule-3-h':'Guide de Formation',
+'rule-3-p':'Comment améliorer votre LIVE','rg-ban-title':'Absolument Interdit <span style="color:#ff6b6b;">（Bannissement Immédiat）</span>'
+,'rg-age-h':'Restriction d\'Âge'
+,'rg-age-p':'Le streamer doit avoir au moins 18 ans. Interdit d\'utiliser le compte d\'autrui.'
+,'rg-violence-h':'Violence et Comportements Dangereux'
+,'rg-violence-p':'Interdit de menacer, se battre ou agresser. Interdit de montrer des armes. Interdit les défis dangereux.'
+,'rg-hate-h':'Haine et Discrimination'
+,'rg-hate-p':'Interdit d\'insulter des groupes protégés. Interdit de promouvoir la violence ou les idéologies de haine.'
+,'rg-adult-h':'Contenu Sexuel'
+,'rg-adult-p':'Interdit toute nudité. Interdit les gestes, danses ou langage sexuels. Tolérance zéro pour les mineurs.'
+,'rg-minor-h':'Impliquant des Mineurs（Tolérance Zéro）'
+,'rg-minor-p':'Interdit d\'exploiter ou sexualiser des mineurs ou de les utiliser pour obtenir des cadeaux ou du trafic.'
+,'rg-risk-title':'Comportements à Haut Risque <span style="color:var(--gold);">（Peuvent Causer Shadowban ou Bannissements）</span>'
+,'rg-fraud-h':'🎰 Fraude et Fausses Promesses'
+,'rg-fraud-1':'Faux prix'
+,'rg-fraud-2':'Garantir des gains'
+,'rg-fraud-3':'Informations médicales, juridiques ou financières trompeuses'
+,'rg-offplat-h':'💸 Paiements et Détournements Hors Plateforme'
+,'rg-offplat-1':'Demander des paiements hors TikTok'
+,'rg-offplat-2':'Forcer la redirection vers WhatsApp, Telegram, etc.'
+,'rg-offplat-3':'Promouvoir les jeux d\'argent ou les investissements illégaux'
+,'rg-bot-h':'🤖 Triche et Activité Fausse'
+,'rg-bot-1':'Bots, fausses vues ou achat de cadeaux'
+,'rg-bot-2':'Utiliser des logiciels externes'
+,'rg-other-h':'📺 Autres Règles Importantes'
+,'rg-other-1':'Les streams en noir ou sans interaction peuvent être pénalisés'
+,'rg-other-2':'Interdit de diffuser des vidéos enregistrées comme si c\'était du direct'
+,'rg-other-3':'Attention à la musique ou aux vidéos protégées par copyright'
+,'rg-checklist-title':'Liste de Vérification <span class="green">Avant de Commencer</span>'
+,'rg-checklist-p':'☑️ J\'ai au moins 18 ans<br>☑️ Pas de contenu violent, sexuel ou haineux<br>☑️ Je ne promets pas d\'argent ni de faux prix<br>☑️ Je ne demande pas de paiements hors plateforme<br>☑️ Le contenu et le langage sont appropriés<br>☑️ Le streamer est responsable du chat, des invités et du fond'
+,'gift-what-title':'Qu\'est-ce qu\'un <span class="cyan">«Faux Cadeau»</span> ?'
+,'gift-req-title':'TikTok exige que tous les cadeaux soient :'
+,'gift-req-p':'✅ Réels<br>✅ Volontaires<br>✅ Payés via la plateforme<br>❌ Sans remboursement ni cashback'
+,'gift-ban-title':'Absolument Interdit <span style="color:#ff6b6b;">（Bannissement Direct）</span>'
+,'gift-refund-h':'Remboursement de Cadeaux'
+,'gift-refund-p':'Exemple : "Envoie-moi 1000, je te rends 500". C\'est de la fraude financière. Conséquences : gains gelés, bannissement LIVE, suspension permanente.'
+,'gift-swap-h':'Échange de Cadeaux entre Streamers'
+,'gift-swap-p':'A envoie un cadeau à B, B envoie à A pour gonfler artificiellement les revenus. Manipulation de données. Conséquences : gains à zéro, annulation des bonus, pénalisation de l\'agence.'
+,'gift-bot-h':'Bots ou Achat Externe de Cadeaux'
+,'gift-bot-p':'Inclut les services de recharge externes, les tokens illégaux ou bon marché, les logiciels automatiques. TikTok détecte les IP, appareils et comportements anormaux. Conséquences : bannissement immédiat, comptes liés possiblement affectés.'
+,'gift-offpay-h':'Recharge Hors Plateforme'
+,'gift-offpay-p':'"Paye-moi via PayPal", "c\'est moins cher dehors". Viole le système de paiement officiel. Conséquences : bannissement direct, gains gelés.'
+,'gift-fake-h':'Faux Concours'
+,'gift-fake-p':'"Envoie 500 cadeaux et gagne un iPhone", faux prix, fausses listes de gagnants. C\'est de l\'arnaque.'
+,'gift-allow-title':'Comportements Autorisés'
+,'gift-allow-p':'✅ Demander du soutien naturellement<br>✅ Organiser des activités d\'interaction genuines<br>✅ Participer aux PK de façon propre et équitable<br>✅ Motiver l\'audience sans promettre d\'argent'
+,'gift-remember-h':'Rappel'
+,'gift-remember-p':'Si ça nécessite un remboursement, c\'est illégal. Si ça doit se faire en secret, c\'est illégal. L\'agence ne protégera aucun streamer qui fait des remboursements, échange des cadeaux ou utilise des recharges illégales.'
+,'train-loyal-title':'Comment Maintenir le <span class="cyan">Soutien des Grands Donateurs</span>'
+,'train-relation-h':'Construire la Relation d\'Abord'
+,'train-relation-p':'Ne demandez pas constamment des cadeaux. Interagissez d\'abord et créez la confiance. Ex : Comment ça va ? De quel pays es-tu ?'
+,'train-remember-h':'Se Souvenir des Fans Réguliers'
+,'train-remember-p':'Quand un fan habituel entre dans le LIVE, saluez-le par son nom. Ex : "Bonjour Carlos, bienvenue !"'
+,'train-thanks-h':'Remercier les Cadeaux Immédiatement'
+,'train-thanks-p':'Chaque fois que quelqu\'un envoie un cadeau, remerciez-le avec enthousiasme. Ex : "Merci beaucoup pour ton cadeau !"'
+,'train-fan-h':'Cultiver des Fans Fidèles'
+,'train-fan-p':'Faites sentir aux fans qu\'ils font partie du LIVE. Ex : "Tu me soutiens toujours, je t\'en suis vraiment reconnaissant."'
+,'train-phrases-title':'Phrases de Référence pour <span class="cyan">Demander des Cadeaux Naturellement</span>'
+,'train-common-h':'🎯 Phrases Courantes'
+,'train-c1':'Si tu aimes ce LIVE, envoie un petit cadeau'
+,'train-c2':'Un petit cœur ou cadeau pour soutenir le stream'
+,'train-c3':'Merci famille pour le soutien'
+,'train-c4':'Nous sommes dans un PK, nous avons besoin de soutien'
+,'train-c5':'Qui envoie le premier cadeau ?'
+,'train-c6':'Ce cadeau est incroyable !'
+,'train-goal-h':'🚀 Phrases de Motivation par Objectifs'
+,'train-g1':'Si on atteint 100 roses, je danse'
+,'train-g2':'Si on atteint l\'objectif, je fais un défi'
+,'train-g3':'On est presque à l\'objectif famille'
+,'train-g4':'Encore un peu de soutien'
+,'train-g5':'Qui envoie le Lion ? Je donne tout aujourd\'hui'
+,'train-g6':'Nous sommes la meilleure équipe !'
+,'train-pk-title':'Comment Obtenir du <span class="cyan">Soutien en Bataille PK</span>'
+,'train-pk-before-h':'Annonce Avant le PK'
+,'train-pk-before-p':'Prévenez vos fans : "Aujourd\'hui je vais faire plusieurs batailles PK."'
+,'train-pk-during-h':'Rappel Pendant le PK'
+,'train-pk-during-p':'Pendant le PK : "Famille, nous sommes dans une bataille PK."'
+,'train-pk-lose-h':'Motiver Quand On Perd'
+,'train-pk-lose-p':'Quand on est derrière : "Allez l\'équipe, on peut encore gagner !"'
+,'train-pk-after-h':'Remerciements Après le PK'
+,'train-pk-after-p':'Après le PK, remerciez toujours : "Merci à tous pour votre soutien."'
+,'train-core-title':'Le Principe <span class="gold">Le Plus Important</span>'
+,'train-core-h':'💡 La Règle d\'Or'
+,'train-core-p':'Les cadeaux ne viennent pas parce que vous les demandez. Ils viennent parce que <strong style="color:var(--gold);">les gens ressentent une connexion avec vous</strong>.<br>Construisez d\'abord la relation, le soutien viendra naturellement.','req-col-condition':'📋 Condition'
+,'req-col-bonus':'💰 Bonus'
+,'req-1-label':'DURÉE DE LIVE'
+,'req-1-cond':'LIVE ≥ 15h en 7 jours'
+,'req-2-label':'JOURS VALIDES'
+,'req-2-cond':'LIVE valide ≥ 21 jours + 50h'
+,'req-3-label':'FAN CLUB'
+,'req-3-cond':'Fan club du mois ≥ 70 personnes'
+,'req-4-label':'DIAMANTS'
+,'req-4-cond':'Revenus du mois ≥ 80 000 💎'},
+pt:{'nav-about':'Sobre Nós','nav-benefits':'Benefícios','nav-agents':'Agente','nav-contact':'Contato','nav-links-nav':'Links','nav-recruit':'Junte-se','nav-activity':'🏆 Atividade','lang-title':'IDIOMA','back':'← Voltar','hero-sub':'Agência Top · Profissional · Criamos o Futuro','hero-btn':'Junte-se','scroll-hint':'▼ Role para baixo','tag-about':'SOBRE NÓS','title-about':'Sobre <span>Nós</span>','card-about-1-h':'Sobre Tiger Shark','card-about-1-p':'Agência fundada em 2022...','card-about-2-h':'Nossa Missão','card-about-2-p':'Operações profissionais como núcleo...','card-industry-h':'Posição na Indústria','card-industry-p':'Vários prêmios TikTok LIVE FEST...','click-awards':'Ver prêmios →','tag-benefits':'BENEFÍCIOS','title-benefits':'<span>Benefícios</span>','ben-1-h':'Altas Comissões','ben-1-p':'Melhores taxas da indústria','ben-2-h':'Apoio de Tráfego','ben-2-p':'Recursos oficiais dedicados','ben-3-h':'Treinamento Pro','ben-3-p':'Cursos de técnicas de streaming','ben-4-h':'Proteção Total','ben-4-p':'Proteção contratual, equipe jurídica','click-more':'👆 Clique para ver','tag-agents':'SEU AGENTE','title-agents':'Seu <span>Agente Exclusivo</span>','agent-role':'AGENTE CHEFE','agent-desc':'9 anos de experiência em streaming ao vivo.','tag-contact':'CONTATO','title-contact':'<span>Contato</span>','contact-2-h':'HORÁRIO','contact-2-p':'Segunda a Sábado 09:00 - 17:00','tag-links':'LINKS OFICIAIS','title-links':'Links <span>Oficiais</span>','link-wa-h':'Grupo WhatsApp Oficial','link-wa-p':'Últimas notícias','tag-recruit':'JUNTE-SE','title-recruit':'<span>Recrutamento</span>','recruit-hint':'Clique abaixo para se juntar','join-btn':'🦈 Candidatar-se','footer-txt':'Profissional · Integridade · Sucesso Mútuo','popup-badge':'🎉 ATIVIDADE SEMANAL','popup-title':'Atividade da <span>Agência</span>','popup-desc':'Nova atividade esta semana!','popup-go':'🏆 Ver Atividade','popup-skip':'Fechar','popup-summary':'RESUMO DAS RECOMPENSAS','detail-title':'Altas Comissões · Detalhes','detail-desc':'Tiger Shark oferece as melhores taxas','detail-unlock':'Desbloqueie sua <span>Comissão Máxima</span>','commission-base-label':'COMISSÃO BASE','commission-base-desc':'Taxa garantida para todos','commission-arrow':'ATÉ','commission-max-label':'COMISSÃO MÁXIMA','commission-max-desc':'Cumprindo todos os requisitos','accumulate-h':'Bônus são acumuláveis!','accumulate-p':'De 3% base até 5% máximo.','bonus-title':'<span>Bônus</span> Adicionais','bonus-box-h':'💎 Bônus Adicionais','bonus-box-p':'Tiger Shark estabelece fundos mensais de bônus.','settlement-title':'Detalhes de <span>Liquidação</span>','settlement-1-h':'⏰ Ciclo de Liquidação','settlement-1-p':'Liquidação no 1° de cada mês.','settlement-2-h':'📋 Fontes de Renda','settlement-2-p':'Renda de presentes TikTok Live.','settlement-3-h':'🔒 Garantia de Transparência','settlement-3-p':'Dados verificáveis em tempo real.','faq-title':'Perguntas <span>Frequentes</span>','faq-1-h':'🤔 Zero seguidores?','faq-1-p':'Claro! Todos são bem-vindos.','faq-2-h':'📈 Frequência de ajuste?','faq-2-p':'Avaliação mensal. Só sobe.','faq-3-h':'🌍 Criadores internacionais?','faq-3-p':'Aberto ao mundo todo.','faq-4-h':'📝 Restrições do contrato?','faq-4-p':'Termos flexíveis e transparentes.','protect-title':'Proteção Total · Detalhes','protect-desc':'Tiger Shark protege seus direitos','protect-main-title':'Proteções <span class="green">Principais</span>','protect-1-h':'Contrato Transparente','protect-1-p':'Todos os termos são claros.','protect-2-h':'Equipe Jurídica','protect-2-p':'Equipe jurídica profissional.','protect-3-h':'Garantia de Liquidação','protect-3-p':'Liquidação pontual e rastreável.','protect-4-h':'Proteção de Dados','protect-4-p':'Informações protegidas por confidencialidade.','protect-commit-title':'Tiger Shark <span class="green">Compromisso</span>','commit-1-h':'🕐 Suporte 24/7','commit-1-p':'Agente online 24h. Resposta em 2h.','commit-2-h':'📊 Segurança da Conta','commit-2-p':'Ajuda com apelações e bloqueios.','commit-3-h':'🌍 Proteção Transfronteiriça','commit-3-p':'Suporte jurídico internacional.','agent-title':'Seu Agente Exclusivo','agent-page-desc':'Serviço exclusivo individual','agent-card-title':'Cartão do <span class="purple">Agente</span>','agent-contact-title':'<span class="purple">Contato</span>','agent-email-label':'EMAIL EMPRESARIAL','industry-title':'Prêmios · Posição na Indústria','industry-desc':'Premiada pelo TikTok','industry-stats-title':'Conquistas <span class="gold">em Números</span>','stat-awards':'PRÊMIOS OFICIAIS','stat-founded':'ANO DE FUNDAÇÃO','stat-experience':'ANOS DE EXPERIÊNCIA','awards-intro-p':'🏅 Tiger Shark venceu nos torneios mais prestigiados do TikTok.','awards-gallery-title':'Galeria de <span class="gold">Prêmios</span>','about-title':'Sobre Tiger Shark','about-desc':'Agência premium · Fundada em 2022','about-video-title':'Vídeo <span class="cyan">Oficial</span>','about-who-title':'Quem <span class="cyan">Somos?</span>','about-agency-h':'🏢 Sobre a Agência','about-agency-p':'Tiger Shark é uma agência fundada em 2022.','about-mission-h':'🎯 Nossa Missão','about-mission-p':'Estratégias personalizadas para cada criador.','about-global-h':'🌍 Alcance Global','about-global-p':'Presença ativa em várias regiões.','about-values-h':'💡 Nossos Valores','about-values-p':'Profissionalismo, integridade e sucesso mútuo.','about-stats-title':'Tiger Shark <span class="cyan">em Números</span>','activity-title':'Atividade da Agência','activity-desc':'Complete objetivos e desbloqueie recompensas','validity':'VIGÊNCIA:','validity-week':'Semana de','objectives-title':'OBJETIVOS E RECOMPENSAS','objectives-desc':'Dias + diamantes → bônus','rh-days':'Dias · Requisito','rh-diamonds':'💎 Diamantes','rh-reward':'🎁 Recompensa','days-word':'dias','level-basic':'básico','level-advanced':'avançado','level-elite':'elite','diamond-unit':'💎','terms-title':'TERMOS E CONDIÇÕES','terms-desc':'Leia atentamente antes de participar','note-1':'<strong>Período:</strong> Válido apenas durante a vigência.','note-2':'<strong>Diamantes:</strong> Todos os diamantes obtidos contam.','note-3':'<strong>Dias válidos:</strong> Mínimo 1 hora contínua.','note-4':'<strong>Dúvidas:</strong> Contate seu agente.','cta-join':'🚀 Junte-se','cta-ready':'🦈 Está pronto?','cta-ready-p':'Junte-se à Tiger Shark.','cta-confidence':'🛡️ Junte-se com confiança','cta-confidence-p':'Tiger Shark é baseada em profissionalismo.','cta-find-me':'🦈 Me encontre','cta-find-me-p':'Seu agente te acompanha.','cta-champion':'🏆 Junte-se aos campeões','cta-champion-p':'Agência mais premiada pelo TikTok.','cta-join-family':'🦈 Faça parte da Tiger Shark','cta-join-family-p':'Junte-se à família.','cta-challenge':'🚀 Pronto para o desafio?','cta-challenge-p':'Junte-se e ganhe recompensas.','nav-notice':'⚠️ Aviso',
+'notice-title':'Avisos Importantes',
+'notice-desc':'Leia com atenção antes de se juntar',
+'notice-1-title':'Sobre a Divisão de Lucros',
+'notice-1-h':'✅ Compromisso da Agência',
+'notice-1-p':'A agência <strong style="color:var(--cyan);">NÃO tomará nem possuirá nenhuma parte dos lucros do criador</strong>. Todos os seus ganhos do TikTok Live pertencem exclusivamente a você.',
+'notice-2-title':'Processo de Adesão',
+'join-method-1-h':'Método 1: Candidatura Direta',
+'join-method-1-p':'Clique no link de adesão na página web. Um agente entrará em contato em breve.',
+'join-method-2-h':'Método 2: Código de Convite',
+'join-method-2-p':'Envie o código de convite ao agente que entrou em contato com você.',
+'invite-code-title':'Como Obter o Código',
+'invite-steps-h':'📋 Passos',
+'step-1':'1️⃣ Abra o TikTok → vá para seu Perfil',
+'step-2':'2️⃣ Toque nas três linhas (☰) no canto superior direito',
+'step-3':'3️⃣ Selecione TikTok Studio',
+'step-4':'4️⃣ Entre no módulo LIVE',
+'step-5':'5️⃣ Role para baixo → encontre Ferramentas e Recursos',
+'step-6':'6️⃣ Selecione Centro de Agência',
+'step-7':'7️⃣ Toque em Ver Métodos de Adesão',
+'step-8':'8️⃣ Encontre o texto azul Código de Convite',
+'step-9':'9️⃣ Copie e envie o código ao seu agente',
+'notice-3-title':'Processo de Saída',
+'exit-notice-h':'✅ Liberdade de Sair',
+'exit-notice-p':'A agência <strong style="color:var(--green);">não vai forçá-lo a ficar</strong>. Você pode sair a qualquer momento sem penalidade.',
+'exit-steps-h':'📋 Passos para Sair',
+'exit-step-1':'1️⃣ Abra o TikTok → vá para seu Perfil',
+'exit-step-2':'2️⃣ Toque nas três linhas (☰) no canto superior direito',
+'exit-step-3':'3️⃣ Selecione TikTok Studio',
+'exit-step-4':'4️⃣ Entre no módulo LIVE',
+'exit-step-5':'5️⃣ Role para baixo → encontre Ferramentas e Recursos',
+'exit-step-6':'6️⃣ Selecione Centro de Agência',
+'exit-step-7':'7️⃣ Toque no botão Sair da Agência',
+'exit-step-8':'8️⃣ Siga as instruções para concluir',
+'cta-notice':'🦈 Junte-se com total confiança',
+'cta-notice-p':'Tiger Shark garante transparência e honestidade para cada criador.',
+'tag-rules':'REGRAS LIVE',
+'title-rules':'TikTok <span>Regras de LIVE</span>',
+'rules-hint':'Conheça as regras para proteger sua conta',
+'rule-1-h':'Regras Básicas de LIVE',
+'rule-1-p':'Condutas proibidas e suspensões',
+'rule-2-h':'Regras de Presentes',
+'rule-2-p':'Proibição de presentes falsos',
+'rule-3-h':'Guia de Treinamento',
+'rule-3-p':'Como melhorar seu desempenho','rg-ban-title':'Absolutamente Proibido <span style="color:#ff6b6b;">（Banimento Imediato）</span>'
+,'rg-age-h':'Restrição de Idade'
+,'rg-age-p':'O streamer deve ter pelo menos 18 anos. Proibido usar contas de outras pessoas.'
+,'rg-violence-h':'Violência e Comportamento Perigoso'
+,'rg-violence-p':'Proibido ameaçar, brigar ou agredir. Proibido exibir armas. Proibido desafios perigosos.'
+,'rg-hate-h':'Ódio e Discriminação'
+,'rg-hate-p':'Proibido insultar grupos protegidos. Proibido promover violência ou ideologias de ódio.'
+,'rg-adult-h':'Conteúdo Sexual'
+,'rg-adult-p':'Proibido qualquer nudez. Proibido gestos, danças ou linguagem sexual. Tolerância zero com menores.'
+,'rg-minor-h':'Envolvendo Menores（Tolerância Zero）'
+,'rg-minor-p':'Proibido explorar ou sexualizar menores ou usá-los para obter presentes ou tráfego.'
+,'rg-risk-title':'Comportamentos de Alto Risco <span style="color:var(--gold);">（Podem Causar Shadowban ou Banimentos）</span>'
+,'rg-fraud-h':'🎰 Fraude e Falsas Promessas'
+,'rg-fraud-1':'Prêmios falsos'
+,'rg-fraud-2':'Garantir ganhos'
+,'rg-fraud-3':'Informações médicas, legais ou financeiras enganosas'
+,'rg-offplat-h':'💸 Pagamentos e Desvios Fora da Plataforma'
+,'rg-offplat-1':'Pedir pagamentos fora do TikTok'
+,'rg-offplat-2':'Forçar redirecionamento para WhatsApp, Telegram, etc.'
+,'rg-offplat-3':'Promover apostas ou investimentos ilegais'
+,'rg-bot-h':'🤖 Trapaça e Atividade Falsa'
+,'rg-bot-1':'Bots, visualizações falsas ou compra de presentes'
+,'rg-bot-2':'Usar software externo'
+,'rg-other-h':'📺 Outras Regras Importantes'
+,'rg-other-1':'Streams com tela preta ou sem interação podem ser penalizados'
+,'rg-other-2':'Proibido transmitir vídeos gravados como se fossem ao vivo'
+,'rg-other-3':'Atenção à música ou vídeos com direitos autorais'
+,'rg-checklist-title':'Lista de Verificação <span class="green">Antes de Iniciar</span>'
+,'rg-checklist-p':'☑️ Tenho pelo menos 18 anos<br>☑️ Sem conteúdo violento, sexual ou de ódio<br>☑️ Não prometo dinheiro nem prêmios falsos<br>☑️ Não peço pagamentos fora da plataforma<br>☑️ O conteúdo e linguagem são apropriados<br>☑️ O streamer é responsável pelo chat, convidados e fundo'
+,'gift-what-title':'O que é um <span class="cyan">«Presente Falso»</span>?'
+,'gift-req-title':'O TikTok exige que todos os presentes sejam:'
+,'gift-req-p':'✅ Reais<br>✅ Voluntários<br>✅ Pagos dentro da plataforma<br>❌ Sem reembolsos ou cashback'
+,'gift-ban-title':'Absolutamente Proibido <span style="color:#ff6b6b;">（Banimento Direto）</span>'
+,'gift-refund-h':'Reembolso de Presentes'
+,'gift-refund-p':'Exemplo: "Me manda 1000, eu te devolvo 500". Isso é fraude financeira. Consequências: ganhos congelados, banimento do LIVE, suspensão permanente.'
+,'gift-swap-h':'Troca de Presentes entre Streamers'
+,'gift-swap-p':'A envia presente a B, B envia a A para inflar artificialmente a renda. Manipulação de dados. Consequências: ganhos zerados, bônus cancelados, penalização da agência.'
+,'gift-bot-h':'Bots ou Compra Externa de Presentes'
+,'gift-bot-p':'Inclui serviços de recarga externos, tokens ilegais ou baratos, software automático. TikTok detecta IP, dispositivos e comportamentos anormais. Consequências: banimento imediato, contas vinculadas possivelmente afetadas.'
+,'gift-offpay-h':'Recarga Fora da Plataforma'
+,'gift-offpay-p':'"Me pague via PayPal", "é mais barato fora". Viola o sistema de pagamento oficial. Consequências: banimento direto, ganhos congelados.'
+,'gift-fake-h':'Sorteios Falsos'
+,'gift-fake-p':'"Mande 500 presentes e ganhe um iPhone", prêmios falsos, listas de ganhadores falsas. Isso é fraude.'
+,'gift-allow-title':'Comportamentos Permitidos'
+,'gift-allow-p':'✅ Pedir apoio de forma natural<br>✅ Realizar atividades de interação genuínas<br>✅ Participar de PK de forma limpa e justa<br>✅ Motivar a audiência sem prometer dinheiro'
+,'gift-remember-h':'Lembre-se'
+,'gift-remember-p':'Se precisar de reembolso, é ilegal. Se precisar ser feito em segredo, é ilegal. A agência não protegerá nenhum streamer que faça reembolsos, troque presentes ou use recargas ilegais.'
+,'train-loyal-title':'Como Manter o <span class="cyan">Apoio dos Grandes Doadores</span>'
+,'train-relation-h':'Construa o Relacionamento Primeiro'
+,'train-relation-p':'Não fique pedindo presentes constantemente. Interaja e construa confiança primeiro. Ex.: Como você está? De que país você é?'
+,'train-remember-h':'Lembre-se dos Fãs Regulares'
+,'train-remember-p':'Quando um fã habitual entrar no LIVE, cumprimente-o pelo nome. Ex.: "Olá Carlos, bem-vindo de volta!"'
+,'train-thanks-h':'Agradeça os Presentes Imediatamente'
+,'train-thanks-p':'Toda vez que alguém enviar um presente, agradeça com entusiasmo. Ex.: "Muito obrigado pelo seu presente, eu realmente agradeço!"'
+,'train-fan-h':'Cultive Fãs Leais'
+,'train-fan-p':'Faça os fãs sentirem que são parte importante do LIVE. Ex.: "Você sempre me apoia, sou muito grato."'
+,'train-phrases-title':'Frases de Referência para <span class="cyan">Pedir Presentes Naturalmente</span>'
+,'train-common-h':'🎯 Frases Comuns'
+,'train-c1':'Se você gosta deste LIVE, mande um pequeno presente'
+,'train-c2':'Um coraçãozinho ou presente para apoiar a stream'
+,'train-c3':'Obrigado família pelo apoio'
+,'train-c4':'Estamos em um PK, precisamos de apoio'
+,'train-c5':'Quem manda o primeiro presente?'
+,'train-c6':'Esse presente é incrível!'
+,'train-goal-h':'🚀 Frases de Motivação por Objetivos'
+,'train-g1':'Se chegarmos a 100 rosas, eu danço'
+,'train-g2':'Se atingirmos o objetivo, faço um desafio'
+,'train-g3':'Quase no objetivo família'
+,'train-g4':'Só mais um pouquinho de apoio'
+,'train-g5':'Quem manda o Leão? Dando tudo hoje'
+,'train-g6':'Somos a melhor equipe!'
+,'train-pk-title':'Como Obter <span class="cyan">Apoio nas Batalhas PK</span>'
+,'train-pk-before-h':'Aviso Antes do PK'
+,'train-pk-before-p':'Avise seus fãs: "Hoje vou fazer várias batalhas PK."'
+,'train-pk-during-h':'Lembrete Durante o PK'
+,'train-pk-during-p':'Durante o PK: "Família, estamos em uma batalha PK."'
+,'train-pk-lose-h':'Motivar Quando Está Perdendo'
+,'train-pk-lose-p':'Quando estiver atrás: "Vamos equipe, ainda podemos ganhar!"'
+,'train-pk-after-h':'Agradecer Após o PK'
+,'train-pk-after-p':'Após o PK, sempre agradeça: "Obrigado a todos pelo apoio."'
+,'train-core-title':'O Princípio <span class="gold">Mais Importante</span>'
+,'train-core-h':'💡 A Regra de Ouro'
+,'train-core-p':'Os presentes não vêm porque você pede. Vêm porque <strong style="color:var(--gold);">as pessoas sentem uma conexão com você</strong>.<br>Construa o relacionamento primeiro, o apoio virá naturalmente.','req-col-condition':'📋 Requisito'
+,'req-col-bonus':'💰 Bônus'
+,'req-1-label':'DURAÇÃO DE LIVE'
+,'req-1-cond':'LIVE ≥ 15h em 7 dias'
+,'req-2-label':'DIAS VÁLIDOS'
+,'req-2-cond':'LIVE válido ≥ 21 dias + 50h'
+,'req-3-label':'FÃ CLUBE'
+,'req-3-cond':'Fã clube do mês ≥ 70 pessoas'
+,'req-4-label':'DIAMANTES'
+,'req-4-cond':'Renda do mês ≥ 80.000 💎'},
+ru:{'nav-about':'О Нас','nav-benefits':'Преимущества','nav-agents':'Агент','nav-contact':'Контакты','nav-links-nav':'Ссылки','nav-recruit':'Вступить','nav-activity':'🏆 Активность','lang-title':'ЯЗЫК','back':'← Назад','hero-sub':'Топ Агентство · Профессионально · Создаём Будущее','hero-btn':'Вступить','scroll-hint':'▼ Прокрутите вниз','tag-about':'О НАС','title-about':'О <span>Нас</span>','card-about-1-h':'О Tiger Shark','card-about-1-p':'Агентство, основанное в 2022...','card-about-2-h':'Наша Миссия','card-about-2-p':'Профессиональные операции как основа...','card-industry-h':'Позиция в Индустрии','card-industry-p':'Множество наград TikTok LIVE FEST...','click-awards':'Смотреть награды →','tag-benefits':'ПРЕИМУЩЕСТВА','title-benefits':'<span>Преимущества</span>','ben-1-h':'Высокие Комиссии','ben-1-p':'Лучшие ставки в индустрии','ben-2-h':'Поддержка Трафика','ben-2-p':'Специальные официальные ресурсы','ben-3-h':'Обучение','ben-3-p':'Систематические курсы по стримингу','ben-4-h':'Полная Защита','ben-4-p':'Контрактная защита, юридическая команда','click-more':'👆 Нажмите для деталей','tag-agents':'ВАШ АГЕНТ','title-agents':'Ваш <span>Эксклюзивный Агент</span>','agent-role':'ГЛАВНЫЙ АГЕНТ','agent-desc':'9 лет опыта в прямых трансляциях.','tag-contact':'КОНТАКТЫ','title-contact':'<span>Контакты</span>','contact-2-h':'РАБОЧИЕ ЧАСЫ','contact-2-p':'Понедельник - Суббота 09:00 - 17:00','tag-links':'ОФИЦИАЛЬНЫЕ ССЫЛКИ','title-links':'Официальные <span>Ссылки</span>','link-wa-h':'Группа WhatsApp','link-wa-p':'Последние новости','tag-recruit':'ВСТУПИТЬ','title-recruit':'<span>Набор</span>','recruit-hint':'Нажмите ниже чтобы присоединиться','join-btn':'🦈 Подать Заявку','footer-txt':'Профессионализм · Честность · Успех','popup-badge':'🎉 ЕЖЕНЕДЕЛЬНО','popup-title':'Активность <span>Агентства</span>','popup-desc':'Новая активность на этой неделе!','popup-go':'🏆 Смотреть','popup-skip':'Закрыть','popup-summary':'ОБЗОР НАГРАД','detail-title':'Высокие Комиссии · Детали','detail-desc':'Tiger Shark предлагает лучшие ставки','detail-unlock':'Разблокируйте <span>Максимальную Комиссию</span>','commission-base-label':'БАЗОВАЯ КОМИССИЯ','commission-base-desc':'Гарантированная ставка для всех','commission-arrow':'ДО','commission-max-label':'МАКСИМАЛЬНАЯ КОМИССИЯ','commission-max-desc':'При выполнении всех требований','accumulate-h':'Бонусы суммируются!','accumulate-p':'От 3% базовой до 5% максимальной.','bonus-title':'Дополнительные <span>Бонусы</span>','bonus-box-h':'💎 Дополнительные Бонусы','bonus-box-p':'Tiger Shark ежемесячно формирует бонусный фонд.','settlement-title':'Детали <span>Расчёта</span>','settlement-1-h':'⏰ Цикл Расчёта','settlement-1-p':'Расчёт 1-го числа каждого месяца.','settlement-2-h':'📋 Источники Дохода','settlement-2-p':'Доход от подарков TikTok Live.','settlement-3-h':'🔒 Гарантия Прозрачности','settlement-3-p':'Данные в реальном времени. Аудит третьей стороны.','faq-title':'Частые <span>Вопросы</span>','faq-1-h':'🤔 Ноль подписчиков?','faq-1-p':'Конечно! Все приветствуются.','faq-2-h':'📈 Частота корректировки?','faq-2-p':'Ежемесячная оценка. Только вверх.','faq-3-h':'🌍 Международные авторы?','faq-3-p':'Открыто для всего мира.','faq-4-h':'📝 Ограничения контракта?','faq-4-p':'Гибкие и прозрачные условия.','protect-title':'Полная Защита · Детали','protect-desc':'Tiger Shark защищает ваши права','protect-main-title':'Основные <span class="green">Защиты</span>','protect-1-h':'Прозрачный Контракт','protect-1-p':'Все условия ясны и публичны.','protect-2-h':'Юридическая Команда','protect-2-p':'Профессиональная юридическая команда.','protect-3-h':'Гарантия Расчёта','protect-3-p':'Своевременный и отслеживаемый расчёт.','protect-4-h':'Защита Данных','protect-4-p':'Информация защищена конфиденциальностью.','protect-commit-title':'Tiger Shark <span class="green">Обязательства</span>','commit-1-h':'🕐 Поддержка 24/7','commit-1-p':'Агент онлайн 24ч. Ответ за 2ч.','commit-2-h':'📊 Безопасность Аккаунта','commit-2-p':'Помощь с апелляциями и блокировками.','commit-3-h':'🌍 Трансграничная Защита','commit-3-p':'Юридическая поддержка для международных авторов.','agent-title':'Ваш Эксклюзивный Агент','agent-page-desc':'Эксклюзивный индивидуальный сервис','agent-card-title':'Карточка <span class="purple">Агента</span>','agent-contact-title':'<span class="purple">Контакты</span>','agent-email-label':'РАБОЧИЙ EMAIL','industry-title':'Награды · Позиция в Индустрии','industry-desc':'Награждён TikTok','industry-stats-title':'Достижения <span class="gold">в Цифрах</span>','stat-awards':'ОФИЦИАЛЬНЫЕ НАГРАДЫ','stat-founded':'ГОД ОСНОВАНИЯ','stat-experience':'ЛЕТ ОПЫТА','awards-intro-p':'🏅 Tiger Shark победил на самых престижных турнирах TikTok.','awards-gallery-title':'Галерея <span class="gold">Наград</span>','about-title':'О Tiger Shark','about-desc':'Премиум агентство · Основано в 2022','about-video-title':'Официальное <span class="cyan">Видео</span>','about-who-title':'Кто <span class="cyan">Мы?</span>','about-agency-h':'🏢 Об Агентстве','about-agency-p':'Tiger Shark основано в 2022 году.','about-mission-h':'🎯 Наша Миссия','about-mission-p':'Персонализированные стратегии для каждого.','about-global-h':'🌍 Глобальный Охват','about-global-p':'Активное присутствие в разных регионах.','about-values-h':'💡 Наши Ценности','about-values-p':'Профессионализм, честность и взаимный успех.','about-stats-title':'Tiger Shark <span class="cyan">в Цифрах</span>','activity-title':'Активность Агентства','activity-desc':'Выполняйте цели и получайте награды','validity':'ДЕЙСТВУЕТ:','validity-week':'Неделя с','objectives-title':'ЦЕЛИ И НАГРАДЫ','objectives-desc':'Дни + алмазы → бонус','rh-days':'Дни · Требование','rh-diamonds':'💎 Алмазы','rh-reward':'🎁 Награда','days-word':'дней','level-basic':'базовый','level-advanced':'продвинутый','level-elite':'элита','diamond-unit':'💎','terms-title':'УСЛОВИЯ И ПОЛОЖЕНИЯ','terms-desc':'Прочитайте перед участием','note-1':'<strong>Период:</strong> Только в период действия.','note-2':'<strong>Алмазы:</strong> Все полученные алмазы считаются.','note-3':'<strong>Действ. дни:</strong> Минимум 1 час непрерывного стрима.','note-4':'<strong>Вопросы:</strong> Свяжитесь с агентом.','cta-join':'🚀 Вступить','cta-ready':'🦈 Готовы?','cta-ready-p':'Присоединяйтесь к Tiger Shark.','cta-confidence':'🛡️ Присоединяйтесь уверенно','cta-confidence-p':'Tiger Shark основан на профессионализме.','cta-find-me':'🦈 Найдите меня','cta-find-me-p':'Ваш агент рядом.','cta-champion':'🏆 Присоединяйтесь к чемпионам','cta-champion-p':'Самое награждённое агентство.','cta-join-family':'🦈 Станьте частью Tiger Shark','cta-join-family-p':'Присоединяйтесь к семье.','cta-challenge':'🚀 Готовы к вызову?','cta-challenge-p':'Присоединяйтесь и зарабатывайте.','nav-notice':'⚠️ Уведомление',
+'notice-title':'Важные Уведомления',
+'notice-desc':'Прочитайте внимательно перед присоединением',
+'notice-1-title':'О Распределении Доходов',
+'notice-1-h':'✅ Обязательство Агентства',
+'notice-1-p':'Агентство <strong style="color:var(--cyan);">НЕ будет брать или владеть какой-либо частью прибыли создателя</strong>. Все ваши доходы от TikTok Live принадлежат только вам.',
+'notice-2-title':'Процесс Вступления',
+'join-method-1-h':'Способ 1: Прямая Заявка',
+'join-method-1-p':'Нажмите на ссылку для вступления на веб-странице. Агент свяжется с вами.',
+'join-method-2-h':'Способ 2: Код Приглашения',
+'join-method-2-p':'Отправьте код приглашения агенту, который с вами связался.',
+'invite-code-title':'Как Получить Код',
+'invite-steps-h':'📋 Шаги',
+'step-1':'1️⃣ Откройте TikTok → перейдите в Профиль',
+'step-2':'2️⃣ Нажмите на три линии (☰) в правом верхнем углу',
+'step-3':'3️⃣ Выберите TikTok Studio',
+'step-4':'4️⃣ Войдите в модуль LIVE',
+'step-5':'5️⃣ Прокрутите вниз → найдите Инструменты и Ресурсы',
+'step-6':'6️⃣ Выберите Центр Агентства',
+'step-7':'7️⃣ Нажмите Просмотреть способы вступления',
+'step-8':'8️⃣ Найдите синий текст Код Приглашения',
+'step-9':'9️⃣ Скопируйте и отправьте код вашему агенту',
+'notice-3-title':'Процесс Выхода',
+'exit-notice-h':'✅ Свобода Выхода',
+'exit-notice-p':'Агентство <strong style="color:var(--green);">не принудит вас остаться</strong>. Вы можете уйти в любое время без штрафов.',
+'exit-steps-h':'📋 Шаги для Выхода',
+'exit-step-1':'1️⃣ Откройте TikTok → перейдите в Профиль',
+'exit-step-2':'2️⃣ Нажмите на три линии (☰) в правом верхнем углу',
+'exit-step-3':'3️⃣ Выберите TikTok Studio',
+'exit-step-4':'4️⃣ Войдите в модуль LIVE',
+'exit-step-5':'5️⃣ Прокрутите вниз → найдите Инструменты и Ресурсы',
+'exit-step-6':'6️⃣ Выберите Центр Агентства',
+'exit-step-7':'7️⃣ Нажмите кнопку Покинуть Агентство',
+'exit-step-8':'8️⃣ Следуйте инструкциям для завершения',
+'cta-notice':'🦈 Присоединяйтесь с полной уверенностью',
+'cta-notice-p':'Tiger Shark гарантирует прозрачность и честность для каждого создателя.',
+'tag-rules':'ПРАВИЛА LIVE',
+'title-rules':'TikTok <span>Правила LIVE</span>',
+'rules-hint':'Знайте правила платформы для защиты аккаунта',
+'rule-1-h':'Основные Правила LIVE',
+'rule-1-p':'Запрещённые действия и блокировки',
+'rule-2-h':'Правила Подарков',
+'rule-2-p':'Запрет фиктивных подарков',
+'rule-3-h':'Руководство по Обучению',
+'rule-3-p':'Как улучшить трансляцию','rg-ban-title':'Категорически Запрещено <span style="color:#ff6b6b;">（Немедленная Блокировка）</span>'
+,'rg-age-h':'Возрастное Ограничение'
+,'rg-age-p':'Стример должен быть не моложе 18 лет. Запрещено использовать чужие аккаунты.'
+,'rg-violence-h':'Насилие и Опасное Поведение'
+,'rg-violence-p':'Запрещено угрожать, драться или нападать. Запрещено показывать оружие. Запрещены опасные испытания.'
+,'rg-hate-h':'Ненависть и Дискриминация'
+,'rg-hate-p':'Запрещено оскорблять защищённые группы. Запрещено пропагандировать насилие или идеологии ненависти.'
+,'rg-adult-h':'Сексуальный Контент'
+,'rg-adult-p':'Запрещена любая нагота. Запрещены сексуальные жесты, танцы или язык. Нулевая толерантность к несовершеннолетним.'
+,'rg-minor-h':'Вовлечение Несовершеннолетних（Нулевая Толерантность）'
+,'rg-minor-p':'Запрещено эксплуатировать или сексуализировать несовершеннолетних или использовать их для получения подарков или трафика.'
+,'rg-risk-title':'Высокорисковое Поведение <span style="color:var(--gold);">（Может Привести к Shadowban или Блокировкам）</span>'
+,'rg-fraud-h':'🎰 Мошенничество и Ложные Обещания'
+,'rg-fraud-1':'Фиктивные призы'
+,'rg-fraud-2':'Гарантированный доход'
+,'rg-fraud-3':'Вводящая в заблуждение медицинская, юридическая или финансовая информация'
+,'rg-offplat-h':'💸 Платежи и Перенаправление Вне Платформы'
+,'rg-offplat-1':'Требование оплаты вне TikTok'
+,'rg-offplat-2':'Принудительное перенаправление в WhatsApp, Telegram и т.д.'
+,'rg-offplat-3':'Продвижение азартных игр или незаконных инвестиций'
+,'rg-bot-h':'🤖 Читерство и Фиктивная Активность'
+,'rg-bot-1':'Боты, фиктивные просмотры или покупка подарков'
+,'rg-bot-2':'Использование стороннего ПО'
+,'rg-other-h':'📺 Другие Важные Правила'
+,'rg-other-1':'Трансляции с чёрным экраном или без взаимодействия могут быть оштрафованы'
+,'rg-other-2':'Запрещено транслировать записанные видео как прямые эфиры'
+,'rg-other-3':'Будьте осторожны с авторскими правами на музыку и видео'
+,'rg-checklist-title':'Чек-лист <span class="green">Перед Началом Стрима</span>'
+,'rg-checklist-p':'☑️ Мне не менее 18 лет<br>☑️ Нет насильственного, сексуального или враждебного контента<br>☑️ Не обещаю денег или фиктивных призов<br>☑️ Не прошу оплаты вне платформы<br>☑️ Контент и язык уместны<br>☑️ Стример несёт ответственность за чат, гостей и фон'
+,'gift-what-title':'Что такое <span class="cyan">«Фиктивный Подарок»</span>?'
+,'gift-req-title':'TikTok требует, чтобы все подарки были:'
+,'gift-req-p':'✅ Настоящими<br>✅ Добровольными<br>✅ Оплаченными через платформу<br>❌ Без возвратов или кэшбэка'
+,'gift-ban-title':'Категорически Запрещено <span style="color:#ff6b6b;">（Прямая Блокировка）</span>'
+,'gift-refund-h':'Возврат Подарков'
+,'gift-refund-p':'Например: "Пришли мне 1000, верну тебе 500". Это финансовое мошенничество. Последствия: заморозка заработка, бан LIVE, постоянная блокировка.'
+,'gift-swap-h':'Обмен Подарками между Стримерами'
+,'gift-swap-p':'A отправляет подарок B, B отправляет A для искусственного завышения дохода. Манипуляция данными. Последствия: обнуление заработка, отмена бонусов, штраф агентству.'
+,'gift-bot-h':'Боты или Внешняя Покупка Подарков'
+,'gift-bot-p':'Включает внешние сервисы пополнения, незаконные или дешёвые токены, автоматическое ПО. TikTok обнаруживает IP, устройства и аномальное поведение. Последствия: немедленная блокировка.'
+,'gift-offpay-h':'Пополнение Вне Платформы'
+,'gift-offpay-p':'"Заплати мне через PayPal", "снаружи дешевле". Нарушает официальную платёжную систему. Последствия: прямая блокировка, заморозка заработка.'
+,'gift-fake-h':'Фиктивные Розыгрыши'
+,'gift-fake-p':'"Пришли 500 подарков и выиграй iPhone", фиктивные призы, выдуманные списки победителей. Это мошенничество.'
+,'gift-allow-title':'Разрешённые Действия'
+,'gift-allow-p':'✅ Просить поддержку естественным образом<br>✅ Проводить подлинные интерактивные активности<br>✅ Участвовать в PK честно<br>✅ Мотивировать аудиторию без обещания денег'
+,'gift-remember-h':'Помните'
+,'gift-remember-p':'Если нужен возврат — это незаконно. Если нужно делать тайно — это незаконно. Агентство не защитит стримера, который делает возвраты, обменивается подарками или использует незаконные пополнения.'
+,'train-loyal-title':'Как Удержать <span class="cyan">Поддержку Крупных Донаторов</span>'
+,'train-relation-h':'Сначала Постройте Отношения'
+,'train-relation-p':'Не просите постоянно подарки. Сначала взаимодействуйте и создайте доверие. Напр.: Как дела? Из какой ты страны?'
+,'train-remember-h':'Запоминайте Постоянных Фанатов'
+,'train-remember-p':'Когда постоянный фан заходит в LIVE, приветствуйте его по имени. Напр.: "Привет Карлос, добро пожаловать!"'
+,'train-thanks-h':'Сразу Благодарите за Подарки'
+,'train-thanks-p':'Каждый раз, когда кто-то присылает подарок, благодарите с энтузиазмом. Напр.: "Огромное спасибо за подарок!"'
+,'train-fan-h':'Воспитывайте Преданных Фанатов'
+,'train-fan-p':'Дайте фанатам почувствовать себя важной частью LIVE. Напр.: "Ты всегда меня поддерживаешь, я очень благодарен."'
+,'train-phrases-title':'Фразы для <span class="cyan">Естественного Запроса Подарков</span>'
+,'train-common-h':'🎯 Общие Фразы'
+,'train-c1':'Если тебе нравится этот LIVE, отправь небольшой подарок'
+,'train-c2':'Сердечко или подарок в поддержку стрима'
+,'train-c3':'Спасибо семья за поддержку'
+,'train-c4':'Мы в битве PK, нужна поддержка'
+,'train-c5':'Кто отправит первый подарок?'
+,'train-c6':'Этот подарок невероятный!'
+,'train-goal-h':'🚀 Мотивирующие Фразы по Целям'
+,'train-g1':'Если доберёмся до 100 роз — потанцую'
+,'train-g2':'Если достигнем цели — выполню челлендж'
+,'train-g3':'Почти у цели, семья'
+,'train-g4':'Ещё чуть-чуть поддержки'
+,'train-g5':'Кто отправит Льва? Сегодня выкладываюсь полностью'
+,'train-g6':'Мы лучшая команда!'
+,'train-pk-title':'Как Получить <span class="cyan">Поддержку в PK-Битвах</span>'
+,'train-pk-before-h':'Анонс Перед PK'
+,'train-pk-before-p':'Предупредите фанатов: "Сегодня проведу несколько PK-битв."'
+,'train-pk-during-h':'Напоминание Во Время PK'
+,'train-pk-during-p':'Во время PK: "Семья, мы в PK-битве."'
+,'train-pk-lose-h':'Мотивация Когда Проигрываем'
+,'train-pk-lose-p':'Когда отстаём: "Давайте команда, мы ещё можем выиграть!"'
+,'train-pk-after-h':'Благодарность После PK'
+,'train-pk-after-p':'После PK всегда благодарите: "Спасибо всем за поддержку."'
+,'train-core-title':'Самый Важный <span class="gold">Принцип</span>'
+,'train-core-h':'💡 Золотое Правило'
+,'train-core-p':'Подарки приходят не потому, что вы просите. Они приходят потому, что <strong style="color:var(--gold);">люди чувствуют связь с вами</strong>.<br>Сначала постройте отношения — поддержка придёт сама.','req-col-condition':'📋 Условие'
+,'req-col-bonus':'💰 Бонус'
+,'req-1-label':'ДЛИТЕЛЬНОСТЬ LIVE'
+,'req-1-cond':'LIVE ≥ 15ч за 7 дней'
+,'req-2-label':'ДЕЙСТВИТЕЛЬНЫЕ ДНИ'
+,'req-2-cond':'Действ. LIVE ≥ 21 день + 50ч'
+,'req-3-label':'ФАН-КЛУБ'
+,'req-3-cond':'Фан-клуб месяца ≥ 70 человек'
+,'req-4-label':'АЛМАЗЫ'
+,'req-4-cond':'Доход месяца ≥ 80 000 💎'}
 };
 
 let currentLang='es';
@@ -924,12 +2366,20 @@ function applyTranslation(lang){
         const key=el.getAttribute('data-i18n');
         if(t[key]!==undefined) el.innerHTML=t[key];
     });
+    const tabGeneral=document.getElementById('tab-general');
+    const tabGifts=document.getElementById('tab-gifts');
+    const tabTraining=document.getElementById('tab-training');
+    if(tabGeneral && t['rule-1-h']) tabGeneral.innerHTML='📋 '+t['rule-1-h'];
+    if(tabGifts && t['rule-2-h']) tabGifts.innerHTML='🎁 '+t['rule-2-h'];
+    if(tabTraining && t['rule-3-h']) tabTraining.innerHTML='🎓 '+t['rule-3-h'];
     const langData=LANGS.find(l=>l.code===lang);
-    if(langData){ document.getElementById('current-lang-flag').textContent=langData.flag; document.getElementById('current-lang-name').textContent=langData.code.toUpperCase(); }
+    if(langData){
+        document.getElementById('current-lang-flag').textContent=langData.flag;
+        document.getElementById('current-lang-name').textContent=langData.code.toUpperCase();
+    }
     document.querySelectorAll('.lang-option,.drawer-lang-option').forEach(el=>el.classList.toggle('active',el.dataset.lang===lang));
     document.documentElement.lang=lang;
     currentLang=lang;
-    // 更新 FAB 按钮文字
     const fab=document.getElementById('mobile-fab');
     if(fab && t['join-btn']) fab.textContent=t['join-btn'];
 }
@@ -973,7 +2423,7 @@ document.getElementById('popup-overlay').addEventListener('click',function(e){ i
 function hideAll(){
     document.querySelectorAll('nav').forEach(n=>n.style.display='none');
     document.getElementById('main-page').style.display='none';
-    document.querySelectorAll('#detail-page,#protect-page,#agent-page,#industry-page,#about-page,#activity-page').forEach(el=>{el.style.display='none';});
+    document.querySelectorAll('#detail-page,#protect-page,#agent-page,#industry-page,#about-page,#activity-page,#notice-page,#rules-page').forEach(el=>{el.style.display='none';});
     // FAB 隐藏（子页面有自己的 CTA）
     const fab=document.getElementById('mobile-fab');
     if(fab) fab.style.display='none';
@@ -1002,6 +2452,36 @@ function showAgentPage(){ hideAll();document.getElementById('nav-agent').style.d
 function showIndustryPage(){ hideAll();document.getElementById('nav-industry').style.display='flex';const p=document.getElementById('industry-page');p.style.display='block';p.classList.add('page-fade-in');window.scrollTo(0,0);setTimeout(()=>initIndustryObserver(),100); }
 function showAboutPage(){ hideAll();document.getElementById('nav-about').style.display='flex';const p=document.getElementById('about-page');p.style.display='block';p.classList.add('page-fade-in');window.scrollTo(0,0); }
 function showActivityPage(){ hideAll();document.getElementById('nav-activity').style.display='flex';const p=document.getElementById('activity-page');p.style.display='block';p.classList.add('page-fade-in');window.scrollTo(0,0);setTimeout(()=>initActivityObserver(),100); }
+function showNoticePage(){
+    hideAll();
+    document.getElementById('nav-notice').style.display='flex';
+    const p=document.getElementById('notice-page');
+    p.style.display='block';
+    p.classList.add('page-fade-in');
+    window.scrollTo(0,0);
+    setTimeout(()=>p.classList.remove('page-fade-in'),600);
+}
+let currentRulesTab='general';
+function showRulesPage(tab){
+    tab=tab||'general';
+    hideAll();
+    document.getElementById('nav-rules').style.display='flex';
+    const p=document.getElementById('rules-page');
+    p.style.display='block';
+    p.classList.add('page-fade-in');
+    window.scrollTo(0,0);
+    setTimeout(()=>p.classList.remove('page-fade-in'),600);
+    switchRulesTab(tab);
+}
+function switchRulesTab(tab){
+    currentRulesTab=tab;
+    document.querySelectorAll('.rules-content').forEach(el=>el.style.display='none');
+    document.querySelectorAll('.rules-tab').forEach(el=>el.classList.remove('active'));
+    const target=document.getElementById('rules-'+tab);
+    const tabBtn=document.getElementById('tab-'+tab);
+    if(target) target.style.display='block';
+    if(tabBtn) tabBtn.classList.add('active');
+}
 
 /* ══ Lightbox + 触摸滑动 ══ */
 const lightboxData=[{src:'award1.jpg',caption:'LIVE FEST 2024 · Top 1 · Ligue Or FR'},{src:'award2.jpg',caption:'Community FEST 2024 · Top 4 · EECCA Diamond'},{src:'award3.jpg',caption:'LIVE FEST 25 · 2nd · CCA Diamond'},{src:'award4.jpg',caption:'LIVE FEST 2024 · Top 1 · EECCA Super League'},{src:'award5.jpg',caption:'Community FEST · Creator Network'}];
@@ -1049,7 +2529,19 @@ if(!isTouchDevice){
 }
 
 /* ══ WebGL ══ */
-const glCanvas=document.getElementById('glCanvas'),gl=glCanvas.getContext('webgl')||glCanvas.getContext('experimental-webgl');
+const glCanvas=document.getElementById('glCanvas');
+// Safari iOS WebGL兼容处理
+const glCtxOptions = { 
+    antialias: false, 
+    alpha: true,
+    powerPreference: 'low-power',
+    preserveDrawingBuffer: false
+};
+const gl=glCanvas.getContext('webgl', glCtxOptions)||glCanvas.getContext('experimental-webgl', glCtxOptions);
+if(!gl){
+    // WebGL不支持时，使用CSS渐变背景
+    glCanvas.style.background = 'radial-gradient(ellipse at 30% 40%, rgba(0,100,120,0.4) 0%, transparent 60%), radial-gradient(ellipse at 70% 60%, rgba(0,50,80,0.3) 0%, transparent 50%), #050a0f';
+}
 if(gl){
     const vs=`attribute vec2 a;void main(){gl_Position=vec4(a,0.,1.);}`;
     const fs=`precision mediump float;uniform vec2 R;uniform float T;vec2 hash(vec2 p){p=vec2(dot(p,vec2(127.1,311.7)),dot(p,vec2(269.5,183.3)));return -1.+2.*fract(sin(p)*43758.5453);}float noise(vec2 p){const float K1=0.366025,K2=0.211325;vec2 i=floor(p+(p.x+p.y)*K1),a=p-i+(i.x+i.y)*K2;vec2 o=(a.x>a.y)?vec2(1.,0.):vec2(0.,1.),b=a-o+K2,c=a-1.+2.*K2;vec3 h=max(.5-vec3(dot(a,a),dot(b,b),dot(c,c)),0.);return dot(h*h*h*h*vec3(dot(a,hash(i)),dot(b,hash(i+o)),dot(c,hash(i+1.))),vec3(70.));}float fbm(vec2 x){float v=0.,a=.5;vec2 s=vec2(100.);mat2 r=mat2(cos(.5),sin(.5),-sin(.5),cos(.5));for(int i=0;i<4;i++){v+=a*noise(x);x=r*x*2.+s;a*=.5;}return v;}void main(){vec2 uv=gl_FragCoord.xy/R;uv.x*=R.x/R.y;float t=T*.25;vec2 q=vec2(fbm(uv),fbm(uv+vec2(1.)));vec2 r=vec2(fbm(uv+q+vec2(1.7,9.2)+.15*t),fbm(uv+q+vec2(8.3,2.8)+.126*t));float f=fbm(uv+r);vec3 col=mix(vec3(.02,.04,.06),vec3(0.,.42,.48),clamp(f*2.,0.,1.));col=mix(col,vec3(0.,.9,1.)*.6,clamp(length(q),0.,1.));col=mix(col,vec3(.6,.2,.8)*.3,clamp(abs(r.x),0.,1.));float v=length(gl_FragCoord.xy/R-.5);col*=1.4-v*1.0;gl_FragColor=vec4(col,1.);}`;
@@ -1108,13 +2600,6 @@ window.addEventListener('scroll',()=>{
     lastY=window.scrollY;
 },{passive:true});
 
-/* ✅ iOS 视频自动播放处理 */
-const vid=document.getElementById('about-video');
-if(vid){
-    document.addEventListener('touchstart',()=>{
-        if(vid.paused){ vid.play().catch(()=>{}); }
-    },{once:true,passive:true});
-}
 </script>
 </body>
 </html>
