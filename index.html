@@ -3323,73 +3323,149 @@ if(!isTouchDevice){
     });
 }
 
-/* ══ 背景动画（Canvas 2D - iOS/安卓/桌面全兼容）══ */
+/* ══ WebGL ══ */
 const glCanvas = document.getElementById('glCanvas');
-const ctx2d = glCanvas.getContext('2d');
-
-function resizeBgCanvas(){
-    glCanvas.width  = window.innerWidth;
-    glCanvas.height = window.innerHeight;
+// 检测是否为移动设备
+const isMobileDevice = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+const glCtxOptions = {
+    antialias: false,
+    alpha: true,
+    powerPreference: isMobileDevice ? 'default' : 'low-power',  // ✅ 安卓不强制low-power
+    preserveDrawingBuffer: false,
+    failIfMajorPerformanceCaveat: false  // ✅ 允许软件渲染降级
+};
+const gl = glCanvas.getContext('webgl', glCtxOptions) 
+        || glCanvas.getContext('experimental-webgl', glCtxOptions);
+if (!gl) {
+    glCanvas.style.display = 'none';
+    document.body.style.background = 
+        'radial-gradient(ellipse at 20% 30%, rgba(0,80,100,0.8) 0%, transparent 50%),' +
+        'radial-gradient(ellipse at 80% 70%, rgba(0,40,60,0.6) 0%, transparent 50%),' +
+        'linear-gradient(135deg, #050a0f 0%, #071520 50%, #050a0f 100%)';
 }
-resizeBgCanvas();
-window.addEventListener('resize', resizeBgCanvas, {passive:true});
-
-const bgBlobs = [
-    { x:0.18, y:0.28, rx:0.55, ry:0.45, r:0,  g:140, b:160, a:0.55, sx:0.28,  sy:0.18,  sr:0.05  },
-    { x:0.72, y:0.62, rx:0.50, ry:0.40, r:0,  g:90,  b:120, a:0.45, sx:-0.20, sy:0.25,  sr:-0.04 },
-    { x:0.45, y:0.15, rx:0.60, ry:0.50, r:0,  g:160, b:170, a:0.38, sx:0.12,  sy:-0.22, sr:0.06  },
-    { x:0.25, y:0.75, rx:0.45, ry:0.38, r:0,  g:60,  b:90,  a:0.42, sx:-0.16, sy:-0.18, sr:-0.03 },
-    { x:0.80, y:0.25, rx:0.48, ry:0.42, r:80, g:20,  b:130, a:0.22, sx:0.22,  sy:0.14,  sr:0.04  },
-    { x:0.55, y:0.85, rx:0.40, ry:0.35, r:0,  g:100, b:140, a:0.30, sx:-0.10, sy:0.20,  sr:-0.05 },
-];
-
-function renderBg(ms){
-    const t = ms * 0.001;
-    const w = glCanvas.width;
-    const h = glCanvas.height;
-    const minD = Math.min(w, h);
-
-    ctx2d.clearRect(0, 0, w, h);
-    ctx2d.fillStyle = '#050a0f';
-    ctx2d.fillRect(0, 0, w, h);
-
-    const blurPx = Math.round(minD * 0.12);
-    ctx2d.filter = 'blur(' + blurPx + 'px)';
-
-    bgBlobs.forEach(function(b, i){
-        const cx = (b.x + Math.sin(t * b.sx + i * 1.3) * 0.14) * w;
-        const cy = (b.y + Math.cos(t * b.sy + i * 0.9) * 0.11) * h;
-        const rx = b.rx * minD * (1 + Math.sin(t * b.sr + i) * 0.08);
-        const ry = b.ry * minD * (1 + Math.cos(t * b.sr - i) * 0.08);
-
-        ctx2d.save();
-        ctx2d.translate(cx, cy);
-        ctx2d.scale(1, ry / rx);
-        const grad = ctx2d.createRadialGradient(0, 0, 0, 0, 0, rx);
-        grad.addColorStop(0,   'rgba(' + b.r + ',' + b.g + ',' + b.b + ',' + b.a + ')');
-        grad.addColorStop(0.5, 'rgba(' + b.r + ',' + b.g + ',' + b.b + ',' + (b.a * 0.4) + ')');
-        grad.addColorStop(1,   'rgba(' + b.r + ',' + b.g + ',' + b.b + ',0)');
-        ctx2d.fillStyle = grad;
-        ctx2d.beginPath();
-        ctx2d.arc(0, 0, rx, 0, Math.PI * 2);
-        ctx2d.fill();
-        ctx2d.restore();
-    });
-
-    ctx2d.filter = 'none';
-
-    const vignette = ctx2d.createRadialGradient(w/2, h/2, minD*0.2, w/2, h/2, minD*0.85);
-    vignette.addColorStop(0, 'rgba(0,0,0,0)');
-    vignette.addColorStop(1, 'rgba(0,0,0,0.55)');
-    ctx2d.fillStyle = vignette;
-    ctx2d.fillRect(0, 0, w, h);
-
-    requestAnimationFrame(renderBg);
-requestAnimationFrame(renderBg);
-}                                      ← 加这个，关闭 renderBg 函数
-
-requestAnimationFrame(renderBg);       ← 加这个，启动动画循环
-
+if (gl) {
+    const vs = `attribute vec2 a;void main(){gl_Position=vec4(a,0.,1.);}`;
+    
+    // ✅ 核心修复：precision highp float（解决安卓方块化问题）
+    const fs = `precision highp float;
+uniform vec2 R;
+uniform float T;
+vec2 hash(vec2 p){
+    p=vec2(dot(p,vec2(127.1,311.7)),dot(p,vec2(269.5,183.3)));
+    return -1.+2.*fract(sin(p)*43758.5453123);
+}
+float noise(vec2 p){
+    const float K1=0.366025404;
+    const float K2=0.211324865;
+    vec2 i=floor(p+(p.x+p.y)*K1);
+    vec2 a=p-i+(i.x+i.y)*K2;
+    vec2 o=(a.x>a.y)?vec2(1.,0.):vec2(0.,1.);
+    vec2 b=a-o+K2;
+    vec2 c=a-1.+2.*K2;
+    vec3 h=max(0.5-vec3(dot(a,a),dot(b,b),dot(c,c)),0.0);
+    return dot(h*h*h*h*vec3(dot(a,hash(i)),dot(b,hash(i+o)),dot(c,hash(i+1.0))),vec3(70.0));
+}
+float fbm(vec2 x){
+    float v=0.0;
+    float amplitude=0.5;
+    vec2 shift=vec2(100.0);
+    mat2 rot=mat2(0.8775826,0.4794255,-0.4794255,0.8775826);
+    for(int i=0;i<4;i++){
+        v+=amplitude*noise(x);
+        x=rot*x*2.0+shift;
+        amplitude*=0.5;
+    }
+    return v;
+}
+void main(){
+    vec2 uv=gl_FragCoord.xy/R;
+    uv.x*=R.x/R.y;
+    float t=T*0.25;
+    vec2 q=vec2(fbm(uv+0.1*t),fbm(uv+vec2(1.0)));
+    vec2 r=vec2(
+        fbm(uv+q+vec2(1.7,9.2)+0.15*t),
+        fbm(uv+q+vec2(8.3,2.8)+0.126*t)
+    );
+    float f=fbm(uv+r);
+    vec3 col=mix(vec3(0.02,0.04,0.06),vec3(0.0,0.42,0.48),clamp(f*2.0,0.0,1.0));
+    col=mix(col,vec3(0.0,0.9,1.0)*0.6,clamp(length(q),0.0,1.0));
+    col=mix(col,vec3(0.6,0.2,0.8)*0.3,clamp(abs(r.x),0.0,1.0));
+    float vign=length(gl_FragCoord.xy/R-0.5);
+    col*=1.4-vign*1.0;
+    gl_FragColor=vec4(col,1.0);
+}`;
+    function mkS(type, src) {
+        const sh = gl.createShader(type);
+        gl.shaderSource(sh, src);
+        gl.compileShader(sh);
+        // ✅ 添加编译错误检测
+        if (!gl.getShaderParameter(sh, gl.COMPILE_STATUS)) {
+            console.warn('Shader compile error:', gl.getShaderInfoLog(sh));
+            // 编译失败时使用简化shader
+            return mkSFallback(type);
+        }
+        return sh;
+    }
+    
+    // ✅ 超低端设备备用简化shader
+    function mkSFallback(type) {
+        const sh = gl.createShader(type);
+        if (type === gl.FRAGMENT_SHADER) {
+            gl.shaderSource(sh, `precision mediump float;
+uniform vec2 R;uniform float T;
+void main(){
+    vec2 uv=gl_FragCoord.xy/R;
+    float n=sin(uv.x*8.+T*.5)*cos(uv.y*6.+T*.3)*.5+.5;
+    vec3 col=mix(vec3(.02,.06,.1),vec3(0.,.4,.5),n);
+    gl_FragColor=vec4(col,1.);
+}`);
+        } else {
+            gl.shaderSource(sh, `attribute vec2 a;void main(){gl_Position=vec4(a,0.,1.);}`);
+        }
+        gl.compileShader(sh);
+        return sh;
+    }
+    const prog = gl.createProgram();
+    const vShader = mkS(gl.VERTEX_SHADER, vs);
+    const fShader = mkS(gl.FRAGMENT_SHADER, fs);
+    gl.attachShader(prog, vShader);
+    gl.attachShader(prog, fShader);
+    gl.linkProgram(prog);
+    
+    if (!gl.getProgramParameter(prog, gl.LINK_STATUS)) {
+        console.warn('Program link error:', gl.getProgramInfoLog(prog));
+    } else {
+        gl.useProgram(prog);
+        const buf = gl.createBuffer();
+        gl.bindBuffer(gl.ARRAY_BUFFER, buf);
+        gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,-1,1,-1,-1,1,-1,1,1,-1,1,1]), gl.STATIC_DRAW);
+        const aLoc = gl.getAttribLocation(prog, 'a');
+        gl.enableVertexAttribArray(aLoc);
+        gl.vertexAttribPointer(aLoc, 2, gl.FLOAT, false, 0, 0);
+        const tLoc = gl.getUniformLocation(prog, 'T');
+        const rLoc = gl.getUniformLocation(prog, 'R');
+        
+        // ✅ 移动端降帧率（省电+防发热）
+        let lastFrame = 0;
+        const fps = isMobileDevice ? 30 : 60;
+        const interval = 1000 / fps;
+        
+        (function render(ms) {
+            if (ms - lastFrame >= interval) {
+                lastFrame = ms;
+                if (glCanvas.width !== innerWidth || glCanvas.height !== innerHeight) {
+                    glCanvas.width = innerWidth;
+                    glCanvas.height = innerHeight;
+                    gl.viewport(0, 0, gl.drawingBufferWidth, gl.drawingBufferHeight);
+                }
+                gl.uniform1f(tLoc, ms * 0.001);
+                gl.uniform2f(rLoc, glCanvas.width, glCanvas.height);
+                gl.drawArrays(gl.TRIANGLES, 0, 6);
+            }
+            requestAnimationFrame(render);
+        })(0);
+    }
+}
 
 /* ══ Observers ══ */
 function applyObserver(sel){
