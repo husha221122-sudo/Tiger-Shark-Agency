@@ -3323,64 +3323,68 @@ if(!isTouchDevice){
     });
 }
 
-/* ══ WebGL ══ */
-const glCanvas=document.getElementById('glCanvas');
-const glCtxOptions = { 
-    antialias: false, 
-    alpha: true,
-    powerPreference: 'low-power',
-    preserveDrawingBuffer: false
-};
-const gl=glCanvas.getContext('webgl', glCtxOptions)||glCanvas.getContext('experimental-webgl', glCtxOptions);
+/* ══ 背景动画（Canvas 2D - iOS/安卓/桌面全兼容）══ */
+const glCanvas = document.getElementById('glCanvas');
+const ctx2d = glCanvas.getContext('2d');
 
-// ✅ 新增：统一fallback函数，直接作用于body，安卓也能正常显示
-function applyFallbackBg(){
-    glCanvas.style.display='none';
-    document.body.style.background='radial-gradient(ellipse at 20% 30%, rgba(0,120,140,0.5) 0%, transparent 55%), radial-gradient(ellipse at 75% 65%, rgba(0,60,100,0.4) 0%, transparent 50%), radial-gradient(ellipse at 50% 50%, rgba(0,40,60,0.6) 0%, transparent 70%), #050a0f';
+function resizeBgCanvas(){
+    glCanvas.width  = window.innerWidth;
+    glCanvas.height = window.innerHeight;
 }
+resizeBgCanvas();
+window.addEventListener('resize', resizeBgCanvas, {passive:true});
 
-if(!gl){ applyFallbackBg(); }
+const bgBlobs = [
+    { x:0.18, y:0.28, rx:0.55, ry:0.45, r:0,  g:140, b:160, a:0.55, sx:0.28,  sy:0.18,  sr:0.05  },
+    { x:0.72, y:0.62, rx:0.50, ry:0.40, r:0,  g:90,  b:120, a:0.45, sx:-0.20, sy:0.25,  sr:-0.04 },
+    { x:0.45, y:0.15, rx:0.60, ry:0.50, r:0,  g:160, b:170, a:0.38, sx:0.12,  sy:-0.22, sr:0.06  },
+    { x:0.25, y:0.75, rx:0.45, ry:0.38, r:0,  g:60,  b:90,  a:0.42, sx:-0.16, sy:-0.18, sr:-0.03 },
+    { x:0.80, y:0.25, rx:0.48, ry:0.42, r:80, g:20,  b:130, a:0.22, sx:0.22,  sy:0.14,  sr:0.04  },
+    { x:0.55, y:0.85, rx:0.40, ry:0.35, r:0,  g:100, b:140, a:0.30, sx:-0.10, sy:0.20,  sr:-0.05 },
+];
 
-if(gl){
-    const vs=`attribute vec2 a;void main(){gl_Position=vec4(a,0.,1.);}`;
-    const fs=`precision mediump float;uniform vec2 R;uniform float T;vec2 hash(vec2 p){p=vec2(dot(p,vec2(127.1,311.7)),dot(p,vec2(269.5,183.3)));return -1.+2.*fract(sin(p)*43758.5453);}float noise(vec2 p){const float K1=0.366025,K2=0.211325;vec2 i=floor(p+(p.x+p.y)*K1),a=p-i+(i.x+i.y)*K2;vec2 o=(a.x>a.y)?vec2(1.,0.):vec2(0.,1.),b=a-o+K2,c=a-1.+2.*K2;vec3 h=max(.5-vec3(dot(a,a),dot(b,b),dot(c,c)),0.);return dot(h*h*h*h*vec3(dot(a,hash(i)),dot(b,hash(i+o)),dot(c,hash(i+1.))),vec3(70.));}float fbm(vec2 x){float v=0.,a=.5;vec2 s=vec2(100.);mat2 r=mat2(cos(.5),sin(.5),-sin(.5),cos(.5));for(int i=0;i<4;i++){v+=a*noise(x);x=r*x*2.+s;a*=.5;}return v;}void main(){vec2 uv=gl_FragCoord.xy/R;uv.x*=R.x/R.y;float t=T*.25;vec2 q=vec2(fbm(uv),fbm(uv+vec2(1.)));vec2 r=vec2(fbm(uv+q+vec2(1.7,9.2)+.15*t),fbm(uv+q+vec2(8.3,2.8)+.126*t));float f=fbm(uv+r);vec3 col=mix(vec3(.02,.04,.06),vec3(0.,.42,.48),clamp(f*2.,0.,1.));col=mix(col,vec3(0.,.9,1.)*.6,clamp(length(q),0.,1.));col=mix(col,vec3(.6,.2,.8)*.3,clamp(abs(r.x),0.,1.));float v=length(gl_FragCoord.xy/R-.5);col*=1.4-v*1.0;gl_FragColor=vec4(col,1.);}`;
-    
-    // ✅ 新增：带错误检测的shader编译函数
-    function mkS(t,s){
-        const sh=gl.createShader(t);
-        gl.shaderSource(sh,s);
-        gl.compileShader(sh);
-        if(!gl.getShaderParameter(sh,gl.COMPILE_STATUS)){
-            console.warn('Shader compile error:',gl.getShaderInfoLog(sh));
-            return null;
-        }
-        return sh;
-    }
-    
-    const vsh=mkS(gl.VERTEX_SHADER,vs);
-    const fsh=mkS(gl.FRAGMENT_SHADER,fs);
-    
-    if(!vsh||!fsh){ applyFallbackBg(); }  // ✅ 新增：shader失败则启用fallback
-    else {
-        const prog=gl.createProgram();
-        gl.attachShader(prog,vsh);gl.attachShader(prog,fsh);gl.linkProgram(prog);
-        
-        // ✅ 新增：检查program链接状态，安卓GPU驱动失败时触发fallback
-        if(!gl.getProgramParameter(prog,gl.LINK_STATUS)){
-            console.warn('Program link error:',gl.getProgramInfoLog(prog));
-            applyFallbackBg();
-        } else {
-            gl.useProgram(prog);
-            const buf=gl.createBuffer();gl.bindBuffer(gl.ARRAY_BUFFER,buf);gl.bufferData(gl.ARRAY_BUFFER,new Float32Array([-1,-1,1,-1,-1,1,-1,1,1,-1,1,1]),gl.STATIC_DRAW);
-            const aLoc=gl.getAttribLocation(prog,'a');gl.enableVertexAttribArray(aLoc);gl.vertexAttribPointer(aLoc,2,gl.FLOAT,false,0,0);
-            const tLoc=gl.getUniformLocation(prog,'T'),rLoc=gl.getUniformLocation(prog,'R');
-            (function render(ms){
-                if(glCanvas.width!==innerWidth||glCanvas.height!==innerHeight){glCanvas.width=innerWidth;glCanvas.height=innerHeight;gl.viewport(0,0,gl.drawingBufferWidth,gl.drawingBufferHeight);}
-                gl.uniform1f(tLoc,ms*.001);gl.uniform2f(rLoc,glCanvas.width,glCanvas.height);gl.drawArrays(gl.TRIANGLES,0,6);requestAnimationFrame(render);
-            })(0);
-        }
-    }
-}
+function renderBg(ms){
+    const t = ms * 0.001;
+    const w = glCanvas.width;
+    const h = glCanvas.height;
+    const minD = Math.min(w, h);
+
+    ctx2d.clearRect(0, 0, w, h);
+    ctx2d.fillStyle = '#050a0f';
+    ctx2d.fillRect(0, 0, w, h);
+
+    const blurPx = Math.round(minD * 0.12);
+    ctx2d.filter = 'blur(' + blurPx + 'px)';
+
+    bgBlobs.forEach(function(b, i){
+        const cx = (b.x + Math.sin(t * b.sx + i * 1.3) * 0.14) * w;
+        const cy = (b.y + Math.cos(t * b.sy + i * 0.9) * 0.11) * h;
+        const rx = b.rx * minD * (1 + Math.sin(t * b.sr + i) * 0.08);
+        const ry = b.ry * minD * (1 + Math.cos(t * b.sr - i) * 0.08);
+
+        ctx2d.save();
+        ctx2d.translate(cx, cy);
+        ctx2d.scale(1, ry / rx);
+        const grad = ctx2d.createRadialGradient(0, 0, 0, 0, 0, rx);
+        grad.addColorStop(0,   'rgba(' + b.r + ',' + b.g + ',' + b.b + ',' + b.a + ')');
+        grad.addColorStop(0.5, 'rgba(' + b.r + ',' + b.g + ',' + b.b + ',' + (b.a * 0.4) + ')');
+        grad.addColorStop(1,   'rgba(' + b.r + ',' + b.g + ',' + b.b + ',0)');
+        ctx2d.fillStyle = grad;
+        ctx2d.beginPath();
+        ctx2d.arc(0, 0, rx, 0, Math.PI * 2);
+        ctx2d.fill();
+        ctx2d.restore();
+    });
+
+    ctx2d.filter = 'none';
+
+    const vignette = ctx2d.createRadialGradient(w/2, h/2, minD*0.2, w/2, h/2, minD*0.85);
+    vignette.addColorStop(0, 'rgba(0,0,0,0)');
+    vignette.addColorStop(1, 'rgba(0,0,0,0.55)');
+    ctx2d.fillStyle = vignette;
+    ctx2d.fillRect(0, 0, w, h);
+
+    requestAnimationFrame(renderBg);
 
 /* ══ Observers ══ */
 function applyObserver(sel){
