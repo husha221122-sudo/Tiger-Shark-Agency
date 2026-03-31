@@ -3385,6 +3385,11 @@ function renderBg(ms){
     ctx2d.fillRect(0, 0, w, h);
 
     requestAnimationFrame(renderBg);
+requestAnimationFrame(renderBg);
+}                                      ← 加这个，关闭 renderBg 函数
+
+requestAnimationFrame(renderBg);       ← 加这个，启动动画循环
+
 
 /* ══ Observers ══ */
 function applyObserver(sel){
